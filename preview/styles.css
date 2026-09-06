@@ -9,7 +9,7 @@
   --graphite:#455760;
   --muted:#667a83;
   --line:rgba(23,58,74,.19);
-  --serif:"Instrument Serif", Georgia, "Times New Roman", serif;
+  --serif:"Cormorant Garamond", Georgia, "Times New Roman", serif;
   --sans:"DM Sans", Arial, sans-serif;
   --script:"Caveat", "Segoe Print", cursive;
 }
@@ -32,11 +32,11 @@ img{max-width:100%}
 .hero-photo-fade{position:absolute;left:256px;top:0;width:255px;height:503px;z-index:1;background:linear-gradient(90deg,rgba(245,244,240,1) 0%,rgba(245,244,240,.90) 30%,rgba(245,244,240,.50) 63%,rgba(245,244,240,0) 100%);pointer-events:none}
 .hero-copy{position:absolute;z-index:3;left:46px;top:55px;width:365px;height:430px}
 .eyebrow{margin:0;text-transform:uppercase;letter-spacing:.29em;font-size:7.5px;font-weight:500;color:#526f7d}
-.hero-copy h1{font-family:var(--serif);font-weight:400;letter-spacing:-.035em;font-size:66px;line-height:.90;margin:15px 0 16px;color:#12384a}
+.hero-copy h1{font-family:var(--serif);font-weight:400;letter-spacing:-.035em;font-size:68px;line-height:.875;width:274px;text-align:center;margin:19px 0 16px;color:#12384a}
 .hero-intro{font-size:11.5px;line-height:1.33;color:#314d58;margin:0 0 17px}
 .place-row{display:flex;align-items:center;gap:13px;color:#526c77;font-size:8.5px;white-space:nowrap}
 .short-rule{display:block;width:55px;height:1px;background:#7795a4}
-.hero-actions{display:flex;align-items:center;gap:29px;margin-top:21px}
+.hero-actions{display:flex;align-items:center;gap:29px;margin-top:27px}
 .btn-primary{height:36px;min-width:176px;padding:0 18px;display:flex;align-items:center;justify-content:center;gap:8px;background:#7393a2;color:#fff;text-decoration:none;font-size:9px}
 .text-link{font-size:9px;text-decoration:none;padding-bottom:3px;border-bottom:1px solid rgba(23,58,74,.35);width:max-content;white-space:nowrap}
 .hero-meta{position:absolute;left:0;bottom:0;display:flex;align-items:center;color:#647b85;font-size:7.5px}
@@ -52,7 +52,7 @@ img{max-width:100%}
 .map-panel{position:relative;overflow:hidden}
 .map-art{position:absolute;inset:-13px -6px -10px -34px;width:370px;height:352px;object-fit:cover;object-position:46% 54%;opacity:.58;mix-blend-mode:multiply;filter:saturate(.72) contrast(.90) brightness(1.06)}
 .map-caption{position:absolute;top:25px;left:106px;font-family:var(--script);font-size:21px;color:#7897a6;transform:rotate(-8deg);opacity:.82}
-.map-compass{position:absolute;left:31px;bottom:54px;width:42px;height:42px;opacity:.48}.map-compass:before,.map-compass:after{content:"";position:absolute;background:#7996a4}.map-compass:before{left:20px;top:1px;width:1px;height:40px}.map-compass:after{left:1px;top:20px;width:40px;height:1px}.map-compass i{position:absolute;left:14px;top:9px;width:14px;height:24px;border-left:1px solid #7996a4;border-right:1px solid #7996a4;transform:rotate(45deg)}.map-compass b{position:absolute;left:18px;top:-10px;font-size:5px;font-weight:400;letter-spacing:.12em;color:#7996a4}
+.map-compass{position:absolute;left:31px;bottom:54px;width:42px;height:42px;opacity:.48}.map-compass img{display:block;width:64px;max-width:none;height:64px;transform:translate(-11px,-11px)}
 .map-coordinates{position:absolute;left:43px;bottom:26px;margin:0;font-size:5.5px;line-height:1.8;letter-spacing:.25em;color:#8195a0}
 .region-list{border-right:1px solid rgba(23,58,74,.16);padding:48px 16px 25px 10px;display:flex;flex-direction:column;gap:16px}
 .region-list article h3{font-size:8px;letter-spacing:.06em;font-weight:500;margin:0 0 3px;color:#314b57}
