@@ -67,11 +67,11 @@ img{max-width:100%}
 .micro-note{position:absolute;left:29px;bottom:39px;margin:0;font-size:5.5px;letter-spacing:.34em;line-height:1.9;color:#8197a1}
 
 .properties{height:446px;position:relative;padding:23px 38px 24px 42px;background:rgba(247,246,242,.86);overflow:hidden}
-.properties-heading{height:93px;display:flex;justify-content:space-between;align-items:flex-start}
+.properties-heading{height:83px;display:flex;justify-content:space-between;align-items:flex-start}
 .properties-heading .eyebrow{margin-top:0;margin-bottom:8px}
 .properties-heading h2{font-family:var(--serif);font-size:38px;font-weight:400;letter-spacing:-.03em;line-height:.94;margin:0}
 .all-properties{margin-top:46px;font-size:8px}
-.property-grid{display:grid;grid-template-columns:456px 228px 218px;column-gap:22px;align-items:start}
+.property-grid{display:grid;grid-template-columns:456px 227px 218px;column-gap:0;justify-content:space-between;align-items:start}
 .property{position:relative;min-width:0}
 .property figure{margin:0;overflow:hidden;background:#e9e5dc}
 .property figure img{display:block;width:100%;height:100%;object-fit:cover}
@@ -102,7 +102,7 @@ img{max-width:100%}
 .heritage-sketch{position:absolute;left:347px;top:26px;width:248px;height:140px;margin:0;overflow:hidden}
 .heritage-sketch img{width:100%;height:100%;object-fit:cover;object-position:50% 48%;mix-blend-mode:multiply;opacity:.62;filter:saturate(.58) contrast(.9) brightness(1.05)}
 .heritage-note{position:absolute;left:548px;top:123px;margin:0;font-family:var(--script);font-size:19px;line-height:.88;color:#7897a6;opacity:.72;transform:rotate(-8deg)}
-.heritage-values{position:absolute;left:636px;right:39px;top:60px;height:78px;display:grid;grid-template-columns:repeat(4,1fr);border-left:1px solid rgba(23,58,74,.17)}
+.heritage-values{position:absolute;left:634px;right:38px;top:60px;height:78px;display:grid;grid-template-columns:100px 85px 90px 1fr;border-left:1px solid rgba(23,58,74,.17)}
 .heritage-values div{padding:8px 11px;border-right:1px solid rgba(23,58,74,.17);display:flex;flex-direction:column;gap:7px}
 .heritage-values strong{font-size:6.3px;letter-spacing:.03em;font-weight:500;white-space:nowrap}
 .heritage-values span{font-size:7.5px;color:#677b84;white-space:nowrap}
