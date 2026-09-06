@@ -1,0 +1,69 @@
+name: Install final preview assets
+
+on:
+  push:
+    branches:
+      - redesign/coastal-blueprint
+    paths:
+      - .github/workflows/install-final-preview-assets.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  install:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout coastal blueprint
+        uses: actions/checkout@v4
+        with:
+          ref: redesign/coastal-blueprint
+          fetch-depth: 0
+
+      - name: Extract and verify final assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/immo-final-upload
+          mkdir -p /tmp/immo-final-upload
+          unzip -q preview/immo-hoehn-final-bilder-github.zip -d /tmp/immo-final-upload
+
+          for f in \
+            hero-coast.webp \
+            property-poetenitz.webp \
+            rosenhagen-beach.webp \
+            priwall-interior.webp \
+            region-map.webp \
+            heritage-house.webp; do
+            test -f "/tmp/immo-final-upload/preview/assets/$f"
+            cp "/tmp/immo-final-upload/preview/assets/$f" "preview/assets/$f"
+          done
+
+          cat > /tmp/immo-assets.sha256 <<'EOF'
+          be6f9eb3be30b996c52d728cd12a5b2fb52d8e32212da556ac872175140c7e05  preview/assets/hero-coast.webp
+          9b183efcc87c77e194c32f18e2caf9e2e3ed1292baadc12a966d7e67e13f0421  preview/assets/property-poetenitz.webp
+          5a7256f35f12360c2287cb3bbe1606142c8062329ccafdda0477febdd8d3a325  preview/assets/rosenhagen-beach.webp
+          76a6dd652898692ebca1efbc922c078503974256a896bc582a3c8c3f2c0fa3dc  preview/assets/priwall-interior.webp
+          71f5187436c7263a6af15e521d39a5fa3fe4a34d126a33c17e91f264d8fe3178  preview/assets/region-map.webp
+          27e88b065f92c1f48663c9de83a581ffc0c721b63cc8ee16576dbbfe9bc46a77  preview/assets/heritage-house.webp
+          EOF
+          sha256sum -c /tmp/immo-assets.sha256
+
+          rm -f preview/assets/.tmp-*.txt
+          rm -f preview/immo-hoehn-final-bilder-github.zip
+          rm -f .github/workflows/install-final-preview-assets.yml
+
+      - name: Commit installed assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Nothing to commit"
+            exit 0
+          fi
+          git commit -m "fix: install final coastal image assets"
+          git push origin HEAD:redesign/coastal-blueprint
