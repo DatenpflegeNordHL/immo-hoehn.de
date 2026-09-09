@@ -9,6 +9,30 @@ export function getStaticPaths() {
 const { property } = Astro.props;
 const title = `${property.title} | Höhn Immobilien`;
 const description = `${property.summary} Aktuelle Objektdaten von Höhn Immobilien.`;
+const site = Astro.site ?? new URL('https://immo-hoehn.de');
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Höhn Immobilien',
+      item: new URL('/', site).href,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Immobilien',
+      item: new URL('/immobilien/', site).href,
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: property.title,
+    },
+  ],
+};
 const isRosenhagen = property.location === 'Rosenhagen';
 const hero = isRosenhagen
   ? { src: '/assets/rosenhagen-beach.webp', srcset: undefined, sizes: undefined }
@@ -24,6 +48,7 @@ const hero = isRosenhagen
   image={isRosenhagen ? '/assets/rosenhagen-beach.webp' : '/assets/hero-coast-1440.webp'}
   imageAlt={`${property.title} – Höhn Immobilien`}
 >
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
   <main class="page-main">
     <section class="page-hero">
       <div class="page-hero-copy">
