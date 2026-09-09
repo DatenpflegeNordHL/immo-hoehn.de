@@ -37,6 +37,26 @@ const heroVariants = {
 const heroMedia = page.heroImage
   ? (heroVariants[page.heroImage] || { src: page.heroImage, srcset: undefined, sizes: undefined })
   : null;
+
+const impressumBlocks = [
+  {
+    heading: 'Angaben gemäß § 5 DDG',
+    paragraphs: [
+      'Höhn Immobilien\nInhaberin: Christine Bringmann\nTrakehnerstraße 11\n23942 Dassow OT Pötenitz\nTelefon: 038826 80911\nE-Mail: info@immo-hoehn.de',
+    ],
+  },
+  {
+    heading: 'Aufsichtsbehörde',
+    paragraphs: [
+      'Zuständige Aufsichtsbehörde für die Tätigkeit als Immobilienmaklerin nach § 34c GewO:\n\nAmt Schönberger Land\nAm Markt 15\n23923 Schönberg\nTelefon: 038828 3300\nE-Mail: info@schoenberger-land.de',
+    ],
+  },
+];
+
+const pageIntro = page.slug === 'impressum'
+  ? 'Angaben für Höhn Immobilien gemäß den gesetzlichen Informationspflichten.'
+  : page.intro;
+const pageBlocks = page.slug === 'impressum' ? impressumBlocks : (page.blocks || []);
 ---
 <BaseLayout title={page.title} description={page.description} forceNoindex={page.forceNoindex}>
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
@@ -46,7 +66,7 @@ const heroMedia = page.heroImage
         <div class="breadcrumbs"><a href="/">Start</a> · {crumbs.map((part) => part.replaceAll('-', ' ')).join(' · ')}</div>
         <p class="eyebrow">{page.eyebrow}</p>
         <h1>{page.h1}</h1>
-        <p class="lead">{page.intro}</p>
+        <p class="lead">{pageIntro}</p>
         {(page.primaryCta || page.secondaryCta) && <div class="button-row">
           {page.primaryCta && <a class="button-primary" href={page.primaryCta[0]}>{page.primaryCta[1]} <span aria-hidden="true">→</span></a>}
           {page.secondaryCta && <a class="button-secondary" href={page.secondaryCta[0]}>{page.secondaryCta[1]}</a>}
@@ -60,7 +80,7 @@ const heroMedia = page.heroImage
         {page.kind === 'legal' && <div class="legal-warning">Diese Seite ist auf dem Arbeitsbranch noch nicht für den Produktivbetrieb freigegeben. Rechtliche Inhalte werden vor Deployment separat geprüft.</div>}
         <div class="content-grid">
           <article class="content-prose">
-            {(page.blocks || []).map((block) => <section class="content-block">
+            {pageBlocks.map((block) => <section class="content-block">
               <h2>{block.heading}</h2>
               {(block.paragraphs || []).map((paragraph) => <p>{paragraph.split('\n').map((line, i) => <>{i > 0 && <br />}{line}</>)}</p>)}
               {block.bullets && <ul>{block.bullets.map((item) => <li>{item}</li>)}</ul>}
