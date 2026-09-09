@@ -41,6 +41,8 @@ jobs:
           set -euo pipefail
           mkdir -p release-candidate/site release-candidate/deploy-notes
           cp -a dist/. release-candidate/site/
+          cp deploy/strato-new-site.htaccess release-candidate/site/.htaccess
+          cp deploy/strato-new-site.htaccess release-candidate/deploy-notes/strato-new-site.htaccess
           cp deploy/strato-redirects.htaccess release-candidate/deploy-notes/strato-redirects.htaccess
           cp deploy/strato-security-headers.htaccess release-candidate/deploy-notes/strato-security-headers.htaccess
           cp STRATO-LAUNCH-RUNBOOK-2026-09-09.md release-candidate/deploy-notes/
@@ -49,16 +51,16 @@ jobs:
           cat > release-candidate/README.txt <<'EOF'
           HÖHN IMMOBILIEN – RELEASE CANDIDATE
 
-          site/ enthält den geprüften Production-Intent-Build.
-          deploy-notes/ enthält nur Vorlagen und Launch-Unterlagen.
+          site/ enthält den geprüften Production-Intent-Build inklusive der für einen neuen,
+          leeren STRATO-Zielordner vorbereiteten .htaccess.
+
+          deploy-notes/ enthält Launch-Unterlagen und Einzelvorlagen.
 
           WICHTIG:
           - Dieser Workflow deployt nichts.
-          - .htaccess-Vorlagen niemals ungeprüft als vollständige Live-.htaccess ersetzen.
-          - Redirect- und Security-Regeln mit der bestehenden STRATO-Konfiguration zusammenführen.
-          - HSTS/CSP sind bewusst nicht voraktiviert.
-          - Impressum/Datenschutz bleiben bis zur finalen Unternehmens-/Produktionsprüfung noindex.
-          - Objektstatus, Preise und Verfügbarkeit unmittelbar vor echtem Deployment erneut prüfen.
+          - Alte WordPress-Dateien werden nicht benötigt oder überschrieben.
+          - HSTS/CSP und www/non-www-Zwang sind bewusst nicht voraktiviert.
+          - Objekt-Redirects bleiben bis zum unmittelbaren Browser-Recheck beim Cutover deaktiviert.
           - Kontaktformular auf dem echten Höhn-STRATO-Webspace per realer Testanfrage prüfen.
           EOF
 
