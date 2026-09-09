@@ -36,9 +36,9 @@ RewriteRule ^datenschutzerklaerung/?$ /datenschutz/ [R=301,L,NE]
 # Rosenhagen – Standard-Grundstücksangebot
 # RewriteRule ^immobilienangebote/kaufen/grundstuecke/rosenhagen/?$ /immobilien/baugrundstuecke-rosenhagen/ [R=301,L,NE]
 
-# KEIN Blind-Redirect für:
-# /immobilienangebote/kaufen/grundstuecke/rosenhagen-von-privat
-# Vor Launch muss entschieden werden: eigenes neues Objekt, äquivalentes Ziel oder sauberer Gone-/404-Status.
+# Rosenhagen – separates provisionsfreies Privatangebot
+# Die neue Objektseite existiert. Redirect erst aktivieren, wenn das Privatangebot unmittelbar vor Launch erneut als aktiv bestätigt wurde.
+# RewriteRule ^immobilienangebote/kaufen/grundstuecke/rosenhagen-von-privat/?$ /immobilien/baugrundstuecke-rosenhagen-von-privat/ [R=301,L,NE]
 
 # --- QA vor Produktion ---
 # 1. Bestehende Produktions-.htaccess sichern.
