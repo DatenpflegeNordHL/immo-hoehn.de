@@ -14,3 +14,10 @@
 
   .heritage-sketch img{object-fit:contain;object-position:50% 50%;mix-blend-mode:multiply;opacity:.46;filter:saturate(.45) contrast(.88) brightness(1.06)}
 }
+
+/* Wide desktop pass. The 1024px reference remains untouched; larger viewports expand coherently instead of leaving a dead strip on the right. */
+@media (min-width:1025px){
+  .site-header,.hero,.region-section,.heritage,.after-reference{width:100%;max-width:1440px;margin-left:auto;margin-right:auto}
+  .hero-photo{width:calc(100% - 140px)}
+  .region-section{grid-template-columns:31.25% 23.046875% 32.8125% 12.890625%}
+}
