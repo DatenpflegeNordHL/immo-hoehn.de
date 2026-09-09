@@ -32,8 +32,6 @@ jobs:
 
       - name: Build local audit site
         env:
-          # This build is served only on 127.0.0.1 inside CI. Indexing is enabled here solely
-          # so Lighthouse can test production SEO crawlability; public staging remains noindex.
           PUBLIC_SITE_NOINDEX: 'false'
         run: npm run build
 
@@ -52,7 +50,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p lighthouse-results
-          ROUTES=("home:/" "verkaufen:/immobilie-verkaufen/" "bewertung:/immobilienbewertung/" "immobilien:/immobilien/" "poetenitz:/regionen/poetenitz/")
+          ROUTES=("home:/" "verkaufen:/immobilie-verkaufen/" "bewertung:/immobilienbewertung/" "immobilien:/immobilien/" "poetenitz:/regionen/poetenitz/" "travemuende:/regionen/travemuende/" "priwall:/regionen/priwall/")
           for item in "${ROUTES[@]}"; do
             name="${item%%:*}"
             route="${item#*:}"
