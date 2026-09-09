@@ -1,0 +1,48 @@
+# Höhn Immobilien – STRATO/Apache Redirect-Vorlage
+# Stand: 2026-09-09
+#
+# NICHT ungeprüft als komplette Produktions-.htaccess übernehmen.
+# Diese Datei enthält nur Relaunch-Redirects. Bestehende STRATO-/Security-/PHP-Regeln
+# der echten Produktions-.htaccess müssen beim Deployment erhalten und zusammengeführt werden.
+#
+# Zielhost/CANONICAL wird hier absichtlich NICHT erzwungen. HTTPS/www-Regeln erst nach
+# Prüfung der realen Domain-/STRATO-Konfiguration ergänzen.
+
+RewriteEngine On
+
+# --- Sichere Content-Redirects ---
+RewriteRule ^verkaufen/?$ /immobilie-verkaufen/ [R=301,L,NE]
+RewriteRule ^unsere-dienstleistungen/?$ /immobilie-verkaufen/ [R=301,L,NE]
+RewriteRule ^aktuelle-angebote/?$ /immobilien/ [R=301,L,NE]
+RewriteRule ^immobilienangebote/?$ /immobilien/ [R=301,L,NE]
+RewriteRule ^immobilienangebote/kaufen/?$ /immobilien/ [R=301,L,NE]
+RewriteRule ^immobilienangebote/kaufen/grundstuecke/?$ /immobilien/ [R=301,L,NE]
+RewriteRule ^immobilienangebote/kaufen/haeuser/?$ /immobilien/ [R=301,L,NE]
+RewriteRule ^immobilienangebote/kaufen/wohnungen/?$ /immobilien/ [R=301,L,NE]
+RewriteRule ^datenschutzerklaerung/?$ /datenschutz/ [R=301,L,NE]
+
+# --- Vor Launch erneut entscheiden ---
+# Die alte Miet-Kategorie wird erst nach Prüfung des zum Launch vorhandenen Mietbestands aktiviert.
+# RewriteRule ^immobilienangebote/mieten/?$ /immobilien/ [R=301,L,NE]
+
+# --- Objekt-Redirects: nur nach unmittelbarem Objekt-Recheck aktivieren ---
+# Objekt 1724 – EFH Pötenitz
+# RewriteRule ^immobilienangebote/kaufen/haeuser/efh-poetenitz/?$ /immobilien/einfamilienhaus-poetenitz-1724/ [R=301,L,NE]
+
+# Objekt 1722 – Eigentumswohnung Pötenitz
+# Der alte Pfad enthält tatsächlich den Schreibfehler "eigentumswohung".
+# RewriteRule ^immobilienangebote/kaufen/wohnungen/eigentumswohung/?$ /immobilien/eigentumswohnung-poetenitz-1722/ [R=301,L,NE]
+
+# Rosenhagen – Standard-Grundstücksangebot
+# RewriteRule ^immobilienangebote/kaufen/grundstuecke/rosenhagen/?$ /immobilien/baugrundstuecke-rosenhagen/ [R=301,L,NE]
+
+# KEIN Blind-Redirect für:
+# /immobilienangebote/kaufen/grundstuecke/rosenhagen-von-privat
+# Vor Launch muss entschieden werden: eigenes neues Objekt, äquivalentes Ziel oder sauberer Gone-/404-Status.
+
+# --- QA vor Produktion ---
+# 1. Bestehende Produktions-.htaccess sichern.
+# 2. Diese Regeln mit vorhandenen STRATO-/WordPress-/Security-Regeln zusammenführen.
+# 3. Objekt- und Mietregeln nur nach Re-Check aktivieren.
+# 4. Jede Legacy-URL mit curl -I prüfen: genau ein 301-Hop, korrektes finales 200-Ziel.
+# 5. Keine Regel darf auf Staging, localhost oder einen fremden Host zeigen.
