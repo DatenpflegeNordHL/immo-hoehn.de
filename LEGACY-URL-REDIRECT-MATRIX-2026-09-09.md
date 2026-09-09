@@ -39,7 +39,7 @@ Regeln:
 | `/immobilienangebote/kaufen/haeuser/efh-poetenitz` | `/immobilien/einfamilienhaus-poetenitz-1724/` | 301 **nur nach Re-Check** | A | Aktuell verifiziertes Höhn-Objekt 1724. Status, Preis und Verfügbarkeit vor Deployment erneut prüfen. |
 | `/immobilienangebote/kaufen/wohnungen/eigentumswohung` | `/immobilien/eigentumswohnung-poetenitz-1722/` | 301 **nur nach Re-Check** | A | Aktuell verifiziertes Höhn-Objekt 1722. Alt-Slug enthält tatsächlich den Schreibfehler `eigentumswohung`. |
 | `/immobilienangebote/kaufen/grundstuecke/rosenhagen` | `/immobilien/baugrundstuecke-rosenhagen/` | 301 **nur nach Re-Check** | A | Öffentlich verifizierter Rosenhagen-Grundstücksbestand. |
-| `/immobilienangebote/kaufen/grundstuecke/rosenhagen-von-privat` | **OBJECT DECISION REQUIRED** | kein Blind-Redirect | A | Aktuell öffentlich existierende separate Privat-Offerte mit 1.600 m² und 2.005 m². Vor Launch entscheiden: eigenes neues Objekt, sinnvoller äquivalenter Bestand oder bei Auslaufen 410/anderer sauberer Status. |
+| `/immobilienangebote/kaufen/grundstuecke/rosenhagen-von-privat` | `/immobilien/baugrundstuecke-rosenhagen-von-privat/` | 301 **nur nach Re-Check** | A | Separate Privat-Offerte wird als eigenständiges neues Objekt migriert; 1.600 m² und 2.005 m², 900 €/m², provisionsfrei laut Bestandsseite. |
 
 ## Aktuell öffentlich bestätigte Legacy-Struktur
 
@@ -90,8 +90,9 @@ Nicht blind auf `/` oder `/immobilien/` umleiten:
 - alte PDF-Exposés;
 - nicht mehr verfügbare Immobilien ohne inhaltlich passenden Nachfolger;
 - beliebige 404-URLs;
-- eigenständige aktuelle Angebote wie `rosenhagen-von-privat`, solange ihr Migrationsstatus ungeklärt ist;
 - fremde Höhn-Domains.
+
+Alle aktuell bekannten aktiven Objektseiten besitzen inzwischen ein vorgesehenes neues Objektziel. Die vier Objekt-Redirects bleiben trotzdem bis zum unmittelbaren Launch-Recheck deaktiviert.
 
 ## Deployment-Implementierung
 
@@ -114,7 +115,8 @@ Nach Implementierung automatisiert prüfen:
 ## Aktueller Gate-Status
 
 **Aktuell öffentlich auffindbare Kernstruktur: erweitert gemappt**  
-**Rosenhagen-von-Privat-Migration: offene Objektentscheidung**  
+**Rosenhagen-von-Privat-Migration: RESOLVED – eigene neue Objektseite**  
+**alle vier aktuell bekannten Objekt-Alt-URLs: Ziel definiert; Aktivierung erst nach Launch-Recheck**  
 **Search-Console-/Server-Vollinventur: noch offen**  
-**Redirect-Implementierung: BLOCKED bis Zielhosting / Produktionsfreigabe**  
+**Redirect-Implementierung: vorbereitet, Produktionszusammenführung noch offen**  
 **`main`: unverändert**
