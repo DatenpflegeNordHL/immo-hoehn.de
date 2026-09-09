@@ -26,9 +26,11 @@ jobs:
       - name: Install locked dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Build staging site
+      - name: Build local audit site
         env:
-          PUBLIC_SITE_NOINDEX: 'true'
+          # This build is served only on 127.0.0.1 inside CI. Indexing is enabled here solely
+          # so Lighthouse can test production SEO crawlability; public staging remains noindex.
+          PUBLIC_SITE_NOINDEX: 'false'
         run: npm run build
 
       - name: Start local preview
