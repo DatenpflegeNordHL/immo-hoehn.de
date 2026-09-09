@@ -1,9 +1,8 @@
 name: Deploy Staging Preview
 
+# GitHub Pages is not yet enabled for this repository.
+# Keep this workflow manual-only so normal branch pushes stay green.
 on:
-  push:
-    branches:
-      - redesign/coastal-blueprint
   workflow_dispatch:
 
 permissions:
