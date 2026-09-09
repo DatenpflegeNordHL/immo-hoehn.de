@@ -1,4 +1,9 @@
 ---
+import '@fontsource/caveat/400.css';
+import '@fontsource/cormorant-garamond/400.css';
+import '@fontsource/dm-sans/300.css';
+import '@fontsource/dm-sans/400.css';
+import '@fontsource/dm-sans/500.css';
 import '../styles/global.css';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
@@ -16,7 +21,6 @@ const canonical = new URL(Astro.url.pathname, site);
 const socialImage = new URL(image, site);
 const previewNoindex = import.meta.env.PUBLIC_SITE_NOINDEX !== 'false';
 const robots = forceNoindex || previewNoindex ? 'noindex,nofollow' : 'index,follow';
-const fontStylesheet = 'https://fonts.googleapis.com/css2?family=Caveat:wght@400&family=Cormorant+Garamond:wght@400&family=DM+Sans:wght@300;400;500&display=swap';
 
 const organization = {
   '@context': 'https://schema.org',
@@ -63,11 +67,6 @@ const organization = {
     <meta name="twitter:image" content={socialImage.href} />
     <meta name="twitter:image:alt" content={imageAlt} />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" href={fontStylesheet} />
-    <link rel="stylesheet" href={fontStylesheet} media="print" onload="this.media='all'" />
-    <noscript><link rel="stylesheet" href={fontStylesheet} /></noscript>
     <script type="application/ld+json" set:html={JSON.stringify(organization)}></script>
   </head>
   <body>
