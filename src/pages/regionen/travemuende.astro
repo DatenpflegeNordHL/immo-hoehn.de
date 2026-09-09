@@ -1,0 +1,59 @@
+---
+import ContentPage from '../../components/ContentPage.astro';
+
+const page = {
+  slug: 'regionen/travemuende',
+  eyebrow: 'Region Travemünde',
+  title: 'Immobilienmakler Travemünde | Höhn Immobilien',
+  description: 'Immobilien in Travemünde verkaufen, bewerten oder suchen: Höhn Immobilien begleitet Eigentümer und Interessenten persönlich an der Ostseeküste.',
+  h1: 'Immobilien in Travemünde – verkaufen, bewerten und finden',
+  intro: 'Höhn Immobilien betreut Travemünde als lokalen Tätigkeitsbereich an der Ostseeküste. Eigentümer und Interessenten erhalten persönliche Begleitung bei Verkauf, Wertermittlung und Vermittlung.',
+  heroImage: '/assets/hero-coast.webp',
+  blocks: [
+    {
+      heading: 'Immobilienmakler für Travemünde',
+      paragraphs: [
+        'Höhn Immobilien ist in Dassow OT Pötenitz ansässig und betreut auch Immobilienvorhaben in Travemünde. Der Schwerpunkt liegt auf persönlicher Beratung, einer objektbezogenen Wertermittlung und einer strukturierten Vermarktung.',
+        'Dabei wird nicht mit pauschalen Lageversprechen gearbeitet. Entscheidend sind die konkrete Mikrolage, Grundstück oder Wohnfläche, Zustand, Ausstattung, Nutzung und die aktuelle Marktsituation.'
+      ]
+    },
+    {
+      heading: 'Immobilie in Travemünde verkaufen',
+      paragraphs: [
+        'Wer ein Haus, eine Wohnung oder ein Grundstück in Travemünde verkaufen möchte, braucht mehr als ein Inserat. Höhn Immobilien begleitet den Prozess von der ersten Einordnung über Exposé und Vermarktung bis zu Besichtigungen, Verhandlung, Notartermin und Übergabe.'
+      ],
+      links: [['/immobilie-verkaufen/','Mehr zum Immobilienverkauf']]
+    },
+    {
+      heading: 'Immobilienbewertung in Travemünde',
+      paragraphs: [
+        'Travemünde ist ein Ostseeheilbad mit unterschiedlichen Wohn-, Hafen-, Küsten- und Ortslagen. Für die Einordnung einer konkreten Immobilie werden deshalb Lage und Objektmerkmale gemeinsam betrachtet. Ein einzelner Durchschnittswert ersetzt keine objektbezogene Einschätzung.'
+      ],
+      links: [['/immobilienbewertung/','Wertermittlung anfragen']]
+    },
+    {
+      heading: 'Haus oder Wohnung in Travemünde suchen',
+      paragraphs: [
+        'Aktuelle Kaufangebote werden ausschließlich über die Immobilienübersicht und die jeweiligen Objektseiten veröffentlicht. Wenn derzeit kein passendes Objekt in Travemünde verfügbar ist, wird deshalb kein künstlicher Bestand erzeugt.'
+      ],
+      links: [['/immobilien/','Aktuelle Immobilien ansehen']]
+    },
+    {
+      heading: 'Travemünde und Priwall',
+      paragraphs: [
+        'Der Priwall liegt auf der gegenüberliegenden Seite der Trave und gehört zu Travemünde. Wegen seiner eigenständigen Lage zwischen Trave und Ostsee wird er innerhalb der Website zusätzlich als eigene Region geführt.'
+      ],
+      links: [['/regionen/priwall/','Immobilien auf dem Priwall']]
+    }
+  ],
+  faqs: [
+    ['Begleitet Höhn Immobilien Verkäufe in Travemünde?','Ja. Travemünde gehört zum lokalen Tätigkeitsbereich von Höhn Immobilien. Der konkrete Verkaufsprozess wird immer auf die jeweilige Immobilie und Situation abgestimmt.'],
+    ['Kann ich meine Immobilie in Travemünde bewerten lassen?','Eine Wertermittlung kann für Häuser, Wohnungen und Grundstücke besprochen werden. Lage, Zustand, Flächen, Ausstattung und weitere Objektmerkmale werden gemeinsam betrachtet.'],
+    ['Hat Höhn Immobilien ein Büro in Travemünde?','Der Unternehmenssitz befindet sich in Dassow OT Pötenitz. Auf dieser Website wird kein eigener Bürostandort in Travemünde behauptet.'],
+    ['Wo finde ich aktuelle Immobilien in Travemünde?','Alle aktuell veröffentlichten Höhn-Angebote finden Sie in der Immobilienübersicht. Verfügbarkeiten werden vor Veröffentlichung und vor dem Livegang erneut geprüft.']
+  ],
+  primaryCta: ['/kontakt/','Immobilie in Travemünde besprechen'],
+  secondaryCta: ['/immobilienbewertung/','Wertermittlung anfragen']
+};
+---
+<ContentPage page={page} />
