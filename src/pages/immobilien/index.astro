@@ -14,7 +14,17 @@ import { properties } from '../../data/properties.js';
         <h1>Aktuelle Immobilien an der Ostseeküste</h1>
         <p class="lead">Hier finden Sie die aktuell öffentlich verifizierten Häuser, Wohnungen und Grundstücke von Höhn Immobilien. Keine Demo-Listings und keine erfundenen Objekte.</p>
       </div>
-      <figure class="page-hero-media"><img src="/assets/hero-coast.webp" alt="Küstenlandschaft an der Ostsee" /></figure>
+      <figure class="page-hero-media">
+        <img
+          src="/assets/hero-coast-960.webp"
+          srcset="/assets/hero-coast-480.webp 480w, /assets/hero-coast-960.webp 960w, /assets/hero-coast-1440.webp 1440w"
+          sizes="(max-width: 900px) 100vw, 50vw"
+          alt="Küstenlandschaft an der Ostsee"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+        />
+      </figure>
     </section>
 
     <section class="property-section">
