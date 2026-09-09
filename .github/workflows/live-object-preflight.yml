@@ -1,12 +1,6 @@
 name: Höhn Live Object Preflight
 
 on:
-  push:
-    branches:
-      - redesign/coastal-blueprint
-    paths:
-      - scripts/live-object-preflight.mjs
-      - .github/workflows/live-object-preflight.yml
   workflow_dispatch:
 
 permissions:
