@@ -27,8 +27,40 @@ jobs:
       - name: Install locked dependencies
         run: npm ci --no-audit --no-fund
 
-      - name: Validate contact endpoint
+      - name: Validate contact endpoint syntax
         run: php -l public/api/contact.php
+
+      - name: Smoke-test contact endpoint without sending mail
+        shell: bash
+        run: |
+          set -euo pipefail
+          php -S 127.0.0.1:8099 -t public > /tmp/contact-php.log 2>&1 &
+          PHP_PID=$!
+          trap 'kill "$PHP_PID" 2>/dev/null || true' EXIT
+
+          for i in {1..20}; do
+            if curl -fsS http://127.0.0.1:8099/ >/dev/null; then
+              break
+            fi
+            sleep 0.25
+          done
+
+          GET_STATUS="$(curl -sS -o /dev/null -w '%{http_code}' http://127.0.0.1:8099/api/contact.php)"
+          test "$GET_STATUS" = "405"
+
+          curl -sS -D /tmp/contact-invalid.headers -o /dev/null \
+            -X POST \
+            --data-urlencode 'name=A' \
+            http://127.0.0.1:8099/api/contact.php
+          grep -Fq 'HTTP/1.1 303 See Other' /tmp/contact-invalid.headers
+          grep -Fq 'Location: /kontakt/?kontakt=ungueltig#kontaktformular' /tmp/contact-invalid.headers
+
+          curl -sS -D /tmp/contact-honeypot.headers -o /dev/null \
+            -X POST \
+            --data-urlencode 'website=bot-filled-this-field' \
+            http://127.0.0.1:8099/api/contact.php
+          grep -Fq 'HTTP/1.1 303 See Other' /tmp/contact-honeypot.headers
+          grep -Fq 'Location: /kontakt/?kontakt=erfolg#kontaktformular' /tmp/contact-honeypot.headers
 
       - name: Build staging site
         run: npm run build
