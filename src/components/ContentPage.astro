@@ -4,6 +4,21 @@ import ContactPanel from './ContactPanel.astro';
 
 const { page } = Astro.props;
 const crumbs = page.slug.split('/');
+const heroVariants = {
+  '/assets/hero-coast.webp': {
+    src: '/assets/hero-coast-960.webp',
+    srcset: '/assets/hero-coast-480.webp 480w, /assets/hero-coast-960.webp 960w, /assets/hero-coast-1440.webp 1440w',
+    sizes: '(max-width: 900px) 100vw, 50vw',
+  },
+  '/assets/region-map.webp': {
+    src: '/assets/region-map-960.webp',
+    srcset: '/assets/region-map-480.webp 480w, /assets/region-map-960.webp 960w',
+    sizes: '(max-width: 900px) 100vw, 50vw',
+  },
+};
+const heroMedia = page.heroImage
+  ? (heroVariants[page.heroImage] || { src: page.heroImage, srcset: undefined, sizes: undefined })
+  : null;
 ---
 <BaseLayout title={page.title} description={page.description} forceNoindex={page.forceNoindex}>
   <main class="page-main">
@@ -18,7 +33,7 @@ const crumbs = page.slug.split('/');
           {page.secondaryCta && <a class="button-secondary" href={page.secondaryCta[0]}>{page.secondaryCta[1]}</a>}
         </div>}
       </div>
-      {page.heroImage && <figure class="page-hero-media"><img src={page.heroImage} alt="" fetchpriority="high" decoding="async" /></figure>}
+      {heroMedia && <figure class="page-hero-media"><img src={heroMedia.src} srcset={heroMedia.srcset} sizes={heroMedia.sizes} alt="" loading="eager" fetchpriority="high" decoding="async" /></figure>}
     </section>
 
     {page.kind === 'contact' ? <ContactPanel /> : (
