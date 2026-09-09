@@ -1,0 +1,21 @@
+name: Höhn Post-Deploy Contact Smoke
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contact-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Confirm live site responds before sending test mail
+        run: curl --fail --silent --show-error --max-time 20 https://immo-hoehn.de/kontakt/ >/dev/null
+
+      - name: Send machine-generated test through production website endpoint
+        run: bash scripts/post-deploy-contact-smoke.sh
