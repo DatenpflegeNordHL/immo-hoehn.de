@@ -69,6 +69,26 @@ Daneben existieren mindestens:
 /datenschutzerklaerung
 ```
 
+
+## Historische Höhn-Domain `hoehn-immobilien.de`
+
+Der öffentliche Backlink-Pass vom 09.09.2026 zeigt mehrere aktuelle Drittverzeichnisse, die für **Höhn Immobilien, Trakehner Str. 11, 23942 Pötenitz, Telefon 038826 80911** weiterhin die historische Domain `hoehn-immobilien.de` nennen. Damit ist die Domain dem hiesigen Höhn-Unternehmen belastbar zuordenbar und nicht mit ähnlich benannten Maklern zu vermischen.
+
+Beispiele:
+
+- https://onlinestreet.de/412276-hoehn-immobilien
+- https://regionale-immobilienmakler.de/immobilienmakler-luetgenhof-23942.htm
+- https://tags.branchen-info.net/tag/bausubstanz/337147/59/
+
+Onlinestreet kennzeichnet die historische Website aktuell als möglicherweise nicht erreichbar. Für den Relaunch gilt daher:
+
+1. Eigentum/Kontrolle der Domain `hoehn-immobilien.de` im Domainbestand prüfen.
+2. Falls Höhn die Domain kontrolliert: Host-Redirect per **301** auf `https://immo-hoehn.de/` einrichten; bekannte historische Unterpfade nach Möglichkeit direkt auf das jeweils passendste neue Ziel führen.
+3. Falls die Domain nicht mehr kontrolliert wird: relevante Branchenverzeichnisse auf `https://immo-hoehn.de/` korrigieren lassen.
+4. Keine fremden ähnlich benannten Höhn-Domains in diese Migration einbeziehen.
+
+Status: **PUBLIC BACKLINK EVIDENCE PASS / DOMAIN CONTROL USER-SIDE CHECK REQUIRED**.
+
 ## Noch zu inventarisieren
 
 Vor Produktionsfreigabe muss zusätzlich eine vollständige Alt-URL-Liste aus folgenden Quellen zusammengeführt werden:

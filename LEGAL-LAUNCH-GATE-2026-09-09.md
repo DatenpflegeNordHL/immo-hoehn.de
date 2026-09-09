@@ -91,7 +91,7 @@ Mindestens zu prüfen:
 - Kontaktformular;
 - Empfänger `info@immo-hoehn.de`;
 - serverseitiger PHP-Mailversand;
-- Google Fonts beziehungsweise deren tatsächliche Auslieferungsform im finalen Build;
+- lokal ausgelieferte Webfonts; im finalen Relaunch-Build besteht keine Google-Fonts-Verbindung;
 - Analytics nur falls tatsächlich eingesetzt;
 - Maps/Embeds nur falls tatsächlich eingesetzt;
 - Cookies/Consent nur für tatsächlich verwendete Technologien;
@@ -123,3 +123,8 @@ Die tatsächliche Mailzustellung muss vor Launch auf dem echten Höhn-Webspace g
 **Kontaktformular Source-/CI-Gate: PASS; echte Mailzustellung auf STRATO noch offen**  
 **Datenschutz final: BLOCKED bis Produktionsstack feststeht**  
 **Produktionsfreigabe der Rechtsseiten: BLOCKED**
+
+
+## 10. Font-/Drittanbieter-Gate
+
+**PASS:** Caveat, Cormorant Garamond und DM Sans werden im Relaunch lokal über Fontsource-Pakete ausgeliefert. Die früher im Layout vorhandenen Verbindungen zu `fonts.googleapis.com` und `fonts.gstatic.com` wurden entfernt. Build, Multi-Viewport-QA und Lighthouse wurden anschließend erneut erfolgreich ausgeführt.
