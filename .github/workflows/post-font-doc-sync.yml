@@ -19,100 +19,19 @@ jobs:
         with:
           ref: redesign/coastal-blueprint
 
-      - name: Update privacy and launch documentation
-        shell: python
+      - name: Use Node 22
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Apply documentation sync
+        run: node scripts/post-font-doc-sync.mjs
+
+      - name: Commit cleanup
         run: |
-          from pathlib import Path
-
-          site = Path('src/data/site.js')
-          text = site.read_text(encoding='utf-8')
-          old = "{ heading: '7. Schriftarten', paragraphs: ['Der aktuelle Staging-Build lädt die verwendeten Webfonts noch über Google Fonts. Vor dem Produktivstart ist vorgesehen, die Schriftarten lokal auszuliefern und diese externe Verbindung zu entfernen. Solange die externe Google-Fonts-Verbindung besteht, ist die Datenschutzprüfung für den Livegang nicht abgeschlossen.'] },"
-          new = "{ heading: '7. Schriftarten', paragraphs: ['Die im Relaunch verwendeten Webfonts Caveat, Cormorant Garamond und DM Sans werden lokal über diese Website ausgeliefert. Beim Laden der Schriftarten wird keine Verbindung zu Google Fonts oder zu fonts.gstatic.com hergestellt.'] },"
-          if old not in text:
-              raise SystemExit('Expected Google-Fonts privacy paragraph not found')
-          text = text.replace(old, new, 1)
-          text = text.replace(
-              "Vor der Veröffentlichung wird die Erklärung noch einmal mit der tatsächlichen Hosting-, Mail-, Font-, Cookie- und Drittanbieter-Konfiguration des Produktivsystems abgeglichen.",
-              "Vor der Veröffentlichung wird die Erklärung noch einmal mit der tatsächlichen Hosting-, Mail-, Cookie- und Drittanbieter-Konfiguration des Produktivsystems abgeglichen.",
-              1,
-          )
-          site.write_text(text, encoding='utf-8')
-
-          legal = Path('LEGAL-LAUNCH-GATE-2026-09-09.md')
-          ltext = legal.read_text(encoding='utf-8')
-          ltext = ltext.replace(
-              '- Google Fonts beziehungsweise deren tatsächliche Auslieferungsform im finalen Build;',
-              '- lokal ausgelieferte Webfonts; im finalen Relaunch-Build besteht keine Google-Fonts-Verbindung;',
-          )
-          if '## 10. Font-/Drittanbieter-Gate' not in ltext:
-              ltext += "\n\n## 10. Font-/Drittanbieter-Gate\n\n**PASS:** Caveat, Cormorant Garamond und DM Sans werden im Relaunch lokal über Fontsource-Pakete ausgeliefert. Die früher im Layout vorhandenen Verbindungen zu `fonts.googleapis.com` und `fonts.gstatic.com` wurden entfernt. Build, Multi-Viewport-QA und Lighthouse wurden anschließend erneut erfolgreich ausgeführt.\n"
-          legal.write_text(ltext, encoding='utf-8')
-
-          redirect = Path('LEGACY-URL-REDIRECT-MATRIX-2026-09-09.md')
-          rtext = redirect.read_text(encoding='utf-8')
-          legacy_section = """
-
-## Historische Höhn-Domain `hoehn-immobilien.de`
-
-Der öffentliche Backlink-Pass vom 09.09.2026 zeigt mehrere aktuelle Drittverzeichnisse, die für **Höhn Immobilien, Trakehner Str. 11, 23942 Pötenitz, Telefon 038826 80911** weiterhin die historische Domain `hoehn-immobilien.de` nennen. Damit ist die Domain dem hiesigen Höhn-Unternehmen belastbar zuordenbar und nicht mit ähnlich benannten Maklern zu vermischen.
-
-Beispiele:
-
-- https://onlinestreet.de/412276-hoehn-immobilien
-- https://regionale-immobilienmakler.de/immobilienmakler-luetgenhof-23942.htm
-- https://tags.branchen-info.net/tag/bausubstanz/337147/59/
-
-Onlinestreet kennzeichnet die historische Website aktuell als möglicherweise nicht erreichbar. Für den Relaunch gilt daher:
-
-1. Eigentum/Kontrolle der Domain `hoehn-immobilien.de` im Domainbestand prüfen.
-2. Falls Höhn die Domain kontrolliert: Host-Redirect per **301** auf `https://immo-hoehn.de/` einrichten; bekannte historische Unterpfade nach Möglichkeit direkt auf das jeweils passendste neue Ziel führen.
-3. Falls die Domain nicht mehr kontrolliert wird: relevante Branchenverzeichnisse auf `https://immo-hoehn.de/` korrigieren lassen.
-4. Keine fremden ähnlich benannten Höhn-Domains in diese Migration einbeziehen.
-
-Status: **PUBLIC BACKLINK EVIDENCE PASS / DOMAIN CONTROL USER-SIDE CHECK REQUIRED**.
-"""
-          if '## Historische Höhn-Domain `hoehn-immobilien.de`' not in rtext:
-              marker = '\n## Noch zu inventarisieren\n'
-              if marker in rtext:
-                  rtext = rtext.replace(marker, legacy_section + marker, 1)
-              else:
-                  rtext += legacy_section
-          redirect.write_text(rtext, encoding='utf-8')
-
-          qa = Path('P0-BUILD-QA-2026-09-09.md')
-          qtext = qa.read_text(encoding='utf-8')
-          closure = """
-
-## Post-Launch-Gate-Update – 09.09.2026
-
-### Lokale Webfonts – PASS
-
-- Caveat, Cormorant Garamond und DM Sans als gepinnte Fontsource-Abhängigkeiten integriert.
-- Google-Fonts-Stylesheet, `fonts.googleapis.com` und `fonts.gstatic.com` aus dem Layout entfernt.
-- Locked Build nach Umstellung: **PASS**.
-- Multi-Viewport Visual QA nach Umstellung: **PASS – 180/180**.
-- Lighthouse Hard Gates nach Umstellung: **PASS**.
-
-### Objekt-Recheck – PASS am 09.09.2026
-
-Die vier migrierten First-Party-Angebote wurden erneut gegen die öffentlich erreichbaren Höhn-Seiten geprüft. Haus 1724, Wohnung 1722, Rosenhagen-Standardgrundstücke und Rosenhagen-von-privat sind weiterhin öffentlich auffindbar; die im Relaunch hinterlegten Kernwerte stimmen mit den aktuellen First-Party-Seiten überein. Ein weiterer unmittelbarer Recheck bleibt trotzdem Bestandteil des tatsächlichen Produktionsdeployments, weil Verfügbarkeit und Preise zeitkritisch sind.
-
-### Legacy-Domain – neuer Produktionshinweis
-
-Öffentliche Drittverzeichnisse führen für das eindeutig zuordenbare Höhn-Unternehmen weiterhin `hoehn-immobilien.de`. Domainkontrolle beziehungsweise Verzeichniskorrektur ist deshalb als eigener Relaunch-Punkt in der Redirect-Matrix dokumentiert.
-"""
-          if '## Post-Launch-Gate-Update – 09.09.2026' not in qtext:
-              qtext += closure
-          qa.write_text(qtext, encoding='utf-8')
-
-      - name: Remove this one-time workflow and commit
-        run: |
-          git rm .github/workflows/post-font-doc-sync.yml
+          git rm .github/workflows/post-font-doc-sync.yml scripts/post-font-doc-sync.mjs
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add src/data/site.js LEGAL-LAUNCH-GATE-2026-09-09.md LEGACY-URL-REDIRECT-MATRIX-2026-09-09.md P0-BUILD-QA-2026-09-09.md
           git commit -m "docs: close font and legacy-domain launch gates"
           git push origin HEAD:redesign/coastal-blueprint
-
-      - name: Done
-        run: echo "One-time documentation sync completed."
