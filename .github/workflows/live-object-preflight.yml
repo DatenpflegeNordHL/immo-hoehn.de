@@ -2,6 +2,11 @@ name: Höhn Live Object Preflight
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - redesign/coastal-blueprint
+    paths:
+      - .github/workflows/live-object-preflight.yml
 
 permissions:
   contents: read
