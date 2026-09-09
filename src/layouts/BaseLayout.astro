@@ -13,6 +13,7 @@ const site = Astro.site ?? new URL('https://immo-hoehn.de');
 const canonical = new URL(Astro.url.pathname, site);
 const previewNoindex = import.meta.env.PUBLIC_SITE_NOINDEX !== 'false';
 const robots = forceNoindex || previewNoindex ? 'noindex,nofollow' : 'index,follow';
+const fontStylesheet = 'https://fonts.googleapis.com/css2?family=Caveat:wght@400&family=Cormorant+Garamond:wght@400&family=DM+Sans:wght@300;400;500&display=swap';
 
 const organization = {
   '@context': 'https://schema.org',
@@ -42,6 +43,7 @@ const organization = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -50,7 +52,9 @@ const organization = {
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400&family=Cormorant+Garamond:wght@400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href={fontStylesheet} />
+    <link rel="stylesheet" href={fontStylesheet} media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href={fontStylesheet} /></noscript>
     <script type="application/ld+json" set:html={JSON.stringify(organization)}></script>
   </head>
   <body>
