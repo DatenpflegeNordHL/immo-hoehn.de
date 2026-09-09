@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Seite nicht gefunden | Höhn Immobilien"
+  description="Die angeforderte Seite wurde nicht gefunden. Zurück zu Höhn Immobilien und den aktuellen Immobilienangeboten."
+  forceNoindex={true}
+>
+  <main class="page-main">
+    <section class="page-hero page-hero--text">
+      <div class="page-hero-copy">
+        <div class="breadcrumbs"><a href="/">Start</a> · 404</div>
+        <p class="eyebrow">Seite nicht gefunden</p>
+        <h1>Diese Adresse führt nicht zur gewünschten Immobilie.</h1>
+        <p class="lead">Die aufgerufene Seite existiert nicht oder wurde verschoben. Über die Startseite, die Immobilienübersicht oder den Kontakt gelangen Sie weiter.</p>
+        <div class="button-row">
+          <a class="button-primary" href="/">Zur Startseite</a>
+          <a class="button-secondary" href="/immobilien/">Immobilien ansehen</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
