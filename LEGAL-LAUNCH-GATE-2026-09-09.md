@@ -44,19 +44,35 @@ Die gewerbsmäßige Vermittlung beziehungsweise der Nachweis von Verträgen übe
 Offizielle Quelle:
 - https://www.gesetze-im-internet.de/gewo/__34c.html
 
-## 4. Vor Livegang zwingend zu verifizieren
+## 4. §34c-Zuständigkeit für den heutigen Standort
 
-Nicht erfinden, sondern aus aktuellen Höhn-Unterlagen / Gewerbeerlaubnis / zuständiger Behörde übernehmen:
+Die aktuelle offizielle Verwaltungsseite der Stadt Dassow / des Amtes Schönberger Land führt die Erlaubnis für Immobilienmakler nach §34c GewO als Verwaltungsleistung des **Amtes Schönberger Land**.
+
+Aktuell veröffentlichte Kontaktdaten:
+
+- Amt Schönberger Land
+- Am Markt 15
+- 23923 Schönberg
+- Telefon: 038828 3300
+- E-Mail: info@schoenberger-land.de
+
+Offizielle Quelle:
+- https://www.schoenberger-land.de/amtsangeh%C3%B6rige-St%C3%A4dte-Gemeinden/Stadt-Dassow/Wirtschaft/Ansprechpartner/index.php?FID=2618.314.1&ModID=10&object=tx%7C2618.2
+
+**Wichtig:** Damit ist die aktuelle standortbezogene Zuständigkeit belastbar eingegrenzt. Noch nicht belegt ist, welche Behörde die konkrete historische Höhn-Erlaubnis erteilt hat und welche genaue Erlaubnisformulierung in den Höhn-Unterlagen steht. Für das finale Impressum wird deshalb die Gewerbeerlaubnis beziehungsweise ein aktueller Unternehmensnachweis benötigt.
+
+## 5. Vor Livegang zwingend zu verifizieren
+
+Nicht erfinden, sondern aus aktuellen Höhn-Unterlagen / Gewerbeerlaubnis übernehmen:
 
 1. genaue §34c-Genehmigungs-/Erlaubnisangabe;
-2. zuständige Aufsichtsbehörde;
-3. vollständige Anschrift der zuständigen Aufsichtsbehörde, soweit für die Darstellung erforderlich;
-4. gegebenenfalls Register und Registernummer, falls für Höhn Immobilien tatsächlich vorhanden und impressumspflichtig;
-5. Umsatzsteuer-Identifikationsnummer oder Wirtschafts-Identifikationsnummer nur dann, wenn tatsächlich vorhanden und nach § 5 DDG anzugeben;
-6. aktuelle Angaben zur Verbraucherstreitbeilegung, soweit für das Unternehmen einschlägig;
-7. Verantwortlichkeit für journalistisch-redaktionelle Inhalte nur anhand des tatsächlich einschlägigen aktuellen Rechts und des realen Website-Inhalts.
+2. konkrete Erteilungsbehörde der Höhn-Erlaubnis, falls diese im Impressum anzugeben ist;
+3. gegebenenfalls Register und Registernummer, falls für Höhn Immobilien tatsächlich vorhanden und impressumspflichtig;
+4. Umsatzsteuer-Identifikationsnummer oder Wirtschafts-Identifikationsnummer nur dann, wenn tatsächlich vorhanden und nach § 5 DDG anzugeben;
+5. aktuelle Angaben zur Verbraucherstreitbeilegung, soweit für das Unternehmen einschlägig;
+6. Verantwortlichkeit für journalistisch-redaktionelle Inhalte nur anhand des tatsächlich einschlägigen aktuellen Rechts und des realen Website-Inhalts.
 
-## 5. EU-OS-/ODR-Plattform – alter Link entfernen
+## 6. EU-OS-/ODR-Plattform – alter Link entfernen
 
 Die Verordnung (EU) 2024/3228 hat die frühere ODR-Verordnung mit Wirkung vom **20.07.2025** aufgehoben. Die EU-OS-Plattform wurde eingestellt; neue Beschwerden konnten bereits seit 20.03.2025 nicht mehr eingereicht werden.
 
@@ -65,7 +81,7 @@ Der alte OS-/ODR-Link darf deshalb nicht als historischer Standardtext in das ne
 Offizielle Quelle:
 - https://eur-lex.europa.eu/eli/reg/2024/3228/oj/deu
 
-## 6. Datenschutz – Relaunch-Abhängigkeiten
+## 7. Datenschutz – Relaunch-Abhängigkeiten
 
 Die finale Datenschutzerklärung darf erst nach Festlegung des echten Produktionssystems abgeschlossen werden.
 
@@ -82,7 +98,7 @@ Mindestens zu prüfen:
 - Speicherdauer und interne Bearbeitung von Kontaktanfragen;
 - externe Immobilienportale/Verlinkungen, soweit datenschutzrechtlich relevant.
 
-## 7. Kontaktformular – aktueller technischer Stand
+## 8. Kontaktformular – aktueller technischer Stand
 
 Der Arbeitsbranch enthält einen First-Party-PHP-Endpunkt für STRATO-kompatibles Hosting:
 
@@ -91,16 +107,19 @@ Der Arbeitsbranch enthält einen First-Party-PHP-Endpunkt für STRATO-kompatible
 - Honeypot gegen einfache Bots;
 - serverseitige Pflichtfeld-/Längenprüfung;
 - keine externe Form-Service-Plattform;
-- keine Speicherung der Anfrage in einer eigenen Datenbank vorgesehen.
+- keine Speicherung der Anfrage in einer eigenen Datenbank vorgesehen;
+- PHP-Syntax wird im CI geprüft;
+- GET-/Invalid-POST-/Honeypot-Smoke-Tests laufen im CI, ohne eine echte Mail auszulösen.
 
 Die tatsächliche Mailzustellung muss vor Launch auf dem echten Höhn-Webspace getestet werden.
 
-## 8. Gate
+## 9. Gate
 
 **Bekannte Unternehmensstammdaten: PASS**  
 **alte Rechtsseite als Quelle für Relaunch: FAIL / NICHT ÜBERNEHMEN**  
-**§34c-Erlaubnisdetails: MISSING**  
-**zuständige Aufsichtsbehörde: MISSING**  
+**aktuelle standortbezogene §34c-Zuständigkeit: PASS – Amt Schönberger Land**  
+**konkrete Höhn-Erlaubnisdetails / historische Erteilungsbehörde: MISSING**  
 **ODR-Altlink: REMOVE**  
+**Kontaktformular Source-/CI-Gate: PASS; echte Mailzustellung auf STRATO noch offen**  
 **Datenschutz final: BLOCKED bis Produktionsstack feststeht**  
 **Produktionsfreigabe der Rechtsseiten: BLOCKED**
