@@ -10,12 +10,12 @@ const links = [
 ];
 ---
 <header class="site-header">
-  <a class="brand" href="/" aria-label="Höhn Immobilien Startseite">
+  <a class="brand" href="/">
     <span class="brand-name">HÖHN IMMOBILIEN</span>
     <span class="brand-sub">Ostseeküste · Seit 1986</span>
   </a>
   <nav class="main-nav" aria-label="Hauptnavigation">
     {links.map(([href,label]) => <a href={href} aria-current={current === href ? 'page' : undefined}>{label}</a>)}
   </nav>
-  <a class="header-cta" href="/immobilie-verkaufen/">Immobilie verkaufen <span>→</span></a>
+  <a class="header-cta" href="/immobilie-verkaufen/">Immobilie verkaufen <span aria-hidden="true">→</span></a>
 </header>
