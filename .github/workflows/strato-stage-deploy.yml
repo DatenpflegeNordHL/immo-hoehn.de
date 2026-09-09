@@ -7,6 +7,11 @@ on:
         description: 'Zum Upload in den separaten STRATO-Zielordner exakt DEPLOY-HOEHN-STAGE eingeben'
         required: true
         type: string
+  push:
+    branches:
+      - redesign/coastal-blueprint
+    paths:
+      - '.github/deploy-stage-trigger'
 
 permissions:
   contents: read
@@ -20,10 +25,17 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          test "${{ inputs.confirmation }}" = "DEPLOY-HOEHN-STAGE" || {
-            echo "Abbruch: falsche Bestätigung." >&2
+          if [[ "$GITHUB_EVENT_NAME" == "workflow_dispatch" ]]; then
+            test "${{ inputs.confirmation }}" = "DEPLOY-HOEHN-STAGE" || {
+              echo "Abbruch: falsche Bestätigung." >&2
+              exit 1
+            }
+          elif [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
+            echo "Stage-Deploy wurde kontrolliert über .github/deploy-stage-trigger ausgelöst."
+          else
+            echo "Abbruch: unerwartetes Event $GITHUB_EVENT_NAME." >&2
             exit 1
-          }
+          fi
 
       - name: Checkout
         uses: actions/checkout@v6
