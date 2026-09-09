@@ -1,0 +1,60 @@
+name: Visual QA
+
+on:
+  push:
+    branches:
+      - redesign/coastal-blueprint
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  visual-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Use Node 22
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Install Playwright for QA
+        run: |
+          npm install --no-save --package-lock=false playwright@1.63.0
+          npx playwright install --with-deps chromium
+
+      - name: Build staging site
+        run: npm run build
+
+      - name: Start local preview
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4321 > /tmp/immo-hoehn-preview.log 2>&1 &
+          echo $! > /tmp/immo-hoehn-preview.pid
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4321/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/immo-hoehn-preview.log
+          exit 1
+
+      - name: Run multi-viewport QA
+        run: node scripts/visual-qa.mjs
+
+      - name: Upload QA screenshots and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-qa-${{ github.sha }}
+          path: visual-qa/
+          if-no-files-found: error
+          retention-days: 14
