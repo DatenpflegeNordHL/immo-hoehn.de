@@ -2,6 +2,7 @@ import sharp from 'sharp';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
+// One-shot generator for optimized responsive variants. Original source assets remain untouched.
 const root = path.resolve('public/assets');
 const jobs = [
   ['hero-coast.webp', 'hero-coast-480.webp', 480, 72],
