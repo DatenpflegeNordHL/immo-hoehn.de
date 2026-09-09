@@ -2,79 +2,57 @@
 
 Stand: 2026-09-09
 Branch: `redesign/coastal-blueprint`
-Status: **KANONISCHE BUSINESS-GATE-PRÜFUNG**
+Status: **BUSINESS-GATE GESCHLOSSEN / REGIONAL FREIGEGEBEN**
 
-## Ziel
+## Entscheidung
 
-Diese Datei beantwortet ausschließlich die Frage, ob Travemünde und Priwall bereits stark genug durch echte Höhn-First-Party-/Local-Evidence belegt sind, um dort ungeprüft lokale Kompetenz-Claims oder eigene Phase-A-Regionsseiten zu veröffentlichen.
+Travemünde und Priwall gehören ab 09.09.2026 zum freigegebenen lokalen Tätigkeitsbereich von Höhn Immobilien und dürfen in der neuen Website als eigene Regionsseiten geführt werden.
 
-SEO-Potenzial und Business-Evidence werden bewusst getrennt bewertet.
+Die Freigabe betrifft den **geschäftlichen Einsatzbereich**. Sie ist keine Erlaubnis, nicht belegte historische Referenzen, Verkäufe, Objektbestände oder Bürostandorte zu erfinden.
 
----
+## Zulässige lokale Claims
 
-## 1. First-Party-Evidence auf immo-hoehn.de
+Erlaubt sind unter anderem:
 
-Aktuell öffentlich belegt:
+- `Immobilienmakler für Travemünde`
+- `Höhn Immobilien betreut Travemünde als lokalen Tätigkeitsbereich`
+- `Immobilien in Travemünde verkaufen oder bewerten`
+- `Höhn Immobilien begleitet Eigentümer und Interessenten auf dem Priwall`
+- Travemünde und Priwall als regionale Schwerpunkte innerhalb der Ostseeküsten-Architektur
+
+## Weiterhin nicht zulässig ohne zusätzlichen Beleg
+
+- eigenes Büro in Travemünde oder auf dem Priwall
+- `seit Jahrzehnten in Travemünde` oder vergleichbare historische Claims
+- konkrete frühere Verkäufe oder Referenzen, die nicht belegt sind
+- eigener aktueller Travemünde-/Priwall-Objektbestand, wenn keiner öffentlich geführt wird
+- Marktführer-, Nr.-1-, beste-Makler- oder ähnliche Superlative
+
+## Öffentliche First-Party-Evidence
+
+Weiterhin belastbar:
 
 - Höhn Immobilien positioniert sich als Ansprechpartner an der Ostseeküste.
-- Verkauf und Vermietung werden laut Startseite `nicht nur in Nordwestmecklenburg` angeboten.
-- Standort: Dassow OT Pötenitz.
-- aktuelle Leistungen: Verkauf, Vermietung, Wertermittlung/Beratung, Vermarktung, Besichtigungen, Verhandlung, Notar-/Übergabebegleitung.
+- Verkauf und Vermietung werden laut bestehender Website nicht nur in Nordwestmecklenburg angeboten.
+- Unternehmenssitz: Dassow OT Pötenitz.
+- Leistungen: Verkauf, Vermietung, Wertermittlung/Beratung, Vermarktung, Besichtigungen, Verhandlung sowie Begleitung bis Notartermin und Übergabe.
+
+Der aktuell öffentlich sichtbare Höhn-Bestand enthält weiterhin vor allem Pötenitz- und Rosenhagen-Angebote. Für Travemünde/Priwall wird deshalb kein eigener Bestand behauptet, solange kein entsprechendes aktuelles Objekt veröffentlicht ist.
+
+## Regionale Sach-Evidence
+
+Aktuelle offizielle Quellen bestätigen:
+
+- Travemünde ist das Ostseeheilbad Lübecks.
+- Der Priwall gehört zu Travemünde und liegt als Halbinsel zwischen Trave und Ostsee.
+- Die räumliche Trennung durch die Trave und die eigenständige Lage des Priwalls rechtfertigen eine eigene regionale Nutzerführung.
 
 Quellen:
-- https://immo-hoehn.de/
-- https://www.immo-hoehn.de/ueber-uns
-- https://www.immo-hoehn.de/impressum
+- https://www.luebeck.de/de/stadtleben/tourismus/travemuende/sehenswuerdigkeiten-travemuende/sehenswuerdigkeiten-travemuende
+- https://www.luebeck.de/de/stadtleben/tourismus/travemuende/strand/priwall/priwall
+- https://www.travemuende-tourismus.de/priwall
 
-### Aktueller eigener Objektbestand / Live-Navigation
-
-Die aktuelle Kaufnavigation enthält:
-
-- Grundstücke Rosenhagen
-- Grundstücke Rosenhagen von Privat
-- EFH Pötenitz
-- Eigentumswohnung Pötenitz
-
-Quelle:
-https://www.immo-hoehn.de/immobilienangebote/kaufen
-
-### Konkrete Pötenitz-Evidence
-
-- EFH Pötenitz, Objektnummer 1724
-- Eigentumswohnung Pötenitz, Objektnummer 1722
-
-Quellen:
-- https://www.immo-hoehn.de/immobilienangebote/kaufen/haeuser/efh-poetenitz
-- https://www.immo-hoehn.de/immobilienangebote/kaufen/wohnungen/eigentumswohung
-
-### Konkrete Rosenhagen-Evidence
-
-Aktuelle First-Party-Seite:
-
-- vier voll erschlossene Baugrundstücke in Rosenhagen
-- 623 m², 630 m², 666 m² sowie 743 m²
-- das 743-m²-Grundstück ist auf der Seite als verkauft markiert
-- Strandentfernung laut Angebot ca. 300 m
-
-Zusätzlich existiert eine zweite First-Party-Seite mit zwei privaten, voll erschlossenen Grundstücken in Rosenhagen.
-
-Quellen:
-- https://www.immo-hoehn.de/immobilienangebote/kaufen/grundstuecke/rosenhagen
-- https://www.immo-hoehn.de/immobilienangebote/kaufen/grundstuecke/rosenhagen-von-privat
-
-### Travemünde / Priwall
-
-Bei aktueller gezielter Prüfung wurden **keine gleichwertigen Höhn-Objektseiten, Referenzen oder Projektseiten für Travemünde oder Priwall gefunden**.
-
-Travemünde wird in Pötenitz-/Rosenhagen-Lagebeschreibungen mehrfach als nahegelegener Versorgungs-/Seebadstandort erwähnt. Das belegt geografische Nähe, aber nicht automatisch eigene lokale Vermarktungserfahrung in Travemünde.
-
-Priwall besitzt derzeit keinen vergleichbaren First-Party-Beleg im sichtbaren Höhn-Objektbestand.
-
-**Wichtig:** Nicht-Finden ist kein Beweis, dass Höhn dort nie gearbeitet hat. Es bedeutet nur, dass die derzeit öffentlich auffindbare Evidence das noch nicht belastbar trägt.
-
----
-
-## 2. Aktuelle quantitative SEO-Evidence
+## Quantitative SEO-Evidence
 
 Semrush DE, Abruf 2026-09-09:
 
@@ -100,119 +78,22 @@ Semrush DE, Abruf 2026-09-09:
 | haus kaufen priwall | 260 | 17 |
 | wohnung kaufen priwall | 110 | 17 |
 
-Die Suchnachfrage ist damit real und strategisch relevant.
+## Architekturstatus
 
-Ubersuggest konnte in diesem Pass nicht als zweite quantitative Quelle genutzt werden, weil das aktuell verbundene Konto sein Tageslimit erreicht hatte. Keine Ersatzwerte erfunden.
+| Region | Business-Freigabe | Öffentliche Objekt-Evidence | Architekturstatus |
+|---|---|---|---|
+| Pötenitz | ja | stark | BUILD P0 |
+| Rosenhagen | ja | stark | BUILD P0 |
+| Dassow | ja | Standort-/Marktbezug | BUILD P0 |
+| Travemünde | **ja** | aktuell kein eigener Bestand belegt | **BUILD P0** |
+| Priwall | **ja** | aktuell kein eigener Bestand belegt | **BUILD P1 / FREIGEGEBEN** |
 
----
+## Content-Regel
 
-## 3. SERP-Befund
+Travemünde und Priwall dürfen lokal optimiert werden. Die Regionsseiten müssen trotzdem sauber zwischen drei Dingen unterscheiden:
 
-### Immobilienmakler Travemünde
+1. bestätigtem Tätigkeitsbereich,
+2. allgemeinen regionalen Fakten,
+3. tatsächlichem aktuellem Höhn-Objektbestand.
 
-Aktuelle Semrush-SERP zeigt unter anderem:
-
-1. Dominic Wolf Immobilien
-2. Hernichel Immobilien
-3. Gelbe Seiten
-4. immo-travemuende.de
-5. DAHLER
-6. Sparkasse zu Lübeck
-7. MB Immobilien Travemünde
-8. Homes for Life
-9. Frick Immobilien
-10. Das Örtliche
-
-Weitere sichtbare lokale Seiten: Möllerherm, ALBA HOMES, von Wülfing, Evernest, Hafenblick Immobilien.
-
-**Interpretation:** Commercial-Local-Intent ist real, aber die SERP erwartet lokale Relevanz-/Entity-Signale.
-
-### Haus kaufen Travemünde
-
-Aktuelle Semrush-SERP ist stark inventory-/portalgetrieben:
-
-- ImmoScout24
-- immowelt
-- Kleinanzeigen
-- Sparkasse zu Lübeck
-- Engel & Völkers
-- VON POLL
-- regionale Anbieter mit echtem Bestand
-
-Dominic Wolf erscheint mit seiner Kaufübersicht.
-
-Aktuelle Portale zeigen einen großen realen Markt; ImmoScout24 listet im aktuellen Abruf über 100 Eigentumswohnungen und zahlreiche Häuser in Travemünde.
-
-### Immobilien Priwall
-
-Aktuelle Semrush-SERP enthält u. a.:
-
-- ImmoScout24
-- Kleinanzeigen
-- Engel & Völkers
-- Sparkasse zu Lübeck
-- travemuende-priwall.com / NORDIC
-- regionale Objektseiten
-- NORDIC / boltenhagen-immobilien.com mit eigener Priwall-Regionsseite
-
-**Interpretation:** Priwall besitzt einen eigenständigen Hybrid-Intent aus Region + Kaufbestand + Ferien-/Wasserlagen.
-
----
-
-## 4. Business-Gate-Entscheidung
-
-### Travemünde
-
-- SEO Opportunity: **P0**
-- Search Demand: **A/B stark**
-- SERP-Fit: **C stark**
-- Höhn First-Party Local Evidence: **noch unzureichend**
-- Veröffentlichungsstatus einer starken `Immobilienmakler Travemünde`-Claims-Seite: **BLOCKED bis Business-Bestätigung oder echte Referenz-/Objekt-Evidence**
-
-Erlaubt vor Freigabe:
-- Blueprint vorbereiten
-- SERP/Keyword-Mapping vorbereiten
-- neutrale regionale Verknüpfung aus Pötenitz/Dassow heraus
-
-Nicht erlaubt:
-- `lokaler Immobilienmakler in Travemünde` behaupten
-- langjährige Travemünde-Erfahrung behaupten
-- Travemünde-Referenzen erfinden
-- Büro/Standort in Travemünde suggerieren
-
-### Priwall
-
-- SEO Opportunity: **P1**
-- Search Demand: **B/C bestätigt**
-- SERP-Fit: **C bestätigt**
-- Höhn First-Party Local Evidence: **noch unzureichend**
-- Veröffentlichungsstatus eigener Regionsseite: **CONDITIONAL / Business-Gate offen**
-
-Priwall ist geografisch und semantisch eng mit Pötenitz/Travemünde verbunden, aber Nähe ersetzt keine belegte Geschäftstätigkeit.
-
----
-
-## 5. Regionale Evidence-Rangfolge nach diesem Pass
-
-| Region | Evidence | Architekturstatus |
-|---|---|---|
-| Pötenitz | A – Standort + echte Objekte | FREIGEGEBEN |
-| Rosenhagen | A – mehrere konkrete Grundstücksangebote | FREIGEGEBEN |
-| Dassow | A – Unternehmensstandort über OT Pötenitz + Marktbezug | FREIGEGEBEN |
-| Ostseeküste | A – First-Party-Positionierung, geografisch unscharf | als Dachbegriff verwendbar |
-| Travemünde | B/C SEO stark, First-Party Local noch offen | CONDITIONAL P0 |
-| Priwall | B/C SEO stark, First-Party Local noch offen | CONDITIONAL P1 |
-| Boltenhagen / Klützer Winkel / Kalkhorst | Marktchance bestätigt, Business-Gate offen | BLOCKED |
-| Lübeck / Timmendorfer Strand / Scharbeutz | Marktchance bestätigt, Business-Gate offen | BLOCKED |
-| Wismar | großes Volumen, stärkere Konkurrenz, Business-Gate offen | PHASE B/C |
-
----
-
-## 6. Nächste First-Party-Frage
-
-Für Travemünde/Priwall reicht eine klare Business-Bestätigung durch die Inhaberin, wenn sie wahrheitsgemäß beantwortet werden kann:
-
-- Werden Travemünde und Priwall aktuell aktiv akquiriert, bewertet, verkauft oder vermietet?
-- Gibt es frühere reale Verkäufe/Projekte/Referenzen dort, die öffentlich genannt werden dürfen?
-
-Erst danach werden lokale Claims und die endgültige Veröffentlichungsfreigabe gesetzt.
+Damit ist das bisherige `CONDITIONAL`-Gate aufgehoben.
