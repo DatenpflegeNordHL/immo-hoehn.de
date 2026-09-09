@@ -1,0 +1,60 @@
+---
+import '../styles/global.css';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+const {
+  title = 'Höhn Immobilien | Immobilien an der Ostseeküste',
+  description = 'Höhn Immobilien begleitet Eigentümer und Käufer an der Ostseeküste bei Verkauf, Wertermittlung und Vermittlung.',
+  forceNoindex = false,
+} = Astro.props;
+
+const site = Astro.site ?? new URL('https://immo-hoehn.de');
+const canonical = new URL(Astro.url.pathname, site);
+const previewNoindex = import.meta.env.PUBLIC_SITE_NOINDEX !== 'false';
+const robots = forceNoindex || previewNoindex ? 'noindex,nofollow' : 'index,follow';
+
+const organization = {
+  '@context': 'https://schema.org',
+  '@type': 'RealEstateAgent',
+  name: 'Höhn Immobilien',
+  url: 'https://immo-hoehn.de/',
+  foundingDate: '1986',
+  email: 'info@immo-hoehn.de',
+  telephone: ['+49 38826 80911', '+49 171 1230162'],
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Trakehnerstraße 11',
+    postalCode: '23942',
+    addressLocality: 'Dassow OT Pötenitz',
+    addressCountry: 'DE',
+  },
+};
+---
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f4f0" />
+    <meta name="robots" content={robots} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Höhn Immobilien" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400&family=Cormorant+Garamond:wght@400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+    <script type="application/ld+json" set:html={JSON.stringify(organization)}></script>
+  </head>
+  <body>
+    <SiteHeader />
+    <slot />
+    <SiteFooter />
+  </body>
+</html>
