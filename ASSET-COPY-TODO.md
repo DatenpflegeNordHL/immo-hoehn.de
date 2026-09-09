@@ -1,0 +1,1 @@
+Temporary marker: `public/assets/hero-coast.webp` must be replaced with the existing blob from `preview/assets/hero-coast.webp` before build validation. Other public design assets must likewise be copied from the preview asset blobs, not regenerated.
