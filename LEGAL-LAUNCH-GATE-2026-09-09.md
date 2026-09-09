@@ -1,7 +1,7 @@
 # Höhn Immobilien – Legal Launch Gate
 
 Stand: 2026-09-09  
-Status: **BLOCKED BIS UNTERNEHMENSSPEZIFISCHE PFLICHTDATEN VERIFIZIERT SIND**
+Status: **NUR NOCH WENIGE UNTERNEHMENSSPEZIFISCHE PFLICHTDATEN OFFEN**
 
 Diese Datei ist eine technische/rechtliche Prüfliste für den Relaunch und keine Rechtsberatung oder Freigabe zur Veröffentlichung.
 
@@ -34,6 +34,8 @@ Diese Fassung darf nicht ungeprüft in den Relaunch kopiert werden.
 
 Soweit die angebotene Tätigkeit einer behördlichen Zulassung bedarf, verlangt § 5 Abs. 1 Nr. 3 DDG außerdem Angaben zur zuständigen Aufsichtsbehörde.
 
+Ein Register und eine Registernummer sind nur anzugeben, wenn tatsächlich eine Eintragung in einem dort erfassten Register besteht. Eine Umsatzsteuer-Identifikationsnummer oder Wirtschafts-Identifikationsnummer ist nur anzugeben, wenn eine solche Nummer tatsächlich vorhanden ist.
+
 Offizielle Quelle:
 - https://www.gesetze-im-internet.de/ddg/__5.html
 
@@ -41,8 +43,11 @@ Offizielle Quelle:
 
 Die gewerbsmäßige Vermittlung beziehungsweise der Nachweis von Verträgen über Grundstücke, grundstücksgleiche Rechte, gewerbliche Räume oder Wohnräume fällt unter § 34c GewO.
 
-Offizielle Quelle:
+Andere §34c-Tätigkeiten wie Bauträger, Baubetreuer oder Wohnimmobilienverwaltung besitzen einen eigenen Erlaubnisumfang. Diese erweiterten Tätigkeiten dürfen im Relaunch nicht allein aus allgemeinen Projekt-/Entwicklungsformulierungen abgeleitet werden.
+
+Offizielle Quellen:
 - https://www.gesetze-im-internet.de/gewo/__34c.html
+- https://www.schoenberger-land.de/amtsangeh%C3%B6rige-St%C3%A4dte-Gemeinden/Stadt-Dassow/Wirtschaft/Ansprechpartner/index.php?FID=2618.314.1&ModID=10&object=tx%7C2618.2
 
 ## 4. §34c-Zuständigkeit für den heutigen Standort
 
@@ -59,20 +64,34 @@ Aktuell veröffentlichte Kontaktdaten:
 Offizielle Quelle:
 - https://www.schoenberger-land.de/amtsangeh%C3%B6rige-St%C3%A4dte-Gemeinden/Stadt-Dassow/Wirtschaft/Ansprechpartner/index.php?FID=2618.314.1&ModID=10&object=tx%7C2618.2
 
-**Wichtig:** Damit ist die aktuelle standortbezogene Zuständigkeit belastbar eingegrenzt. Noch nicht belegt ist, welche Behörde die konkrete historische Höhn-Erlaubnis erteilt hat und welche genaue Erlaubnisformulierung in den Höhn-Unterlagen steht. Für das finale Impressum wird deshalb die Gewerbeerlaubnis beziehungsweise ein aktueller Unternehmensnachweis benötigt.
+**Aktueller Rechts-/Research-Stand:** Für das Website-Impressum ist die aktuell zuständige Aufsichtsbehörde maßgeblich. Die historische Behörde, die eine Erlaubnis irgendwann erteilt hat, ist deshalb kein eigener Launch-Blocker. Die vollständige §34c-Erlaubnisurkunde, ihr Erteilungsdatum, ein Aktenzeichen oder der komplette Tätigkeitskatalog müssen nicht pauschal öffentlich auf der Website wiedergegeben werden.
 
-## 5. Vor Livegang zwingend zu verifizieren
+Eine echte Höhn-§34c-Erlaubnisurkunde wurde im aktuellen Chat und in der verfügbaren Library nicht gefunden. Das verhindert die Veröffentlichung eines normalen Makler-Impressums nicht, solange im Relaunch keine darüber hinausgehenden §34c-Tätigkeiten wie Bauträger, Baubetreuer oder Wohnimmobilienverwaltung ausdrücklich als eigene Leistung beworben werden. Soll ein solcher erweiterter Tätigkeitsbereich später aufgenommen werden, muss vorher der tatsächliche Erlaubnisumfang aus der Höhn-Unterlage geprüft werden.
 
-Nicht erfinden, sondern aus aktuellen Höhn-Unterlagen / Gewerbeerlaubnis übernehmen:
+## 5. Register-Recherche
 
-1. genaue §34c-Genehmigungs-/Erlaubnisangabe;
-2. konkrete Erteilungsbehörde der Höhn-Erlaubnis, falls diese im Impressum anzugeben ist;
-3. gegebenenfalls Register und Registernummer, falls für Höhn Immobilien tatsächlich vorhanden und impressumspflichtig;
-4. Umsatzsteuer-Identifikationsnummer oder Wirtschafts-Identifikationsnummer nur dann, wenn tatsächlich vorhanden und nach § 5 DDG anzugeben;
-5. aktuelle Angaben zur Verbraucherstreitbeilegung, soweit für das Unternehmen einschlägig;
-6. Verantwortlichkeit für journalistisch-redaktionelle Inhalte nur anhand des tatsächlich einschlägigen aktuellen Rechts und des realen Website-Inhalts.
+Öffentliche Recherche nach `Christine Bringmann`, `Höhn Immobilien`, Dassow/Pötenitz sowie der Geschäftsanschrift ergab keinen belastbaren Handels-/Unternehmensregistertreffer für dieses Höhn-Unternehmen.
 
-## 6. EU-OS-/ODR-Plattform – alter Link entfernen
+Treffer auf Gesellschaften mit dem Namen Höhn Immobilien in Würzburg gehören nach Anschrift, Rechtsform und handelnden Personen eindeutig zu anderen Unternehmen und werden nicht übernommen.
+
+Daraus folgt für den Relaunch:
+
+- aktuell **keine Registerangabe** in das Impressum aufnehmen;
+- keine Registernummer erfinden oder aus namensähnlichen Unternehmen übernehmen;
+- nur falls Christine Bringmann beziehungsweise Höhn Immobilien tatsächlich einen einschlägigen Registereintrag besitzt, muss dieser ergänzt werden.
+
+Status: **PUBLIC REGISTER RESEARCH: NO MATCHING ENTRY FOUND**.
+
+## 6. Noch vor Livegang zu verifizieren
+
+Nur noch unternehmensspezifische Punkte, die öffentlich nicht sicher feststellbar sind:
+
+1. **USt-IdNr. oder W-IdNr.:** nur ergänzen, falls tatsächlich vorhanden. Eine normale Steuernummer gehört nicht in das Website-Impressum.
+2. **Verbraucherstreitbeilegung:** aktuelle Angabe nur soweit für Höhn Immobilien konkret einschlägig.
+3. **Journalistisch-redaktionelle Verantwortlichkeit:** nur falls der reale Website-Inhalt eine entsprechende Pflicht tatsächlich auslöst.
+4. **Erweiterter §34c-Erlaubnisumfang:** nur dann erneut prüfen, wenn künftig Bauträger-, Baubetreuer-, Wohnimmobilienverwaltungs- oder vergleichbare erlaubnispflichtige Tätigkeiten ausdrücklich angeboten werden sollen.
+
+## 7. EU-OS-/ODR-Plattform – alter Link entfernen
 
 Die Verordnung (EU) 2024/3228 hat die frühere ODR-Verordnung mit Wirkung vom **20.07.2025** aufgehoben. Die EU-OS-Plattform wurde eingestellt; neue Beschwerden konnten bereits seit 20.03.2025 nicht mehr eingereicht werden.
 
@@ -81,24 +100,30 @@ Der alte OS-/ODR-Link darf deshalb nicht als historischer Standardtext in das ne
 Offizielle Quelle:
 - https://eur-lex.europa.eu/eli/reg/2024/3228/oj/deu
 
-## 7. Datenschutz – Relaunch-Abhängigkeiten
+## 8. Datenschutz – Relaunch-Abhängigkeiten
 
-Die finale Datenschutzerklärung darf erst nach Festlegung des echten Produktionssystems abgeschlossen werden.
+Die finale Datenschutzerklärung wird mit dem echten Produktionssystem abgeglichen.
 
-Mindestens zu prüfen:
+Bereits technisch festgelegt beziehungsweise geprüft:
 
-- STRATO Hosting / Serverlogs;
-- Kontaktformular;
-- Empfänger `info@immo-hoehn.de`;
-- serverseitiger PHP-Mailversand;
-- lokal ausgelieferte Webfonts; im finalen Relaunch-Build besteht keine Google-Fonts-Verbindung;
-- Analytics nur falls tatsächlich eingesetzt;
-- Maps/Embeds nur falls tatsächlich eingesetzt;
-- Cookies/Consent nur für tatsächlich verwendete Technologien;
+- STRATO Hosting ist vorgesehen;
+- Kontaktformular verwendet einen eigenen serverseitigen PHP-Endpunkt;
+- Empfänger ist fest `info@immo-hoehn.de`;
+- keine eigene Formulardatenbank vorgesehen;
+- Honeypot statt externem Captcha;
+- Webfonts werden lokal ausgeliefert;
+- keine Google-Fonts-Verbindung im Relaunch-Build;
+- aktuell keine eigenen Analyse-, Marketing- oder Profilingdienste vorgesehen;
+- keine externen Maps/Embeds im aktuellen Relaunch-Build.
+
+Vor Produktion noch real zu prüfen:
+
+- tatsächliche STRATO-/Serverlog-Konfiguration;
+- reale Mailzustellung des Formulars;
 - Speicherdauer und interne Bearbeitung von Kontaktanfragen;
-- externe Immobilienportale/Verlinkungen, soweit datenschutzrechtlich relevant.
+- spätere zusätzliche Drittanbieter nur, falls tatsächlich aktiviert.
 
-## 8. Kontaktformular – aktueller technischer Stand
+## 9. Kontaktformular – aktueller technischer Stand
 
 Der Arbeitsbranch enthält einen First-Party-PHP-Endpunkt für STRATO-kompatibles Hosting:
 
@@ -113,18 +138,19 @@ Der Arbeitsbranch enthält einen First-Party-PHP-Endpunkt für STRATO-kompatible
 
 Die tatsächliche Mailzustellung muss vor Launch auf dem echten Höhn-Webspace getestet werden.
 
-## 9. Gate
+## 10. Gate
 
 **Bekannte Unternehmensstammdaten: PASS**  
-**alte Rechtsseite als Quelle für Relaunch: FAIL / NICHT ÜBERNEHMEN**  
 **aktuelle standortbezogene §34c-Zuständigkeit: PASS – Amt Schönberger Land**  
-**konkrete Höhn-Erlaubnisdetails / historische Erteilungsbehörde: MISSING**  
+**historische Erteilungsbehörde als Website-Pflicht: RESOLVED / NICHT ERFORDERLICH**  
+**vollständige §34c-Urkunde im Chat/Library: NICHT VORHANDEN; für aktuellen reinen Makler-Webauftritt kein eigener Publikationsblocker**  
+**Registerrecherche: KEIN PASSENDER ÖFFENTLICHER EINTRAG GEFUNDEN; daher aktuell keine Registerangabe**  
+**USt-IdNr./W-IdNr.: NOCH EINMALIG INTERN ZU BESTÄTIGEN, nur falls vorhanden veröffentlichen**  
 **ODR-Altlink: REMOVE**  
 **Kontaktformular Source-/CI-Gate: PASS; echte Mailzustellung auf STRATO noch offen**  
-**Datenschutz final: BLOCKED bis Produktionsstack feststeht**  
-**Produktionsfreigabe der Rechtsseiten: BLOCKED**
+**Datenschutz technisch weitgehend vorbereitet; finaler Produktionsabgleich bleibt offen**  
+**Produktionsfreigabe Rechtsseiten: nur noch Restdaten/Produktionsabgleich offen**
 
-
-## 10. Font-/Drittanbieter-Gate
+## 11. Font-/Drittanbieter-Gate
 
 **PASS:** Caveat, Cormorant Garamond und DM Sans werden im Relaunch lokal über Fontsource-Pakete ausgeliefert. Die früher im Layout vorhandenen Verbindungen zu `fonts.googleapis.com` und `fonts.gstatic.com` wurden entfernt. Build, Multi-Viewport-QA und Lighthouse wurden anschließend erneut erfolgreich ausgeführt.
