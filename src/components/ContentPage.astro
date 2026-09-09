@@ -7,7 +7,7 @@ const crumbs = page.slug.split('/');
 ---
 <BaseLayout title={page.title} description={page.description} forceNoindex={page.forceNoindex}>
   <main class="page-main">
-    <section class="page-hero">
+    <section class:list={['page-hero', !page.heroImage && 'page-hero--text']}>
       <div class="page-hero-copy">
         <div class="breadcrumbs"><a href="/">Start</a> · {crumbs.map((part) => part.replaceAll('-', ' ')).join(' · ')}</div>
         <p class="eyebrow">{page.eyebrow}</p>
