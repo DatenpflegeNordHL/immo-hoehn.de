@@ -7,10 +7,13 @@ const {
   title = 'Höhn Immobilien | Immobilien an der Ostseeküste',
   description = 'Höhn Immobilien begleitet Eigentümer und Käufer an der Ostseeküste bei Verkauf, Wertermittlung und Vermittlung.',
   forceNoindex = false,
+  image = '/assets/hero-coast-1440.webp',
+  imageAlt = 'Höhn Immobilien an der Ostseeküste',
 } = Astro.props;
 
 const site = Astro.site ?? new URL('https://immo-hoehn.de');
 const canonical = new URL(Astro.url.pathname, site);
+const socialImage = new URL(image, site);
 const previewNoindex = import.meta.env.PUBLIC_SITE_NOINDEX !== 'false';
 const robots = forceNoindex || previewNoindex ? 'noindex,nofollow' : 'index,follow';
 const fontStylesheet = 'https://fonts.googleapis.com/css2?family=Caveat:wght@400&family=Cormorant+Garamond:wght@400&family=DM+Sans:wght@300;400;500&display=swap';
@@ -44,12 +47,22 @@ const organization = {
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="de_DE" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="Höhn Immobilien" />
+    <meta property="og:image" content={socialImage.href} />
+    <meta property="og:image:alt" content={imageAlt} />
+
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage.href} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preload" as="style" href={fontStylesheet} />
