@@ -135,4 +135,45 @@ export const properties = [
       },
     ],
   },
+  {
+    slug: 'baugrundstuecke-rosenhagen-von-privat',
+    type: 'Grundstück',
+    location: 'Rosenhagen',
+    title: 'Baugrundstücke in Rosenhagen von privat',
+    price: '900 € / m²',
+    status: 'Privatangebot · provisionsfrei',
+    verifiedAt: '2026-09-09',
+    sourceUrl: 'https://www.immo-hoehn.de/immobilienangebote/kaufen/grundstuecke/rosenhagen-von-privat',
+    summary: 'Zwei voll erschlossene Grundstücke in Rosenhagen mit 1.600 m² und 2.005 m², laut Bestandsseite provisionsfrei von privat.',
+    commission: 'Provisionsfrei von privat laut aktueller Bestandsseite.',
+    facts: [
+      ['Grundstück 1','1.600 m² · 900 € / m²'],
+      ['Grundstück 2','2.005 m² · 900 € / m²'],
+      ['Erschließung','voll erschlossen'],
+      ['Courtage','provisionsfrei von privat'],
+      ['Region','Rosenhagen / Dassow'],
+    ],
+    sections: [
+      {
+        heading: 'Privates Grundstücksangebot',
+        paragraphs: [
+          'Die bestehende Höhn-Seite führt zwei voll erschlossene Grundstücke mit 1.600 m² und 2.005 m². Beide werden dort mit 900 Euro pro Quadratmeter und als provisionsfrei von privat angegeben.',
+          'Die Bestandsseite beschreibt eine mögliche Nutzung als Feriendomizil und nennt je Haus die Möglichkeit von zwei Ferienwohnungen. Diese Angabe wird nicht als pauschale baurechtliche Zusage übernommen; für einen Kauf sind die konkret geltenden Planungs- und Genehmigungsunterlagen maßgeblich.'
+        ],
+      },
+      {
+        heading: 'Lage an der Ostsee',
+        paragraphs: [
+          'Die Grundstücke werden auf der aktuellen Höhn-Seite mit rund 300 Metern Entfernung zum Naturstrand beschrieben. Dazwischen liegt laut Bestandsseite eine geschützte Grünfläche.',
+          'Der Ostseeküsten-Radweg wird ebenfalls mit rund 300 Metern Entfernung angegeben. Lübeck liegt laut Objektbeschreibung rund 25 Autominuten entfernt, die A20-Anschlussstelle Schönberg rund 15 Minuten.'
+        ],
+      },
+      {
+        heading: 'Provision',
+        paragraphs: [
+          'Das Angebot wird auf der aktuellen Höhn-Seite ausdrücklich als provisionsfrei von privat geführt.'
+        ],
+      },
+    ],
+  },
 ];
