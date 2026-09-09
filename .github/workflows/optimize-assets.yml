@@ -33,7 +33,7 @@ jobs:
       - name: Commit optimized assets
         shell: bash
         run: |
-          git add public/assets/
+          git add public/assets/ preview/assets/
           if git diff --cached --quiet; then
             echo "No optimized asset changes."
             exit 0
