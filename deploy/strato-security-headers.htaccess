@@ -1,0 +1,23 @@
+# Höhn Immobilien – STRATO/Apache Security-Header-Vorlage
+# Stand: 2026-09-09
+#
+# NICHT als komplette Produktions-.htaccess verwenden.
+# Diese Regeln müssen mit der bestehenden Live-.htaccess zusammengeführt werden.
+#
+# Bewusst NICHT enthalten:
+# - Strict-Transport-Security (HSTS): erst nach verifiziertem HTTPS-Setup für alle betroffenen Hosts/Subdomains.
+# - Content-Security-Policy (CSP): erst nach einem eigenen CSP-Pass mit den tatsächlich benötigten Inline-/Asset-Regeln.
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>
+
+# Produktions-QA nach Zusammenführung:
+# 1. curl -I https://immo-hoehn.de/
+# 2. Header auf Startseite, Kontakt, Objektseite und 404 prüfen.
+# 3. Kontaktformular absenden und Redirect/Antwort prüfen.
+# 4. Keine HSTS-Regel aktivieren, bevor HTTPS/Hostvarianten geprüft wurden.
+# 5. Keine CSP-Regel ungeprüft ergänzen; Astro/JSON-LD/Formular enthalten legitime Inline-Anteile.
