@@ -18,7 +18,6 @@
       <span class="brand-sub">Ostseeküste · Seit 1986</span>
     </a>
     <nav class="main-nav" aria-label="Hauptnavigation">
-      <a href="#kontakt">Immobilien</a>
       <a href="#verkaufen">Verkaufen</a>
       <a href="#regionen">Regionen</a>
       <a href="#ueber-uns">Über uns</a>
@@ -40,8 +39,7 @@
         <p class="hero-intro">Seit 1986 begleiten wir Eigentümer und Käufer<br>rund um Travemünde, Priwall und die mecklenburgische<br>Ostseeküste.</p>
         <div class="place-row"><span class="short-rule"></span><span>Travemünde · Priwall · Pötenitz · Rosenhagen · Dassow</span></div>
         <div class="hero-actions">
-          <a class="btn-primary" href="#kontakt">Immobilien entdecken <span>→</span></a>
-          <a class="text-link" href="#verkaufen">Immobilie verkaufen</a>
+          <a class="btn-primary" href="#verkaufen">Immobilie verkaufen <span>→</span></a>
         </div>
         <div class="hero-meta">
           <div class="pager"><span>01</span><span class="pager-line"></span><span>03</span></div>
@@ -98,10 +96,67 @@
       </div>
     </section>
 
-    <section id="verkaufen" class="after-reference">
-      <div><p class="eyebrow">Verkaufen mit Gefühl für Lage</p><h2>Wer hier verkauft,<br>verkauft mehr als Quadratmeter.</h2></div>
+    <section id="verkaufen" class="after-reference sell-section">
+      <div>
+        <p class="eyebrow">Verkaufen mit Gefühl für Lage</p>
+        <h2>Wer hier verkauft,<br>verkauft mehr als Quadratmeter.</h2>
+        <p class="sell-copy">Wir begleiten Eigentümer persönlich, diskret und mit einem klaren Blick für Lage, Wert und den passenden Käufer.</p>
+        <a class="text-link" href="#kontakt">Unverbindlich Kontakt aufnehmen <span>→</span></a>
+      </div>
     </section>
-    <section id="kontakt" class="after-reference contact-placeholder"><h2>Sprechen wir über Ihre Immobilie.</h2></section>
+
+    <section id="kontakt" class="contact-section" aria-labelledby="contact-heading">
+      <div class="contact-intro">
+        <p class="eyebrow">Kontakt</p>
+        <h2 id="contact-heading">Sprechen wir über<br>Ihre Immobilie.</h2>
+        <p>Ob Verkauf, Bewertung, Suchwunsch oder eine erste unverbindliche Frage: Schreiben Sie uns. Wir melden uns persönlich bei Ihnen zurück.</p>
+        <div class="contact-meta">
+          <span>Travemünde · Priwall · Pötenitz</span>
+          <span>Rosenhagen · Dassow · Ostseeküste</span>
+        </div>
+      </div>
+
+      <form class="contact-form" onsubmit="event.preventDefault();" aria-describedby="form-preview-note">
+        <div class="form-row">
+          <label>
+            <span>Name *</span>
+            <input type="text" name="name" autocomplete="name" required>
+          </label>
+          <label>
+            <span>E-Mail *</span>
+            <input type="email" name="email" autocomplete="email" required>
+          </label>
+        </div>
+        <div class="form-row">
+          <label>
+            <span>Telefon</span>
+            <input type="tel" name="telefon" autocomplete="tel">
+          </label>
+          <label>
+            <span>Anliegen *</span>
+            <select name="anliegen" required>
+              <option value="" selected disabled>Bitte auswählen</option>
+              <option>Immobilie verkaufen</option>
+              <option>Immobilie bewerten lassen</option>
+              <option>Suchwunsch</option>
+              <option>Allgemeine Anfrage</option>
+            </select>
+          </label>
+        </div>
+        <label class="form-message">
+          <span>Nachricht *</span>
+          <textarea name="nachricht" rows="5" required></textarea>
+        </label>
+        <label class="consent-row">
+          <input type="checkbox" required>
+          <span>Ich bin mit der Verarbeitung meiner Angaben zur Bearbeitung meiner Anfrage einverstanden.</span>
+        </label>
+        <div class="form-actions">
+          <button type="submit">Anfrage senden <span>→</span></button>
+          <small id="form-preview-note">Formularansicht in der Preview. Der Versand wird beim Livegang technisch angebunden.</small>
+        </div>
+      </form>
+    </section>
   </main>
 </body>
 </html>
