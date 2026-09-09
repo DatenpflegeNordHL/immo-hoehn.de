@@ -39,6 +39,31 @@ function attr(html, tagName, attrName, attrValue, wanted) {
   return null;
 }
 
+function schemaTypes(value, out = []) {
+  if (Array.isArray(value)) {
+    for (const item of value) schemaTypes(item, out);
+    return out;
+  }
+  if (!value || typeof value !== 'object') return out;
+  if (typeof value['@type'] === 'string') out.push(value['@type']);
+  if (Array.isArray(value['@type'])) out.push(...value['@type'].filter((type) => typeof type === 'string'));
+  if (value['@graph']) schemaTypes(value['@graph'], out);
+  return out;
+}
+
+function parseJsonLd(html, route) {
+  const scripts = [...html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+  const parsed = [];
+  for (const [index, match] of scripts.entries()) {
+    try {
+      parsed.push(JSON.parse(match[1]));
+    } catch (error) {
+      fail(`${route}: JSON-LD #${index + 1} ist ungültig (${error.message}).`);
+    }
+  }
+  return parsed;
+}
+
 if (!existsSync(DIST)) fail('dist/ fehlt. Production build wurde nicht erzeugt.');
 
 const htmlFiles = existsSync(DIST) ? walk(DIST, '.html') : [];
@@ -59,6 +84,20 @@ for (const file of htmlFiles) {
 
   const externalFontResource = /<(?:link|script)\b[^>]*(?:href|src)=["']https:\/\/(?:fonts\.googleapis\.com|fonts\.gstatic\.com)[^"']*["'][^>]*>/i;
   if (externalFontResource.test(html)) fail(`${route}: externe Google-Font-Ressource im Markup gefunden.`);
+
+  const externalScript = /<script\b[^>]*src=["']https?:\/\/(?!immo-hoehn\.de\/)[^"']+["'][^>]*>/i;
+  const externalIframe = /<iframe\b[^>]*src=["']https?:\/\/(?!immo-hoehn\.de\/)[^"']+["'][^>]*>/i;
+  const externalStylesheet = /<link\b(?=[^>]*rel=["']stylesheet["'])(?=[^>]*href=["']https?:\/\/(?!immo-hoehn\.de\/)[^"']+["'])[^>]*>/i;
+  if (externalScript.test(html)) fail(`${route}: unerwartetes externes Script im Production-Build.`);
+  if (externalIframe.test(html)) fail(`${route}: unerwartetes externes iframe im Production-Build.`);
+  if (externalStylesheet.test(html)) fail(`${route}: unerwartetes externes Stylesheet im Production-Build.`);
+
+  const parsedSchemas = parseJsonLd(html, route);
+  const types = parsedSchemas.flatMap((schema) => schemaTypes(schema));
+  if (!types.includes('RealEstateAgent')) fail(`${route}: RealEstateAgent-Schema fehlt.`);
+  if (route !== '/' && route !== '/404' && !types.includes('BreadcrumbList')) {
+    fail(`${route}: BreadcrumbList-Schema fehlt.`);
+  }
 
   const robots = attr(html, 'meta', 'name', 'robots', 'content');
   const shouldNoindex = legalNoindex.has(route);
@@ -119,4 +158,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`Production readiness PASS: ${htmlFiles.length} HTML-Seiten, ${indexableCount} indexierbar, Canonicals/Sitemap/Robots/Branding/Form-Empfänger geprüft.`);
+console.log(`Production readiness PASS: ${htmlFiles.length} HTML-Seiten, ${indexableCount} indexierbar, Canonicals/Sitemap/Robots/Schema/Drittressourcen/Branding/Form-Empfänger geprüft.`);
