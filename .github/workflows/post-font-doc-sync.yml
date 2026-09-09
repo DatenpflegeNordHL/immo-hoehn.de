@@ -113,3 +113,6 @@ Die vier migrierten First-Party-Angebote wurden erneut gegen die öffentlich err
           git add src/data/site.js LEGAL-LAUNCH-GATE-2026-09-09.md LEGACY-URL-REDIRECT-MATRIX-2026-09-09.md P0-BUILD-QA-2026-09-09.md
           git commit -m "docs: close font and legacy-domain launch gates"
           git push origin HEAD:redesign/coastal-blueprint
+
+      - name: Done
+        run: echo "One-time documentation sync completed."
