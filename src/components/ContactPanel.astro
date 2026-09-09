@@ -14,62 +14,102 @@ const { compact = false } = Astro.props;
     </div>
   </div>
 
-  <form class="contact-form" onsubmit="event.preventDefault();" aria-describedby="form-preview-note" data-staging-form>
+  <form
+    id="kontaktformular"
+    class="contact-form"
+    action="/api/contact.php"
+    method="post"
+    accept-charset="UTF-8"
+  >
+    <div class="hp-field" aria-hidden="true">
+      <label>
+        <span>Website</span>
+        <input type="text" name="website" tabindex="-1" autocomplete="off" />
+      </label>
+    </div>
+
     <div class="form-row">
       <label>
         <span>Name *</span>
-        <input type="text" name="name" autocomplete="name" required />
+        <input type="text" name="name" autocomplete="name" minlength="2" maxlength="120" required />
       </label>
       <label>
         <span>E-Mail *</span>
-        <input type="email" name="email" autocomplete="email" required />
+        <input type="email" name="email" autocomplete="email" maxlength="254" required />
       </label>
     </div>
+
     <div class="form-row">
       <label>
         <span>Telefon</span>
-        <input type="tel" name="telefon" autocomplete="tel" />
+        <input type="tel" name="telefon" autocomplete="tel" maxlength="60" />
       </label>
       <label>
         <span>Anliegen *</span>
         <select name="anliegen" required>
           <option value="" selected disabled>Bitte auswählen</option>
-          <option>Immobilie verkaufen</option>
-          <option>Wertermittlung</option>
-          <option>Objektanfrage</option>
-          <option>Allgemeine Anfrage</option>
+          <option value="immobilie-verkaufen">Immobilie verkaufen</option>
+          <option value="wertermittlung">Wertermittlung</option>
+          <option value="objektanfrage">Objektanfrage</option>
+          <option value="allgemeine-anfrage">Allgemeine Anfrage</option>
         </select>
       </label>
     </div>
+
     {!compact && (
       <div class="form-row">
         <label>
           <span>Objektart</span>
           <select name="objektart">
             <option value="">Nicht angegeben</option>
-            <option>Haus</option>
-            <option>Wohnung</option>
-            <option>Grundstück</option>
-            <option>Gewerbe</option>
+            <option value="haus">Haus</option>
+            <option value="wohnung">Wohnung</option>
+            <option value="grundstueck">Grundstück</option>
+            <option value="gewerbe">Gewerbe</option>
           </select>
         </label>
         <label>
           <span>Ort / PLZ</span>
-          <input type="text" name="ort" autocomplete="postal-code" />
+          <input type="text" name="ort" autocomplete="postal-code" maxlength="120" />
         </label>
       </div>
     )}
+
     <label class="form-message">
       <span>Nachricht *</span>
-      <textarea name="nachricht" rows="5" required></textarea>
+      <textarea name="nachricht" rows="5" minlength="10" maxlength="5000" required></textarea>
     </label>
+
     <label class="consent-row">
-      <input type="checkbox" required />
-      <span>Ich bin mit der Verarbeitung meiner Angaben zur Bearbeitung meiner Anfrage einverstanden.</span>
+      <input type="checkbox" name="datenschutz" value="1" required />
+      <span>Ich bin mit der Verarbeitung meiner Angaben zur Bearbeitung meiner Anfrage einverstanden. Hinweise dazu finden Sie in der <a href="/datenschutz/">Datenschutzerklärung</a>.</span>
     </label>
+
+    <p class="form-status" data-form-status role="status" aria-live="polite" hidden></p>
+
     <div class="form-actions">
-      <button type="submit">Anfrage senden <span>→</span></button>
-      <small id="form-preview-note">Staging: Der Formularversand ist noch nicht technisch angebunden. Live-Empfänger wird ausschließlich info@immo-hoehn.de.</small>
+      <button type="submit">Anfrage senden <span aria-hidden="true">→</span></button>
+      <small>Ihre Angaben werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet.</small>
     </div>
   </form>
 </section>
+
+<script is:inline>
+  (() => {
+    const status = new URLSearchParams(window.location.search).get('kontakt');
+    const output = document.querySelector('[data-form-status]');
+    if (!output || !status) return;
+
+    const messages = {
+      erfolg: 'Vielen Dank. Ihre Anfrage wurde versendet.',
+      ungueltig: 'Bitte prüfen Sie Ihre Eingaben und senden Sie das Formular erneut.',
+      versandfehler: 'Die Anfrage konnte gerade nicht versendet werden. Bitte nutzen Sie Telefon oder E-Mail.'
+    };
+
+    if (messages[status]) {
+      output.textContent = messages[status];
+      output.hidden = false;
+      output.dataset.status = status === 'erfolg' ? 'success' : 'error';
+    }
+  })();
+</script>
