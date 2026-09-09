@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactPanel from './ContactPanel.astro';
+
+const { page } = Astro.props;
+const crumbs = page.slug.split('/');
+---
+<BaseLayout title={page.title} description={page.description} forceNoindex={page.forceNoindex}>
+  <main class="page-main">
+    <section class="page-hero">
+      <div class="page-hero-copy">
+        <div class="breadcrumbs"><a href="/">Start</a> · {crumbs.map((part) => part.replaceAll('-', ' ')).join(' · ')}</div>
+        <p class="eyebrow">{page.eyebrow}</p>
+        <h1>{page.h1}</h1>
+        <p class="lead">{page.intro}</p>
+        {(page.primaryCta || page.secondaryCta) && <div class="button-row">
+          {page.primaryCta && <a class="button-primary" href={page.primaryCta[0]}>{page.primaryCta[1]} <span>→</span></a>}
+          {page.secondaryCta && <a class="button-secondary" href={page.secondaryCta[0]}>{page.secondaryCta[1]}</a>}
+        </div>}
+      </div>
+      {page.heroImage && <figure class="page-hero-media"><img src={page.heroImage} alt="" /></figure>}
+    </section>
+
+    {page.kind === 'contact' ? <ContactPanel /> : (
+      <div class="content-wrap">
+        {page.kind === 'legal' && <div class="legal-warning">Diese Seite ist auf dem Arbeitsbranch noch nicht für den Produktivbetrieb freigegeben. Rechtliche Inhalte werden vor Deployment separat geprüft.</div>}
+        <div class="content-grid">
+          <article class="content-prose">
+            {(page.blocks || []).map((block) => <section class="content-block">
+              <h2>{block.heading}</h2>
+              {(block.paragraphs || []).map((paragraph) => <p>{paragraph.split('\n').map((line, i) => <>{i > 0 && <br />}{line}</>)}</p>)}
+              {block.bullets && <ul>{block.bullets.map((item) => <li>{item}</li>)}</ul>}
+              {block.links && <div class="region-links">{block.links.map(([href,label]) => <a href={href}>{label}</a>)}</div>}
+            </section>)}
+
+            {page.faqs && <section class="content-block">
+              <p class="eyebrow">Fragen & Antworten</p>
+              <h2>Häufige Fragen</h2>
+              <div class="faq-list">{page.faqs.map(([q,a]) => <details><summary>{q}</summary><p>{a}</p></details>)}</div>
+            </section>}
+          </article>
+
+          <aside class="side-card">
+            <p class="eyebrow">Höhn Immobilien</p>
+            <h2>Persönlich erreichbar</h2>
+            <p>Christine Bringmann<br />Trakehnerstraße 11<br />23942 Dassow OT Pötenitz</p>
+            <a href="tel:+493882680911">038826 80911</a>
+            <a href="tel:+491711230162">0171 1230162</a>
+            <a href="mailto:info@immo-hoehn.de">info@immo-hoehn.de</a>
+            <div class="button-row"><a class="button-primary" href="/kontakt/">Kontakt aufnehmen</a></div>
+          </aside>
+        </div>
+      </div>
+    )}
+  </main>
+</BaseLayout>
