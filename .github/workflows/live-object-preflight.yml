@@ -1,0 +1,29 @@
+name: Höhn Live Object Preflight
+
+on:
+  push:
+    branches:
+      - redesign/coastal-blueprint
+    paths:
+      - scripts/live-object-preflight.mjs
+      - .github/workflows/live-object-preflight.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live-object-preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Use Node 22
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Re-check four public Höhn object pages
+        run: node scripts/live-object-preflight.mjs
