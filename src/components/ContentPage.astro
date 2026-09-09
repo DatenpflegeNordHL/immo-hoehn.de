@@ -4,6 +4,24 @@ import ContactPanel from './ContactPanel.astro';
 
 const { page } = Astro.props;
 const crumbs = page.slug.split('/');
+const site = Astro.site ?? new URL('https://immo-hoehn.de');
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Höhn Immobilien',
+      item: new URL('/', site).href,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: page.h1,
+    },
+  ],
+};
 const heroVariants = {
   '/assets/hero-coast.webp': {
     src: '/assets/hero-coast-960.webp',
@@ -21,6 +39,7 @@ const heroMedia = page.heroImage
   : null;
 ---
 <BaseLayout title={page.title} description={page.description} forceNoindex={page.forceNoindex}>
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
   <main class="page-main">
     <section class:list={['page-hero', !page.heroImage && 'page-hero--text']}>
       <div class="page-hero-copy">
