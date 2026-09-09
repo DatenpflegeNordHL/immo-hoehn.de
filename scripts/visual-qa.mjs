@@ -76,12 +76,27 @@ for (const route of routes) {
       const body = document.body;
       const vw = window.innerWidth;
       const all = [...document.querySelectorAll('body *')];
+
       const visible = all.filter((el) => {
         const style = getComputedStyle(el);
         const rect = el.getBoundingClientRect();
         return style.display !== 'none' && style.visibility !== 'hidden' && Number(style.opacity) !== 0 && rect.width > 0 && rect.height > 0;
       });
+
+      const intentionallyClipped = (el) => {
+        let parent = el.parentElement;
+        while (parent && parent !== document.body) {
+          const style = getComputedStyle(parent);
+          const ox = style.overflowX;
+          const o = style.overflow;
+          if (ox === 'hidden' || ox === 'clip' || o === 'hidden' || o === 'clip') return true;
+          parent = parent.parentElement;
+        }
+        return false;
+      };
+
       const offscreen = visible
+        .filter((el) => !intentionallyClipped(el))
         .map((el) => {
           const r = el.getBoundingClientRect();
           return {
