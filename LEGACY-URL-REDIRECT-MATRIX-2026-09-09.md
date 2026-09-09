@@ -69,10 +69,9 @@ Daneben existieren mindestens:
 /datenschutzerklaerung
 ```
 
-
 ## Historische Höhn-Domain `hoehn-immobilien.de`
 
-Der öffentliche Backlink-Pass vom 09.09.2026 zeigt mehrere aktuelle Drittverzeichnisse, die für **Höhn Immobilien, Trakehner Str. 11, 23942 Pötenitz, Telefon 038826 80911** weiterhin die historische Domain `hoehn-immobilien.de` nennen. Damit ist die Domain dem hiesigen Höhn-Unternehmen belastbar zuordenbar und nicht mit ähnlich benannten Maklern zu vermischen.
+Der öffentliche Backlink-Pass vom 09.09.2026 zeigt mehrere aktuelle Drittverzeichnisse, die für **Höhn Immobilien, Trakehner Str. 11, 23942 Pötenitz, Telefon 038826 80911** weiterhin die historische Domain `hoehn-immobilien.de` nennen.
 
 Beispiele:
 
@@ -80,14 +79,16 @@ Beispiele:
 - https://regionale-immobilienmakler.de/immobilienmakler-luetgenhof-23942.htm
 - https://tags.branchen-info.net/tag/bausubstanz/337147/59/
 
-Onlinestreet kennzeichnet die historische Website aktuell als möglicherweise nicht erreichbar. Für den Relaunch gilt daher:
+**Eigentums-/Kontrollstatus laut Projektinhaber am 09.09.2026:** Höhn Immobilien besitzt beziehungsweise kontrolliert die historische Domain **nicht mehr**.
 
-1. Eigentum/Kontrolle der Domain `hoehn-immobilien.de` im Domainbestand prüfen.
-2. Falls Höhn die Domain kontrolliert: Host-Redirect per **301** auf `https://immo-hoehn.de/` einrichten; bekannte historische Unterpfade nach Möglichkeit direkt auf das jeweils passendste neue Ziel führen.
-3. Falls die Domain nicht mehr kontrolliert wird: relevante Branchenverzeichnisse auf `https://immo-hoehn.de/` korrigieren lassen.
-4. Keine fremden ähnlich benannten Höhn-Domains in diese Migration einbeziehen.
+Daraus folgt:
 
-Status: **PUBLIC BACKLINK EVIDENCE PASS / DOMAIN CONTROL USER-SIDE CHECK REQUIRED**.
+1. **Kein Redirect-Projekt** für `hoehn-immobilien.de` einplanen; technisch besteht keine Kontrolle mehr über diesen Host.
+2. Die historische Domain darf nicht Bestandteil einer neuen DNS-, SSL-, Canonical- oder Redirect-Konfiguration werden.
+3. Relevante Branchenverzeichnisse sollen nach Möglichkeit auf die kanonische Domain `https://immo-hoehn.de/` korrigiert werden.
+4. Keine fremden oder ähnlich benannten Höhn-Domains in diese Migration einbeziehen.
+
+Status: **DOMAIN CONTROL RESOLVED – NOT OWNED / NO REDIRECT POSSIBLE / DIRECTORY CLEANUP ONLY**.
 
 ## Noch zu inventarisieren
 
@@ -110,7 +111,8 @@ Nicht blind auf `/` oder `/immobilien/` umleiten:
 - alte PDF-Exposés;
 - nicht mehr verfügbare Immobilien ohne inhaltlich passenden Nachfolger;
 - beliebige 404-URLs;
-- fremde Höhn-Domains.
+- fremde Höhn-Domains;
+- `hoehn-immobilien.de`, da die Domain nicht mehr kontrolliert wird.
 
 Alle aktuell bekannten aktiven Objektseiten besitzen inzwischen ein vorgesehenes neues Objektziel. Die vier Objekt-Redirects bleiben trotzdem bis zum unmittelbaren Launch-Recheck deaktiviert.
 
@@ -137,6 +139,7 @@ Nach Implementierung automatisiert prüfen:
 **Aktuell öffentlich auffindbare Kernstruktur: erweitert gemappt**  
 **Rosenhagen-von-Privat-Migration: RESOLVED – eigene neue Objektseite**  
 **alle vier aktuell bekannten Objekt-Alt-URLs: Ziel definiert; Aktivierung erst nach Launch-Recheck**  
+**historische Domain `hoehn-immobilien.de`: RESOLVED – nicht mehr im Besitz / kein Redirect möglich**  
 **Search-Console-/Server-Vollinventur: noch offen**  
 **Redirect-Implementierung: vorbereitet, Produktionszusammenführung noch offen**  
 **`main`: unverändert**
