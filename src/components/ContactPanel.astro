@@ -1,0 +1,75 @@
+---
+const { compact = false } = Astro.props;
+---
+<section class="contact-section" aria-labelledby="contact-heading">
+  <div class="contact-intro">
+    <p class="eyebrow">Kontakt</p>
+    <h2 id="contact-heading">Sprechen wir über<br />Ihre Immobilie.</h2>
+    <p>Ob Verkauf, Wertermittlung, Objektanfrage oder eine erste Frage: Sie erreichen Höhn Immobilien persönlich per Telefon, E-Mail oder über das Formular.</p>
+    <div class="contact-meta">
+      <a href="tel:+493882680911">038826 80911</a>
+      <a href="tel:+491711230162">0171 1230162</a>
+      <a href="mailto:info@immo-hoehn.de">info@immo-hoehn.de</a>
+      <span>Trakehnerstraße 11 · 23942 Dassow OT Pötenitz</span>
+    </div>
+  </div>
+
+  <form class="contact-form" onsubmit="event.preventDefault();" aria-describedby="form-preview-note" data-staging-form>
+    <div class="form-row">
+      <label>
+        <span>Name *</span>
+        <input type="text" name="name" autocomplete="name" required />
+      </label>
+      <label>
+        <span>E-Mail *</span>
+        <input type="email" name="email" autocomplete="email" required />
+      </label>
+    </div>
+    <div class="form-row">
+      <label>
+        <span>Telefon</span>
+        <input type="tel" name="telefon" autocomplete="tel" />
+      </label>
+      <label>
+        <span>Anliegen *</span>
+        <select name="anliegen" required>
+          <option value="" selected disabled>Bitte auswählen</option>
+          <option>Immobilie verkaufen</option>
+          <option>Wertermittlung</option>
+          <option>Objektanfrage</option>
+          <option>Allgemeine Anfrage</option>
+        </select>
+      </label>
+    </div>
+    {!compact && (
+      <div class="form-row">
+        <label>
+          <span>Objektart</span>
+          <select name="objektart">
+            <option value="">Nicht angegeben</option>
+            <option>Haus</option>
+            <option>Wohnung</option>
+            <option>Grundstück</option>
+            <option>Gewerbe</option>
+          </select>
+        </label>
+        <label>
+          <span>Ort / PLZ</span>
+          <input type="text" name="ort" autocomplete="postal-code" />
+        </label>
+      </div>
+    )}
+    <label class="form-message">
+      <span>Nachricht *</span>
+      <textarea name="nachricht" rows="5" required></textarea>
+    </label>
+    <label class="consent-row">
+      <input type="checkbox" required />
+      <span>Ich bin mit der Verarbeitung meiner Angaben zur Bearbeitung meiner Anfrage einverstanden.</span>
+    </label>
+    <div class="form-actions">
+      <button type="submit">Anfrage senden <span>→</span></button>
+      <small id="form-preview-note">Staging: Der Formularversand ist noch nicht technisch angebunden. Live-Empfänger wird ausschließlich info@immo-hoehn.de.</small>
+    </div>
+  </form>
+</section>
