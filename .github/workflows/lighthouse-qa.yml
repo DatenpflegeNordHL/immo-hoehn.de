@@ -50,7 +50,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p lighthouse-results
-          ROUTES=("home:/" "verkaufen:/immobilie-verkaufen/" "bewertung:/immobilienbewertung/" "immobilien:/immobilien/" "poetenitz:/regionen/poetenitz/" "travemuende:/regionen/travemuende/" "priwall:/regionen/priwall/")
+          ROUTES=("home:/" "verkaufen:/immobilie-verkaufen/" "grundstueck:/grundstueck-verkaufen/" "bewertung:/immobilienbewertung/" "immobilien:/immobilien/" "poetenitz:/regionen/poetenitz/" "travemuende:/regionen/travemuende/" "priwall:/regionen/priwall/")
           for item in "${ROUTES[@]}"; do
             name="${item%%:*}"
             route="${item#*:}"
