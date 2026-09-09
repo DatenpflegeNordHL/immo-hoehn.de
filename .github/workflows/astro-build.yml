@@ -64,3 +64,13 @@ jobs:
 
       - name: Build staging site
         run: npm run build
+
+      - name: Build production-intent site
+        env:
+          PUBLIC_SITE_NOINDEX: 'false'
+        run: |
+          rm -rf dist
+          npm run build
+
+      - name: Run production readiness gate
+        run: node scripts/production-readiness.mjs
