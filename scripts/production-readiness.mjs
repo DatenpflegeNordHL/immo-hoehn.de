@@ -1,5 +1,7 @@
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
+import { properties } from '../src/data/properties.js';
+import { PUBLISH_PROPERTY_LISTINGS } from '../src/data/launch-config.js';
 
 const ROOT = process.cwd();
 const DIST = join(ROOT, 'dist');
@@ -72,7 +74,10 @@ if (htmlFiles.length < 19) fail(`Zu wenige HTML-Seiten im Production-Build: ${ht
 const sitemapFiles = existsSync(DIST) ? walk(DIST, '.xml').filter((p) => p.includes('sitemap')) : [];
 const sitemapCorpus = sitemapFiles.map((p) => readFileSync(p, 'utf8')).join('\n');
 
-const legalNoindex = new Set(['/impressum/', '/datenschutz/', '/404']);
+const noindexRoutes = new Set(['/impressum/', '/datenschutz/', '/404']);
+if (!PUBLISH_PROPERTY_LISTINGS) {
+  for (const property of properties) noindexRoutes.add(`/immobilien/${property.slug}/`);
+}
 let indexableCount = 0;
 
 for (const file of htmlFiles) {
@@ -81,6 +86,9 @@ for (const file of htmlFiles) {
 
   if (/hoehn\.immobilien@t-online\.de/i.test(html)) fail(`${route}: alte T-Online-Adresse im Build gefunden.`);
   if (/DatenpflegeNord/i.test(html)) fail(`${route}: fremdes Projektbranding im öffentlichen Build gefunden.`);
+  if (/Staging-(?:Fassung|Platzhalter)|Staging-Fassung|Staging-Platzhalter|Arbeitsbranch noch nicht für den Produktivbetrieb/i.test(html)) {
+    fail(`${route}: Staging-/Arbeitsbranch-Text im Production-Build gefunden.`);
+  }
 
   const externalFontResource = /<(?:link|script)\b[^>]*(?:href|src)=["']https:\/\/(?:fonts\.googleapis\.com|fonts\.gstatic\.com)[^"']*["'][^>]*>/i;
   if (externalFontResource.test(html)) fail(`${route}: externe Google-Font-Ressource im Markup gefunden.`);
@@ -100,15 +108,12 @@ for (const file of htmlFiles) {
   }
 
   const robots = attr(html, 'meta', 'name', 'robots', 'content');
-  const shouldNoindex = legalNoindex.has(route);
+  const shouldNoindex = noindexRoutes.has(route);
   if (shouldNoindex) {
     if (!robots?.toLowerCase().includes('noindex')) fail(`${route}: erwartetes noindex fehlt.`);
   } else {
     indexableCount += 1;
     if (robots !== 'index,follow') fail(`${route}: Production-Robots ist '${robots}', erwartet 'index,follow'.`);
-    if (/Staging-(?:Fassung|Platzhalter)|Staging-Fassung|Staging-Platzhalter/i.test(html)) {
-      fail(`${route}: Staging-Text auf indexierbarer Seite gefunden.`);
-    }
   }
 
   if (route !== '/404') {
@@ -123,6 +128,7 @@ for (const file of htmlFiles) {
         if (url.origin !== 'https://immo-hoehn.de') fail(`${route}: falscher Canonical-Host ${url.origin}.`);
         if (url.pathname !== route) fail(`${route}: Canonical-Pfad ${url.pathname} stimmt nicht mit Route ${route} überein.`);
         if (!shouldNoindex && !sitemapCorpus.includes(canonical)) fail(`${route}: indexierbarer Canonical fehlt in Sitemap.`);
+        if (shouldNoindex && sitemapCorpus.includes(canonical)) fail(`${route}: noindex-Canonical ist unerwartet in der Sitemap.`);
       } catch {
         fail(`${route}: ungültiger Canonical '${canonical}'.`);
       }
@@ -130,7 +136,7 @@ for (const file of htmlFiles) {
   }
 }
 
-if (indexableCount < 16) fail(`Zu wenige indexierbare Production-Seiten: ${indexableCount} (erwartet mindestens 16).`);
+if (indexableCount < 12) fail(`Zu wenige indexierbare Production-Seiten: ${indexableCount} (erwartet mindestens 12).`);
 
 const robotsPath = join(DIST, 'robots.txt');
 if (!existsSync(robotsPath)) fail('robots.txt fehlt im Production-Build.');
@@ -143,6 +149,13 @@ else {
 if (!sitemapFiles.some((p) => p.endsWith('sitemap-index.xml'))) fail('sitemap-index.xml fehlt.');
 if (/\/impressum\/?</i.test(sitemapCorpus)) fail('Impressum ist unerwartet in der Sitemap.');
 if (/\/datenschutz\/?</i.test(sitemapCorpus)) fail('Datenschutz ist unerwartet in der Sitemap.');
+if (!PUBLISH_PROPERTY_LISTINGS) {
+  for (const property of properties) {
+    if (sitemapCorpus.includes(`/immobilien/${property.slug}/`)) {
+      fail(`Unbestätigtes Objekt ${property.slug} ist unerwartet in der Sitemap.`);
+    }
+  }
+}
 
 const contactPath = join(DIST, 'api', 'contact.php');
 if (!existsSync(contactPath)) fail('Kontakt-Endpunkt fehlt im Production-Build.');
