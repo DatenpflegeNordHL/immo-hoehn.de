@@ -10,6 +10,7 @@ const height = 900;
 const routes = [
   '/',
   '/immobilie-verkaufen/',
+  '/grundstueck-verkaufen/',
   '/immobilienbewertung/',
   '/immobilien/',
   '/immobilien/einfamilienhaus-poetenitz-1724/',
@@ -29,6 +30,7 @@ const routes = [
 const screenshotRoutes = new Set([
   '/',
   '/immobilie-verkaufen/',
+  '/grundstueck-verkaufen/',
   '/immobilienbewertung/',
   '/immobilien/',
   '/immobilien/einfamilienhaus-poetenitz-1724/',
