@@ -1,8 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { properties } from '../../data/properties.js';
+import { PUBLISH_PROPERTY_LISTINGS } from '../../data/launch-config.js';
 
 const site = Astro.site ?? new URL('https://immo-hoehn.de');
+const publishedProperties = PUBLISH_PROPERTY_LISTINGS ? properties : [];
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
@@ -23,16 +25,16 @@ const breadcrumbSchema = {
 ---
 <BaseLayout
   title="Immobilien an der Ostseeküste | Höhn Immobilien"
-  description="Aktuelle Häuser, Wohnungen und Grundstücke von Höhn Immobilien an der Ostseeküste entdecken. Alle Angebote mit realen Objektdaten und direkter Anfrage."
+  description="Immobilien und Grundstücke an der Ostseeküste mit Höhn Immobilien. Aktuelle Angebote werden nach bestätigter Verfügbarkeit veröffentlicht; Anfragen sind direkt möglich."
 >
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
   <main class="page-main">
     <section class="page-hero">
       <div class="page-hero-copy">
         <div class="breadcrumbs"><a href="/">Start</a> · Immobilien</div>
-        <p class="eyebrow">Aktueller Bestand</p>
-        <h1>Aktuelle Immobilien an der Ostseeküste</h1>
-        <p class="lead">Hier finden Sie die aktuell öffentlich verifizierten Häuser, Wohnungen und Grundstücke von Höhn Immobilien. Keine Demo-Listings und keine erfundenen Objekte.</p>
+        <p class="eyebrow">Immobilienangebote</p>
+        <h1>Immobilien an der Ostseeküste</h1>
+        <p class="lead">Aktuelle Angebote veröffentlichen wir hier, sobald Verfügbarkeit und aktuelles Vermarktungsmandat bestätigt sind. So sehen Sie keine veralteten oder nur historisch dokumentierten Objekte als vermeintlich aktuellen Bestand.</p>
       </div>
       <figure class="page-hero-media">
         <img
@@ -50,17 +52,25 @@ const breadcrumbSchema = {
     <section class="property-section">
       <div class="property-section-head">
         <div><p class="eyebrow">Angebote</p><h2>Immobilien & Grundstücke</h2></div>
-        <p>Datenstand der hier hinterlegten Startbestände: 09.09.2026. Vor produktiver Veröffentlichung wird jede Verfügbarkeit erneut gegen die First-Party-Quelle geprüft.</p>
+        <p>Verfügbarkeit und Vermarktungsstatus werden vor jeder Veröffentlichung geprüft.</p>
       </div>
-      <div class="property-cards">
-        {properties.map((property) => <article class="property-card">
-          <p class="kicker">{property.type} · {property.location}</p>
-          <h3>{property.title}</h3>
-          <p class="price">{property.price}</p>
-          <p class="facts">{property.summary}</p>
-          <a href={`/immobilien/${property.slug}/`}>Details ansehen →</a>
-        </article>)}
-      </div>
+      {publishedProperties.length > 0 ? (
+        <div class="property-cards">
+          {publishedProperties.map((property) => <article class="property-card">
+            <p class="kicker">{property.type} · {property.location}</p>
+            <h3>{property.title}</h3>
+            <p class="price">{property.price}</p>
+            <p class="facts">{property.summary}</p>
+            <a href={`/immobilien/${property.slug}/`}>Details ansehen →</a>
+          </article>)}
+        </div>
+      ) : (
+        <div class="content-prose">
+          <h3>Derzeit keine Angebote als aktuell bestätigt</h3>
+          <p>Die bisher dokumentierten Objektdaten bleiben intern erhalten, werden zum Relaunch aber nicht als aktueller Höhn-Bestand ausgegeben. Für aktuelle Kauf- oder Grundstücksanfragen erreichen Sie Höhn Immobilien direkt.</p>
+          <div class="button-row"><a class="button-primary" href="/kontakt/">Aktuelle Angebote anfragen</a></div>
+        </div>
+      )}
     </section>
 
     <section class="after-reference">
