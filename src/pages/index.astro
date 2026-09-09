@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactPanel from '../components/ContactPanel.astro';
+import { properties } from '../data/properties.js';
+---
+<BaseLayout
+  title="Höhn Immobilien | Immobilien an der Ostseeküste"
+  description="Höhn Immobilien begleitet Eigentümer und Käufer an der Ostseeküste bei Verkauf, Wertermittlung und Vermittlung – persönlich und erfahren seit 1986."
+>
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <figure class="hero-photo" aria-hidden="true"><img src="/assets/hero-coast.webp" alt="" /></figure>
+      <div class="hero-photo-fade" aria-hidden="true"></div>
+
+      <div class="hero-copy">
+        <p class="eyebrow">Höhn Immobilien · Ostseeküste</p>
+        <h1 id="hero-title">Immobilien an<br />der Ostseeküste.</h1>
+        <p class="hero-intro">Persönliche Begleitung bei Verkauf, Wertermittlung und Vermittlung – seit 1986.</p>
+        <div class="place-row"><span class="short-rule"></span><span>Dassow · Pötenitz · Rosenhagen · Ostseeküste</span></div>
+        <div class="hero-actions">
+          <a class="btn-primary" href="/immobilie-verkaufen/">Immobilie verkaufen <span>→</span></a>
+          <a class="text-link" href="/immobilien/">Immobilien entdecken</a>
+        </div>
+        <div class="hero-meta">
+          <div class="pager"><span>01</span><span class="pager-line"></span><span>03</span></div>
+          <p>Standort in<br />Dassow OT Pötenitz.</p>
+        </div>
+      </div>
+
+      <aside class="hero-note" aria-label="Unternehmensnotiz">
+        <p class="hero-note-hand">Persönlich<br />seit 1986.</p>
+        <span class="hero-note-rule" aria-hidden="true"></span>
+        <p class="coordinates">HÖHN IMMOBILIEN<br />DASSOW OT PÖTENITZ<br />OSTSEEKÜSTE</p>
+      </aside>
+    </section>
+
+    <section id="regionen" class="region-section" aria-labelledby="region-heading">
+      <div class="map-panel">
+        <img class="map-art" src="/assets/region-map.webp" alt="Illustrative Küstenkarte im Raum Dassow" />
+        <span class="map-caption">Unsere Region</span>
+        <span class="map-compass" aria-hidden="true"><img src="/assets/compass.png" alt="" /></span>
+        <p class="map-coordinates">DASSOW<br />PÖTENITZ<br />ROSENHAGEN</p>
+      </div>
+
+      <div class="region-list" aria-label="Regionen">
+        <article><h3><a href="/regionen/dassow/">DASSOW</a></h3><p>Unternehmensregion und lokaler Hub</p></article>
+        <article><h3><a href="/regionen/poetenitz/">PÖTENITZ</a></h3><p>Standort und aktueller Wohnbestand</p></article>
+        <article><h3><a href="/regionen/rosenhagen/">ROSENHAGEN</a></h3><p>Grundstücke mit konkretem Küstenbezug</p></article>
+      </div>
+
+      <div class="region-story">
+        <p class="eyebrow">Unsere Region</p>
+        <h2 id="region-heading">Eine Küste.<br />Konkrete<br />Lagen.</h2>
+        <p class="region-copy">Wir bauen regionale Seiten dort, wo Standort, Bestand und echte Inhalte sie tragen – nicht dort, wo nur ein Ortsname hübsch klingt.</p>
+      </div>
+
+      <div class="grass-panel" aria-hidden="true">
+        <img src="/assets/region-dune-grass.webp" alt="" />
+        <p class="micro-note">REGION<br />OBJEKT<br />VERTRAUEN</p>
+      </div>
+    </section>
+
+    <section class="property-section" aria-labelledby="property-heading">
+      <div class="property-section-head">
+        <div><p class="eyebrow">Aktueller Bestand</p><h2 id="property-heading">Echte Angebote.<br />Keine Platzhalter.</h2></div>
+        <p>Die Objektübersicht enthält ausschließlich aktuell öffentlich verifizierte Höhn-Angebote. Preise und Status werden vor dem Livegang erneut geprüft.</p>
+      </div>
+      <div class="property-cards">
+        {properties.map((property) => <article class="property-card">
+          <p class="kicker">{property.type} · {property.location}</p>
+          <h3>{property.title}</h3>
+          <p class="price">{property.price}</p>
+          <p class="facts">{property.summary}</p>
+          <a href={`/immobilien/${property.slug}/`}>Objekt ansehen →</a>
+        </article>)}
+      </div>
+    </section>
+
+    <section id="verkaufen" class="after-reference sell-section">
+      <div>
+        <p class="eyebrow">Immobilie verkaufen</p>
+        <h2>Ein guter Verkauf beginnt<br />vor dem Inserat.</h2>
+        <p class="sell-copy">Höhn Immobilien begleitet Eigentümer von Beratung und Wertermittlung über Exposé, Vermarktung und Besichtigungen bis zu Verhandlung, Notartermin und Übergabe.</p>
+        <div class="button-row"><a class="button-primary" href="/immobilie-verkaufen/">Verkauf besprechen</a><a class="button-secondary" href="/immobilienbewertung/">Wertermittlung</a></div>
+      </div>
+    </section>
+
+    <ContactPanel compact={true} />
+
+    <section id="ueber-uns" class="heritage" aria-labelledby="heritage-title">
+      <div class="heritage-year"><span>Seit</span><strong id="heritage-title">1986</strong><i></i></div>
+      <div class="heritage-copy"><p>INHABERGEFÜHRT<br />PERSÖNLICH<br />AN DER OSTSEEKÜSTE.</p></div>
+      <figure class="heritage-sketch"><img src="/assets/heritage-house.webp" alt="Illustration eines norddeutschen Hauses" /></figure>
+      <p class="heritage-note">Wert<br />begleiten.</p>
+      <div class="heritage-values">
+        <div><strong>INHABERGEFÜHRT</strong><span>Christine Bringmann</span></div>
+        <div><strong>REGIONAL</strong><span>Pötenitz / Dassow</span></div>
+        <div><strong>VERMITTLUNG</strong><span>Wohn- & Gewerbe</span></div>
+        <div><strong>ERFAHREN</strong><span>seit 1986</span></div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
