@@ -42,6 +42,7 @@ jobs:
           mkdir -p release-candidate/site release-candidate/deploy-notes
           cp -a dist/. release-candidate/site/
           cp deploy/strato-redirects.htaccess release-candidate/deploy-notes/strato-redirects.htaccess
+          cp deploy/strato-security-headers.htaccess release-candidate/deploy-notes/strato-security-headers.htaccess
           cp STRATO-LAUNCH-RUNBOOK-2026-09-09.md release-candidate/deploy-notes/
           cp LEGACY-URL-REDIRECT-MATRIX-2026-09-09.md release-candidate/deploy-notes/
           cp LEGAL-LAUNCH-GATE-2026-09-09.md release-candidate/deploy-notes/
@@ -53,7 +54,9 @@ jobs:
 
           WICHTIG:
           - Dieser Workflow deployt nichts.
-          - strato-redirects.htaccess niemals ungeprüft als vollständige Live-.htaccess ersetzen.
+          - .htaccess-Vorlagen niemals ungeprüft als vollständige Live-.htaccess ersetzen.
+          - Redirect- und Security-Regeln mit der bestehenden STRATO-Konfiguration zusammenführen.
+          - HSTS/CSP sind bewusst nicht voraktiviert.
           - Impressum/Datenschutz bleiben bis zur finalen Unternehmens-/Produktionsprüfung noindex.
           - Objektstatus, Preise und Verfügbarkeit unmittelbar vor echtem Deployment erneut prüfen.
           - Kontaktformular auf dem echten Höhn-STRATO-Webspace per realer Testanfrage prüfen.
