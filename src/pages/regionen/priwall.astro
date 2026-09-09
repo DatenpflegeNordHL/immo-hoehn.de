@@ -1,0 +1,59 @@
+---
+import ContentPage from '../../components/ContentPage.astro';
+
+const page = {
+  slug: 'regionen/priwall',
+  eyebrow: 'Region Priwall',
+  title: 'Immobilien Priwall | Höhn Immobilien',
+  description: 'Immobilien auf dem Priwall verkaufen, bewerten oder suchen: Höhn Immobilien begleitet Eigentümer und Interessenten persönlich an der Ostseeküste.',
+  h1: 'Immobilien auf dem Priwall – Verkauf, Bewertung und Suche',
+  intro: 'Der Priwall gehört zum lokalen Tätigkeitsbereich von Höhn Immobilien. Die Halbinsel zwischen Trave und Ostsee wird wegen ihrer besonderen Lage als eigenständige Region innerhalb der Website geführt.',
+  heroImage: '/assets/hero-coast.webp',
+  blocks: [
+    {
+      heading: 'Immobilien auf dem Priwall',
+      paragraphs: [
+        'Der Priwall gehört zu Travemünde und liegt zwischen Trave und Ostsee. Für Immobilien ist deshalb nicht nur der Ortsname entscheidend, sondern die konkrete Mikrolage, Nutzung, Grundstücks- oder Wohnsituation sowie der bauliche Zustand.',
+        'Höhn Immobilien begleitet Eigentümer und Interessenten auf dem Priwall persönlich bei Verkauf, Wertermittlung und Vermittlung.'
+      ]
+    },
+    {
+      heading: 'Immobilie auf dem Priwall verkaufen',
+      paragraphs: [
+        'Beim Verkauf eines Hauses, einer Wohnung oder eines Grundstücks auf dem Priwall werden Objekt, Lage und Nutzungsmöglichkeiten getrennt betrachtet. Anschließend kann die Vermarktung mit Exposé, Präsentation, Besichtigungen und Verhandlung strukturiert aufgebaut werden.'
+      ],
+      links: [['/immobilie-verkaufen/','Verkauf besprechen']]
+    },
+    {
+      heading: 'Immobilienbewertung auf dem Priwall',
+      paragraphs: [
+        'Küsten- und Wasserlagen können sich innerhalb kurzer Distanzen deutlich unterscheiden. Eine Bewertung sollte deshalb nicht aus einem pauschalen Ortswert abgeleitet werden. Grundstück, Fläche, Zustand, Ausstattung, genehmigte Nutzung und konkrete Lage müssen objektbezogen geprüft werden.'
+      ],
+      links: [['/immobilienbewertung/','Wertermittlung anfragen']]
+    },
+    {
+      heading: 'Aktuelle Häuser und Wohnungen',
+      paragraphs: [
+        'Aktuelle Höhn-Angebote werden ausschließlich in der Immobilienübersicht veröffentlicht. Gibt es momentan kein eigenes Priwall-Objekt, bleibt die Seite trotzdem als regionale Leistungsseite bestehen, ohne erfundene Kaufangebote oder Referenzen.'
+      ],
+      links: [['/immobilien/','Aktuelle Immobilien ansehen']]
+    },
+    {
+      heading: 'Priwall, Travemünde und die östliche Ostseeküste',
+      paragraphs: [
+        'Der Priwall ist eng mit Travemünde verbunden und liegt zugleich in unmittelbarer Nähe zum Höhn-Standort in Dassow OT Pötenitz. Die Website verknüpft diese Regionen deshalb miteinander, ohne daraus einen zusätzlichen Bürostandort abzuleiten.'
+      ],
+      links: [['/regionen/travemuende/','Travemünde'],['/regionen/poetenitz/','Pötenitz'],['/regionen/dassow/','Dassow']]
+    }
+  ],
+  faqs: [
+    ['Ist Höhn Immobilien auf dem Priwall tätig?','Ja. Der Priwall gehört zum lokalen Tätigkeitsbereich von Höhn Immobilien. Beratung und Vermarktung werden objektbezogen geplant.'],
+    ['Kann Höhn Immobilien eine Immobilie auf dem Priwall bewerten?','Eine Wertermittlung kann für Häuser, Wohnungen und Grundstücke besprochen werden. Entscheidend sind immer die konkrete Lage und die individuellen Objektmerkmale.'],
+    ['Gibt es aktuell Höhn-Immobilien auf dem Priwall?','Aktuelle Angebote werden ausschließlich in der Immobilienübersicht veröffentlicht. Die Regionsseite selbst behauptet keinen Bestand, der dort nicht tatsächlich geführt wird.'],
+    ['Hat Höhn Immobilien einen Standort auf dem Priwall?','Nein eigener Standort wird auf dieser Website behauptet. Der Unternehmenssitz liegt in Dassow OT Pötenitz.']
+  ],
+  primaryCta: ['/kontakt/','Immobilie auf dem Priwall besprechen'],
+  secondaryCta: ['/immobilienbewertung/','Wertermittlung anfragen']
+};
+---
+<ContentPage page={page} />
