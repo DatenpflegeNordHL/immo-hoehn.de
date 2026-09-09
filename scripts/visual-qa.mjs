@@ -18,6 +18,8 @@ const routes = [
   '/regionen/dassow/',
   '/regionen/poetenitz/',
   '/regionen/rosenhagen/',
+  '/regionen/travemuende/',
+  '/regionen/priwall/',
   '/ueber-uns/',
   '/kontakt/',
   '/impressum/',
@@ -111,8 +113,6 @@ for (const route of routes) {
         .filter((x) => x.right > vw + 2 || x.left < -2)
         .slice(0, 20);
 
-      // A lazy image outside the current viewport can legitimately be incomplete.
-      // Only count images that have actually finished loading and resolved to zero pixels.
       const brokenImages = [...document.images]
         .filter((img) => img.complete && img.naturalWidth === 0)
         .map((img) => img.currentSrc || img.src || img.alt || '(unknown)');
