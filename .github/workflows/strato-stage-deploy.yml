@@ -1,0 +1,165 @@
+name: Höhn STRATO Stage Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: 'Zum Upload in den separaten STRATO-Zielordner exakt DEPLOY-HOEHN-STAGE eingeben'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  deploy-stage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Require explicit staging confirmation
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "${{ inputs.confirmation }}" = "DEPLOY-HOEHN-STAGE" || {
+            echo "Abbruch: falsche Bestätigung." >&2
+            exit 1
+          }
+
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Use Node 22
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Validate contact endpoint syntax
+        run: php -l public/api/contact.php
+
+      - name: Build production-intent site
+        env:
+          PUBLIC_SITE_NOINDEX: 'false'
+        run: npm run build
+
+      - name: Run production readiness gate
+        run: node scripts/production-readiness.mjs
+
+      - name: Add clean STRATO htaccess to build
+        run: cp deploy/strato-new-site.htaccess dist/.htaccess
+
+      - name: Validate STRATO deployment secrets and target safety
+        env:
+          STRATO_SSH_HOST: ${{ secrets.STRATO_SSH_HOST }}
+          STRATO_SSH_USER: ${{ secrets.STRATO_SSH_USER }}
+          STRATO_SSH_PRIVATE_KEY: ${{ secrets.STRATO_SSH_PRIVATE_KEY }}
+          STRATO_SSH_KNOWN_HOSTS: ${{ secrets.STRATO_SSH_KNOWN_HOSTS }}
+          STRATO_DEPLOY_DIR: ${{ secrets.STRATO_DEPLOY_DIR }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          for name in STRATO_SSH_HOST STRATO_SSH_USER STRATO_SSH_PRIVATE_KEY STRATO_SSH_KNOWN_HOSTS STRATO_DEPLOY_DIR; do
+            test -n "${!name:-}" || {
+              echo "Abbruch: GitHub Secret $name fehlt." >&2
+              exit 1
+            }
+          done
+
+          [[ "$STRATO_DEPLOY_DIR" =~ ^[A-Za-z0-9._/-]+$ ]] || {
+            echo "Abbruch: STRATO_DEPLOY_DIR enthält unerwartete Zeichen." >&2
+            exit 1
+          }
+
+          case "$STRATO_DEPLOY_DIR" in
+            /|.|./|*/wordpress_01|*/wordpress_02|wordpress_01|wordpress_02)
+              echo "Abbruch: unsicheres oder bestehendes WordPress-Zielverzeichnis." >&2
+              exit 1
+              ;;
+          esac
+
+          if [[ "$STRATO_DEPLOY_DIR" == *"wordpress_"* ]]; then
+            echo "Abbruch: Deployment in einen WordPress-Pfad ist ausdrücklich gesperrt." >&2
+            exit 1
+          fi
+
+      - name: Configure SSH
+        env:
+          STRATO_SSH_PRIVATE_KEY: ${{ secrets.STRATO_SSH_PRIVATE_KEY }}
+          STRATO_SSH_KNOWN_HOSTS: ${{ secrets.STRATO_SSH_KNOWN_HOSTS }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          install -d -m 700 ~/.ssh
+          printf '%s\n' "$STRATO_SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' "$STRATO_SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Verify STRATO SSH connection
+        env:
+          STRATO_SSH_HOST: ${{ secrets.STRATO_SSH_HOST }}
+          STRATO_SSH_USER: ${{ secrets.STRATO_SSH_USER }}
+        run: ssh -o BatchMode=yes -o StrictHostKeyChecking=yes "$STRATO_SSH_USER@$STRATO_SSH_HOST" 'printf "STRATO SSH PASS\n"'
+
+      - name: Create isolated target directory
+        env:
+          STRATO_SSH_HOST: ${{ secrets.STRATO_SSH_HOST }}
+          STRATO_SSH_USER: ${{ secrets.STRATO_SSH_USER }}
+          STRATO_DEPLOY_DIR: ${{ secrets.STRATO_DEPLOY_DIR }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          ssh "$STRATO_SSH_USER@$STRATO_SSH_HOST" "mkdir -p -- '$STRATO_DEPLOY_DIR'"
+
+      - name: Upload Höhn release to isolated STRATO directory
+        env:
+          STRATO_SSH_HOST: ${{ secrets.STRATO_SSH_HOST }}
+          STRATO_SSH_USER: ${{ secrets.STRATO_SSH_USER }}
+          STRATO_DEPLOY_DIR: ${{ secrets.STRATO_DEPLOY_DIR }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          rsync \
+            --archive \
+            --compress \
+            --delete \
+            --human-readable \
+            --itemize-changes \
+            -e 'ssh -o BatchMode=yes -o StrictHostKeyChecking=yes' \
+            dist/ "$STRATO_SSH_USER@$STRATO_SSH_HOST:$STRATO_DEPLOY_DIR/"
+
+      - name: Verify uploaded release files
+        env:
+          STRATO_SSH_HOST: ${{ secrets.STRATO_SSH_HOST }}
+          STRATO_SSH_USER: ${{ secrets.STRATO_SSH_USER }}
+          STRATO_DEPLOY_DIR: ${{ secrets.STRATO_DEPLOY_DIR }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          ssh "$STRATO_SSH_USER@$STRATO_SSH_HOST" "
+            test -f '$STRATO_DEPLOY_DIR/index.html' &&
+            test -f '$STRATO_DEPLOY_DIR/api/contact.php' &&
+            test -f '$STRATO_DEPLOY_DIR/.htaccess' &&
+            test -f '$STRATO_DEPLOY_DIR/sitemap-index.xml' &&
+            printf 'STRATO STAGE FILE CHECK PASS\n'
+          "
+
+      - name: Write deployment summary
+        env:
+          STRATO_DEPLOY_DIR: ${{ secrets.STRATO_DEPLOY_DIR }}
+        shell: bash
+        run: |
+          {
+            echo '## Höhn STRATO Stage Deploy'
+            echo
+            echo "- Commit: $GITHUB_SHA"
+            echo "- Zielordner: \`$STRATO_DEPLOY_DIR\`"
+            echo '- Produktionsbuild + Readiness Gate: PASS'
+            echo '- Upload: PASS'
+            echo '- Alte WordPress-Produktion wurde nicht verändert.'
+            echo '- Domain-Umschaltung ist ausdrücklich NICHT Bestandteil dieses Workflows.'
+          } >> "$GITHUB_STEP_SUMMARY"
