@@ -27,5 +27,8 @@ jobs:
       - name: Install locked dependencies
         run: npm ci --no-audit --no-fund
 
+      - name: Validate contact endpoint
+        run: php -l public/api/contact.php
+
       - name: Build staging site
         run: npm run build
