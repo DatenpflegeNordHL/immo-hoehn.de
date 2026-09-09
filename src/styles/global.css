@@ -30,6 +30,7 @@ main{display:block}
 .button-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;min-width:0}
 .button-primary,.button-secondary{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:0 18px;text-decoration:none;font-size:10px;letter-spacing:.04em;max-width:100%;text-align:center}
 .button-primary{background:#587786;color:white}.button-secondary{border:1px solid rgba(23,58,74,.22);color:#294856}
+.side-card a.button-primary{color:#fff}
 .faq-list{display:grid;gap:10px}
 .faq-list details{border-top:1px solid rgba(23,58,74,.13);padding:16px 0}
 .faq-list summary{cursor:pointer;font:400 22px/1.2 var(--serif)}
