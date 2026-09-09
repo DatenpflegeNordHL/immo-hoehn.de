@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build:
@@ -22,21 +22,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: package.json
-
-      - name: Generate lockfile
-        run: npm install --package-lock-only --ignore-scripts --no-audit --no-fund
-
-      - name: Commit lockfile when missing or changed
-        shell: bash
-        run: |
-          if ! git diff --quiet -- package-lock.json || ! git ls-files --error-unmatch package-lock.json >/dev/null 2>&1; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add package-lock.json
-            git commit -m "build: lock Astro dependencies [skip ci]"
-            git push origin HEAD:redesign/coastal-blueprint
-          fi
+          cache-dependency-path: package-lock.json
 
       - name: Install locked dependencies
         run: npm ci --no-audit --no-fund
