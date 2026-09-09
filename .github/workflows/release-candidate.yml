@@ -1,0 +1,68 @@
+name: Höhn Release Candidate
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release-candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Use Node 22
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Validate contact endpoint syntax
+        run: php -l public/api/contact.php
+
+      - name: Build production-intent site
+        env:
+          PUBLIC_SITE_NOINDEX: 'false'
+        run: npm run build
+
+      - name: Run production readiness gate
+        run: node scripts/production-readiness.mjs
+
+      - name: Assemble release candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p release-candidate/site release-candidate/deploy-notes
+          cp -a dist/. release-candidate/site/
+          cp deploy/strato-redirects.htaccess release-candidate/deploy-notes/strato-redirects.htaccess
+          cp STRATO-LAUNCH-RUNBOOK-2026-09-09.md release-candidate/deploy-notes/
+          cp LEGACY-URL-REDIRECT-MATRIX-2026-09-09.md release-candidate/deploy-notes/
+          cp LEGAL-LAUNCH-GATE-2026-09-09.md release-candidate/deploy-notes/
+          cat > release-candidate/README.txt <<'EOF'
+          HÖHN IMMOBILIEN – RELEASE CANDIDATE
+
+          site/ enthält den geprüften Production-Intent-Build.
+          deploy-notes/ enthält nur Vorlagen und Launch-Unterlagen.
+
+          WICHTIG:
+          - Dieser Workflow deployt nichts.
+          - strato-redirects.htaccess niemals ungeprüft als vollständige Live-.htaccess ersetzen.
+          - Impressum/Datenschutz bleiben bis zur finalen Unternehmens-/Produktionsprüfung noindex.
+          - Objektstatus, Preise und Verfügbarkeit unmittelbar vor echtem Deployment erneut prüfen.
+          - Kontaktformular auf dem echten Höhn-STRATO-Webspace per realer Testanfrage prüfen.
+          EOF
+
+      - name: Upload release candidate
+        uses: actions/upload-artifact@v7
+        with:
+          name: hoehn-release-candidate-${{ github.sha }}
+          path: release-candidate
+          retention-days: 14
+          if-no-files-found: error
