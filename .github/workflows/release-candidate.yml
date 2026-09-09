@@ -45,6 +45,7 @@ jobs:
           cp deploy/strato-new-site.htaccess release-candidate/deploy-notes/strato-new-site.htaccess
           cp deploy/strato-redirects.htaccess release-candidate/deploy-notes/strato-redirects.htaccess
           cp deploy/strato-security-headers.htaccess release-candidate/deploy-notes/strato-security-headers.htaccess
+          cp STRATO-GITHUB-DEPLOY-SETUP-2026-09-09.md release-candidate/deploy-notes/
           cp STRATO-LAUNCH-RUNBOOK-2026-09-09.md release-candidate/deploy-notes/
           cp LEGACY-URL-REDIRECT-MATRIX-2026-09-09.md release-candidate/deploy-notes/
           cp LEGAL-LAUNCH-GATE-2026-09-09.md release-candidate/deploy-notes/
@@ -55,6 +56,7 @@ jobs:
           leeren STRATO-Zielordner vorbereiteten .htaccess.
 
           deploy-notes/ enthält Launch-Unterlagen und Einzelvorlagen.
+          Für den aktuellen Deploy-Weg ist STRATO-GITHUB-DEPLOY-SETUP-2026-09-09.md maßgeblich.
 
           WICHTIG:
           - Dieser Workflow deployt nichts.
