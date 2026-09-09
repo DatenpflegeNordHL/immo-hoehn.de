@@ -1,0 +1,44 @@
+name: Optimize Staging Assets
+
+on:
+  push:
+    branches:
+      - redesign/coastal-blueprint
+    paths:
+      - scripts/optimize-assets.mjs
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  optimize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Use Node 22
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Install image optimizer
+        run: npm install --no-save --no-package-lock sharp@0.35.4
+
+      - name: Generate responsive assets
+        run: node scripts/optimize-assets.mjs
+
+      - name: Commit optimized assets
+        shell: bash
+        run: |
+          git add public/assets/
+          if git diff --cached --quiet; then
+            echo "No optimized asset changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "perf: add optimized responsive assets [asset-opt]"
+          git push origin HEAD:redesign/coastal-blueprint
