@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { properties } from '../../data/properties.js';
+---
+<BaseLayout
+  title="Immobilien an der Ostseeküste | Höhn Immobilien"
+  description="Aktuelle Häuser, Wohnungen und Grundstücke von Höhn Immobilien an der Ostseeküste entdecken. Alle Angebote mit realen Objektdaten und direkter Anfrage."
+>
+  <main class="page-main">
+    <section class="page-hero">
+      <div class="page-hero-copy">
+        <div class="breadcrumbs"><a href="/">Start</a> · Immobilien</div>
+        <p class="eyebrow">Aktueller Bestand</p>
+        <h1>Aktuelle Immobilien an der Ostseeküste</h1>
+        <p class="lead">Hier finden Sie die aktuell öffentlich verifizierten Häuser, Wohnungen und Grundstücke von Höhn Immobilien. Keine Demo-Listings und keine erfundenen Objekte.</p>
+      </div>
+      <figure class="page-hero-media"><img src="/assets/hero-coast.webp" alt="Küstenlandschaft an der Ostsee" /></figure>
+    </section>
+
+    <section class="property-section">
+      <div class="property-section-head">
+        <div><p class="eyebrow">Angebote</p><h2>Immobilien & Grundstücke</h2></div>
+        <p>Datenstand der hier hinterlegten Startbestände: 09.09.2026. Vor produktiver Veröffentlichung wird jede Verfügbarkeit erneut gegen die First-Party-Quelle geprüft.</p>
+      </div>
+      <div class="property-cards">
+        {properties.map((property) => <article class="property-card">
+          <p class="kicker">{property.type} · {property.location}</p>
+          <h3>{property.title}</h3>
+          <p class="price">{property.price}</p>
+          <p class="facts">{property.summary}</p>
+          <a href={`/immobilien/${property.slug}/`}>Details ansehen →</a>
+        </article>)}
+      </div>
+    </section>
+
+    <section class="after-reference">
+      <p class="eyebrow">Für Eigentümer</p>
+      <h2>Sie möchten selbst eine Immobilie anbieten?</h2>
+      <p class="sell-copy">Wenn Sie ein Haus, eine Wohnung oder ein Grundstück verkaufen möchten, sprechen wir mit Ihnen über Wertermittlung, Präsentation und den weiteren Vermarktungsprozess.</p>
+      <div class="button-row"><a class="button-primary" href="/immobilie-verkaufen/">Immobilie verkaufen</a><a class="button-secondary" href="/kontakt/">Kontakt aufnehmen</a></div>
+    </section>
+  </main>
+</BaseLayout>
