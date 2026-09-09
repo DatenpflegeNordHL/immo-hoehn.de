@@ -5,5 +5,9 @@ export default defineConfig({
   site: 'https://immo-hoehn.de',
   output: 'static',
   trailingSlash: 'always',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) => !page.endsWith('/impressum/') && !page.endsWith('/datenschutz/'),
+    }),
+  ],
 });
