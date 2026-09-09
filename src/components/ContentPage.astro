@@ -14,11 +14,11 @@ const crumbs = page.slug.split('/');
         <h1>{page.h1}</h1>
         <p class="lead">{page.intro}</p>
         {(page.primaryCta || page.secondaryCta) && <div class="button-row">
-          {page.primaryCta && <a class="button-primary" href={page.primaryCta[0]}>{page.primaryCta[1]} <span>→</span></a>}
+          {page.primaryCta && <a class="button-primary" href={page.primaryCta[0]}>{page.primaryCta[1]} <span aria-hidden="true">→</span></a>}
           {page.secondaryCta && <a class="button-secondary" href={page.secondaryCta[0]}>{page.secondaryCta[1]}</a>}
         </div>}
       </div>
-      {page.heroImage && <figure class="page-hero-media"><img src={page.heroImage} alt="" /></figure>}
+      {page.heroImage && <figure class="page-hero-media"><img src={page.heroImage} alt="" fetchpriority="high" decoding="async" /></figure>}
     </section>
 
     {page.kind === 'contact' ? <ContactPanel /> : (
