@@ -4,6 +4,8 @@ Stand: 2026-09-09
 
 - Branch: `redesign/coastal-blueprint`
 - `main` bleibt unberührt.
+- Toolchain: Astro `^7.3.2`, `@astrojs/sitemap ^3.7.4`.
+- Node: gerade Version ab `22.12.0`; `.nvmrc` verwendet Node 22.
 - Der Astro-Build ist standardmäßig `noindex,nofollow`.
 - Produktion erst mit `PUBLIC_SITE_NOINDEX=false` bauen.
 - Kontaktformular ist im Staging absichtlich noch ohne Versand.
@@ -15,6 +17,7 @@ Stand: 2026-09-09
 Build:
 
 ```bash
+nvm use
 npm install
 npm run build
 ```
@@ -23,4 +26,10 @@ Preview:
 
 ```bash
 npm run dev
+```
+
+Produktionsbuild erst nach QA/Freigabe:
+
+```bash
+PUBLIC_SITE_NOINDEX=false npm run build
 ```
