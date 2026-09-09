@@ -1,0 +1,44 @@
+# Höhn Immobilien – neue Astro-Produktion auf STRATO
+# Stand: 2026-09-09
+# Für einen NEUEN, leeren Zielordner. Nicht über eine bestehende WordPress-.htaccess legen.
+
+DirectoryIndex index.html
+ErrorDocument 404 /404.html
+
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Sichere, inhaltsgleiche Legacy-Redirects
+  RewriteRule ^verkaufen/?$ /immobilie-verkaufen/ [R=301,L,NE]
+  RewriteRule ^unsere-dienstleistungen/?$ /immobilie-verkaufen/ [R=301,L,NE]
+  RewriteRule ^aktuelle-angebote/?$ /immobilien/ [R=301,L,NE]
+  RewriteRule ^immobilienangebote/?$ /immobilien/ [R=301,L,NE]
+  RewriteRule ^immobilienangebote/kaufen/?$ /immobilien/ [R=301,L,NE]
+  RewriteRule ^immobilienangebote/kaufen/grundstuecke/?$ /immobilien/ [R=301,L,NE]
+  RewriteRule ^immobilienangebote/kaufen/haeuser/?$ /immobilien/ [R=301,L,NE]
+  RewriteRule ^immobilienangebote/kaufen/wohnungen/?$ /immobilien/ [R=301,L,NE]
+  RewriteRule ^datenschutzerklaerung/?$ /datenschutz/ [R=301,L,NE]
+
+  # Objekt-Redirects bleiben bis zum unmittelbar vor Cutover bestätigten Objektstatus deaktiviert.
+  # Objekt 1724
+  # RewriteRule ^immobilienangebote/kaufen/haeuser/efh-poetenitz/?$ /immobilien/einfamilienhaus-poetenitz-1724/ [R=301,L,NE]
+
+  # Objekt 1722, alter Pfad enthält den Schreibfehler "eigentumswohung"
+  # RewriteRule ^immobilienangebote/kaufen/wohnungen/eigentumswohung/?$ /immobilien/eigentumswohnung-poetenitz-1722/ [R=301,L,NE]
+
+  # Rosenhagen
+  # RewriteRule ^immobilienangebote/kaufen/grundstuecke/rosenhagen/?$ /immobilien/baugrundstuecke-rosenhagen/ [R=301,L,NE]
+  # RewriteRule ^immobilienangebote/kaufen/grundstuecke/rosenhagen-von-privat/?$ /immobilien/baugrundstuecke-rosenhagen-von-privat/ [R=301,L,NE]
+</IfModule>
+
+# Bewusst nicht voraktiviert:
+# - HSTS, bis HTTPS und alle Hostvarianten auf Produktion geprüft sind.
+# - CSP, bis die echte Produktionsseite mit ihren legitimen Inline-Anteilen geprüft ist.
+# - www/non-www-Zwang, bis die STRATO-Domainzuordnung live verifiziert wurde.
