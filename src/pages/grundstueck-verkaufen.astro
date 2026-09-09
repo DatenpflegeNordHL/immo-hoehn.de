@@ -1,0 +1,69 @@
+---
+import ContentPage from '../components/ContentPage.astro';
+
+const page = {
+  slug: 'grundstueck-verkaufen',
+  eyebrow: 'Grundstück verkaufen',
+  title: 'Grundstück verkaufen an der Ostseeküste | Höhn Immobilien',
+  description: 'Grundstück verkaufen an der Ostseeküste: Höhn Immobilien begleitet Eigentümer bei Wertermittlung, Aufbereitung, Vermarktung und Verhandlung.',
+  h1: 'Grundstück verkaufen – Potenzial, Lage und Vermarktung zusammen denken',
+  intro: 'Bei einem Grundstück reicht eine Quadratmeterzahl allein nicht aus. Lage, Zuschnitt, Erschließung, vorhandene Unterlagen und mögliche Nutzung prägen die Einordnung und die Vermarktungsstrategie.',
+  heroImage: '/assets/rosenhagen-beach.webp',
+  blocks: [
+    {
+      heading: 'Am Anfang steht eine belastbare Einordnung',
+      paragraphs: [
+        'Vor dem Verkaufsstart betrachten wir das konkrete Grundstück und die Informationen, die für Interessenten und Vermarktung relevant sind. Dazu gehören unter anderem Lage, Größe, Zuschnitt, Erschließung, vorhandene Unterlagen und die aktuell nachvollziehbare Nutzungssituation.',
+        'Nicht jede Fläche lässt sich sinnvoll über einen pauschalen Quadratmeterpreis bewerten. Gerade bei Küstenlagen und unterschiedlichen Grundstücksarten ist die konkrete Situation entscheidend.'
+      ],
+      links: [['/immobilienbewertung/','Wertermittlung besprechen']]
+    },
+    {
+      heading: 'Welche Unterlagen und Angaben sind wichtig?',
+      paragraphs: [
+        'Welche Unterlagen tatsächlich benötigt werden, hängt vom Grundstück und vom Verkaufsfall ab. Zu Beginn wird deshalb geprüft, was bereits vorliegt und welche Angaben für eine nachvollziehbare Vermarktung ergänzt werden sollten.'
+      ],
+      bullets: [
+        'Grundstücksgröße und Lage',
+        'Angaben zu Erschließung und vorhandener Bebauung',
+        'vorhandene Pläne und grundstücksbezogene Unterlagen',
+        'bekannte Nutzungs- oder Projektinformationen',
+        'Besonderheiten des konkreten Grundstücks'
+      ]
+    },
+    {
+      heading: 'Grundstück professionell vermarkten',
+      paragraphs: [
+        'Höhn Immobilien begleitet die Vermarktung mit Objektaufbereitung, Exposé, Immobilienfotografie beziehungsweise geeigneter visueller Darstellung, Veröffentlichung über passende Kanäle, Interessentenauswahl, Besichtigungen und Verhandlung.',
+        'Welche Zielgruppe angesprochen wird, richtet sich nach Grundstück, Lage und nachvollziehbaren Nutzungsmöglichkeiten. Private Käufer und gewerbliche Interessenten können je nach Objekt unterschiedliche Anforderungen haben.'
+      ],
+      links: [['/immobilie-verkaufen/','Zum vollständigen Verkaufsablauf']]
+    },
+    {
+      heading: 'Grundstücke an der Ostseeküste',
+      paragraphs: [
+        'Höhn Immobilien hat einen konkreten Grundstücks- und Projektbezug an der Ostseeküste. Im aktuell öffentlich geführten Bestand befinden sich unter anderem erschlossene Grundstücksangebote in Rosenhagen bei Dassow.',
+        'Aktuelle Preise, Flächen und Verfügbarkeiten werden ausschließlich über die Immobilienübersicht und die jeweiligen Objektseiten veröffentlicht und vor dem Livegang erneut geprüft.'
+      ],
+      links: [['/regionen/rosenhagen/','Rosenhagen'],['/immobilien/','Aktuelle Grundstücke und Immobilien']]
+    },
+    {
+      heading: 'Vom Erstgespräch bis zur Übergabe',
+      paragraphs: [
+        'Nach der Einordnung des Grundstücks werden Preispositionierung, Darstellung und Vermarktungsweg abgestimmt. Höhn Immobilien begleitet anschließend Interessentenkontakte, Besichtigungen und Verhandlungen sowie den weiteren Ablauf bis zum Notartermin und zur Übergabe.',
+        'Baurechtliche, steuerliche oder rechtliche Einzelfragen werden dabei nicht durch pauschale Website-Aussagen ersetzt. Wenn für den konkreten Fall fachliche Spezialberatung notwendig ist, muss diese anhand des jeweiligen Grundstücks geklärt werden.'
+      ]
+    }
+  ],
+  faqs: [
+    ['Wie wird der Wert eines Grundstücks eingeschätzt?','Eine sinnvolle Einordnung berücksichtigt nicht nur die Fläche. Lage, Zuschnitt, Erschließung, vorhandene Bebauung oder Unterlagen, bekannte Nutzungsmöglichkeiten und die aktuelle Marktsituation müssen gemeinsam betrachtet werden.'],
+    ['Welche Unterlagen brauche ich für den Grundstücksverkauf?','Das hängt vom Grundstück ab. Zu Beginn wird geprüft, welche Unterlagen bereits vorhanden sind und welche Angaben für Bewertung, Vermarktung und den weiteren Verkaufsprozess benötigt werden.'],
+    ['Vermittelt Höhn Immobilien auch Grundstücke an gewerbliche Käufer?','Je nach Grundstück und Auftrag können sowohl private als auch gewerbliche Interessenten relevant sein. Die Zielgruppe wird anhand des konkreten Objekts und seiner nachvollziehbaren Nutzungsmöglichkeiten bestimmt.'],
+    ['Kann ich auch ein Grundstück in Travemünde oder auf dem Priwall anbieten?','Ja. Travemünde und Priwall gehören zum lokalen Tätigkeitsbereich von Höhn Immobilien. Auch dort wird jedes Grundstück anhand seiner konkreten Lage und Merkmale betrachtet.'],
+    ['Verspricht Höhn Immobilien eine bestimmte Bebaubarkeit?','Nein. Auf der Website werden keine unbelegten baurechtlichen Zusagen gemacht. Maßgeblich sind die für das konkrete Grundstück nachweisbaren Unterlagen und die jeweils zuständigen Stellen.']
+  ],
+  primaryCta: ['/kontakt/','Grundstück besprechen'],
+  secondaryCta: ['/immobilienbewertung/','Wertermittlung anfragen']
+};
+---
+<ContentPage page={page} />
