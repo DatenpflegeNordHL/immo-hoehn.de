@@ -2,7 +2,7 @@
 
 Stand: 2026-09-09
 Branch: `redesign/coastal-blueprint`
-Status: **KANONISCHE URL-/KEYWORD-ENTSCHEIDUNG**
+Status: **KANONISCHE URL-/KEYWORD-ENTSCHEIDUNG + BUILD-STATUS**
 
 Diese Datei ersetzt ältere Keyword-/URL-Hypothesen, soweit sie ihr widersprechen.
 
@@ -19,8 +19,8 @@ Grundlage:
 
 ## Statuslogik
 
-- `BUILD P0` = jetzt bauen / P0
-- `BUILD P1` = fachlich freigegeben, nach Kern-P0
+- `BUILT P0` = gebaut und QA-geprüft / P0
+- `BUILT P1` = gebaut und QA-geprüft / P1
 - `PHASE B` = später nach Daten-/Inventarentwicklung
 - `BLOCKED` = derzeit nicht bauen
 
@@ -34,13 +34,13 @@ Grundlage:
 │   └── [objekt-slug]/
 ├── immobilie-verkaufen/
 ├── immobilienbewertung/
-├── grundstueck-verkaufen/          [P1]
+├── grundstueck-verkaufen/          [BUILT P1]
 ├── regionen/
 │   ├── dassow/
 │   ├── poetenitz/
 │   ├── rosenhagen/
-│   ├── travemuende/                [P0]
-│   └── priwall/                    [P1 / freigegeben]
+│   ├── travemuende/                [BUILT P0]
+│   └── priwall/                    [BUILT P1]
 ├── ueber-uns/
 ├── kontakt/
 ├── impressum/
@@ -66,21 +66,21 @@ Phase B / später:
 
 | URL | Primary Cluster | Secondary Cluster | Intent | Business Value | Evidence | Status | Conversion |
 |---|---|---|---|---|---|---|---|
-| `/` | Höhn Immobilien / Immobilienmakler Ostseeküste | Dassow, Pötenitz, Travemünde, Priwall, Verkauf, Bewertung | Brand + Commercial | sehr hoch | First-Party + Business Scope | BUILD P0 | Kontakt / Immobilie anbieten |
-| `/immobilie-verkaufen/` | Immobilie verkaufen Ostseeküste | Haus verkaufen, Wohnung verkaufen, Verkaufsablauf | Transactional Seller | sehr hoch | Leistung belegt | BUILD P0 | Verkäufer-Lead |
-| `/immobilienbewertung/` | Immobilienbewertung Ostseeküste | Haus/Wohnung/Grundstück bewerten | Transactional Seller | sehr hoch | Wertermittlung belegt | BUILD P0 | Bewertungs-Lead |
-| `/immobilien/` | Immobilien Ostsee kaufen | Haus/Wohnung/Ferienimmobilie Ostsee kaufen | Buyer | hoch bei echtem Bestand | Nachfrage + reales Inventar | BUILD P0 | Objektanfrage |
-| `/immobilien/[objekt-slug]/` | objektspezifisch | Region + Immobilientyp + Lage | Transactional Buyer | hoch | nur echte Objekte | BUILD P0 | Objektanfrage |
-| `/regionen/dassow/` | Immobilien Dassow | Haus kaufen Dassow, Grundstück, Verkauf/Bewertung | Local Hybrid | hoch | Standort-/Marktbezug | BUILD P0 | Verkäufer + Käufer |
-| `/regionen/poetenitz/` | Immobilien Pötenitz | Haus kaufen Pötenitz, Ostseenähe | Local Hybrid | hoch | Standort + reale Objekte | BUILD P0 | Verkäufer + Käufer |
-| `/regionen/rosenhagen/` | Immobilien Rosenhagen | Grundstück Rosenhagen | Local / Land | hoch | reale Grundstücksangebote | BUILD P0 | Grundstücks-/Seller-Lead |
-| `/regionen/travemuende/` | Immobilienmakler Travemünde / Immobilien Travemünde | Immobilie/Haus/Wohnung verkaufen Travemünde, Bewertung | Commercial Local + Hybrid | sehr hoch | Business-Freigabe + Keyword/SERP | **BUILD P0** | Makler-/Seller-Lead |
-| `/regionen/priwall/` | Immobilien Priwall | Haus/Wohnung Priwall, Verkauf/Bewertung | Hybrid Buyer/Local | hoch | Business-Freigabe + Keyword/SERP | **BUILD P1 / FREIGEGEBEN** | Käufer + Seller |
-| `/grundstueck-verkaufen/` | Grundstück verkaufen Ostseeküste | Grundstück bewerten, Bauland | Transactional Seller | hoch | Grundstücks-/Projektbezug | BUILD P1 | Grundstücks-Lead |
-| `/ueber-uns/` | Höhn Immobilien / Christine Bringmann | seit 1986, Erfahrung | Trust / Brand | mittel-hoch | First-Party | BUILD P1 | Trust / Kontakt |
-| `/kontakt/` | Höhn Immobilien Kontakt | Beratung, Verkauf, Bewertung | Navigational / Lead | sehr hoch | First-Party | BUILD P0 | Lead |
-| `/impressum/` | Brand/Legal | NAP | Navigational | Pflicht | First-Party | BUILD P0 | keine SEO-Optimierung |
-| `/datenschutz/` | Legal | Formular/Tracking | Navigational | Pflicht | rechtlich zu prüfen | BUILD P0 | keine SEO-Optimierung |
+| `/` | Höhn Immobilien / Immobilienmakler Ostseeküste | Dassow, Pötenitz, Travemünde, Priwall, Verkauf, Bewertung | Brand + Commercial | sehr hoch | First-Party + Business Scope | BUILT P0 | Kontakt / Immobilie anbieten |
+| `/immobilie-verkaufen/` | Immobilie verkaufen Ostseeküste | Haus verkaufen, Wohnung verkaufen, Verkaufsablauf | Transactional Seller | sehr hoch | Leistung belegt | BUILT P0 | Verkäufer-Lead |
+| `/immobilienbewertung/` | Immobilienbewertung Ostseeküste | Haus/Wohnung/Grundstück bewerten | Transactional Seller | sehr hoch | Wertermittlung belegt | BUILT P0 | Bewertungs-Lead |
+| `/immobilien/` | Immobilien Ostsee kaufen | Haus/Wohnung/Ferienimmobilie Ostsee kaufen | Buyer | hoch bei echtem Bestand | Nachfrage + reales Inventar | BUILT P0 | Objektanfrage |
+| `/immobilien/[objekt-slug]/` | objektspezifisch | Region + Immobilientyp + Lage | Transactional Buyer | hoch | nur echte Objekte | BUILT P0 | Objektanfrage |
+| `/regionen/dassow/` | Immobilien Dassow | Haus kaufen Dassow, Grundstück, Verkauf/Bewertung | Local Hybrid | hoch | Standort-/Marktbezug | BUILT P0 | Verkäufer + Käufer |
+| `/regionen/poetenitz/` | Immobilien Pötenitz | Haus kaufen Pötenitz, Ostseenähe | Local Hybrid | hoch | Standort + reale Objekte | BUILT P0 | Verkäufer + Käufer |
+| `/regionen/rosenhagen/` | Immobilien Rosenhagen | Grundstück Rosenhagen | Local / Land | hoch | reale Grundstücksangebote | BUILT P0 | Grundstücks-/Seller-Lead |
+| `/regionen/travemuende/` | Immobilienmakler Travemünde / Immobilien Travemünde | Immobilie/Haus/Wohnung verkaufen Travemünde, Bewertung | Commercial Local + Hybrid | sehr hoch | Business-Freigabe + Keyword/SERP | **BUILT P0** | Makler-/Seller-Lead |
+| `/regionen/priwall/` | Immobilien Priwall | Haus/Wohnung Priwall, Verkauf/Bewertung | Hybrid Buyer/Local | hoch | Business-Freigabe + Keyword/SERP | **BUILT P1** | Käufer + Seller |
+| `/grundstueck-verkaufen/` | Grundstück verkaufen Ostseeküste | Grundstück bewerten, Bauland | Transactional Seller | hoch | Grundstücks-/Projektbezug | **BUILT P1** | Grundstücks-Lead |
+| `/ueber-uns/` | Höhn Immobilien / Christine Bringmann | seit 1986, Erfahrung | Trust / Brand | mittel-hoch | First-Party | BUILT P1 | Trust / Kontakt |
+| `/kontakt/` | Höhn Immobilien Kontakt | Beratung, Verkauf, Bewertung | Navigational / Lead | sehr hoch | First-Party | BUILT P0 | Lead |
+| `/impressum/` | Brand/Legal | NAP | Navigational | Pflicht | First-Party, Rechtsdetails noch offen | BUILT P0 / LEGAL GATE | keine SEO-Optimierung |
+| `/datenschutz/` | Legal | Formular/Tracking | Navigational | Pflicht | rechtlich zu prüfen | BUILT P0 / LEGAL GATE | keine SEO-Optimierung |
 
 ---
 
@@ -211,9 +211,9 @@ Diese Regionen benötigen weiterhin einen eigenen Business-/Evidence-Pass.
 
 ---
 
-# 8. Build-Reihenfolge
+# 8. Build-Status
 
-Freigegeben:
+Gebaut und QA-geprüft:
 
 1. `/`
 2. `/immobilie-verkaufen/`
@@ -228,6 +228,8 @@ Freigegeben:
 11. `/ueber-uns/`
 12. `/grundstueck-verkaufen/`
 
+Aktueller QA-Stand: 18 statische Seiten gebaut, 170/170 Multi-Viewport-Prüfungen bestanden und 16/16 Lighthouse-Hard-Gates bestanden.
+
 ---
 
 # 9. Kanonische Kontaktdaten-Regel
@@ -238,4 +240,4 @@ Für alle neuen Seiten und Templates:
 - keine `@t-online.de`-Adresse übernehmen
 - NAP konsistent halten
 
-Damit ist die Keyword-to-URL-Phase für Travemünde und Priwall ebenfalls freigegeben und eingefroren.
+Damit ist die Keyword-to-URL-Phase für die aktuelle Phase-A-Architektur eingefroren. Weitere URLs nur nach Business-/Evidence-Gate oder Search-Console-Evidence.
