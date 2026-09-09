@@ -1,0 +1,70 @@
+name: Lighthouse QA
+
+on:
+  push:
+    branches:
+      - redesign/coastal-blueprint
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Use Node 22
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Build staging site
+        env:
+          PUBLIC_SITE_NOINDEX: 'true'
+        run: npm run build
+
+      - name: Start local preview
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4321 > /tmp/astro-preview.log 2>&1 &
+          echo $! > /tmp/astro-preview.pid
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:4321/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/astro-preview.log
+          exit 1
+
+      - name: Run Lighthouse audits
+        shell: bash
+        run: |
+          mkdir -p lighthouse-results
+          ROUTES=("home:/" "verkaufen:/immobilie-verkaufen/" "bewertung:/immobilienbewertung/" "immobilien:/immobilien/" "poetenitz:/regionen/poetenitz/")
+          for item in "${ROUTES[@]}"; do
+            name="${item%%:*}"
+            route="${item#*:}"
+            npx --yes lighthouse@13.4.1 "http://127.0.0.1:4321${route}" \
+              --quiet --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+              --output=json --output-path="lighthouse-results/${name}-mobile.json"
+            npx --yes lighthouse@13.4.1 "http://127.0.0.1:4321${route}" \
+              --quiet --preset=desktop --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+              --output=json --output-path="lighthouse-results/${name}-desktop.json"
+          done
+
+      - name: Summarize and enforce quality thresholds
+        run: node scripts/summarize-lighthouse.mjs lighthouse-results
+
+      - name: Upload Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: lighthouse-${{ github.sha }}
+          path: lighthouse-results/
+          retention-days: 14
