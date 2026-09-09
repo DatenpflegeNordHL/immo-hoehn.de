@@ -1,0 +1,21 @@
+---
+const current = Astro.url.pathname;
+const links = [
+  ['/immobilie-verkaufen/','Verkaufen'],
+  ['/immobilienbewertung/','Bewertung'],
+  ['/immobilien/','Immobilien'],
+  ['/#regionen','Regionen'],
+  ['/ueber-uns/','Über uns'],
+  ['/kontakt/','Kontakt'],
+];
+---
+<header class="site-header">
+  <a class="brand" href="/" aria-label="Höhn Immobilien Startseite">
+    <span class="brand-name">HÖHN IMMOBILIEN</span>
+    <span class="brand-sub">Ostseeküste · Seit 1986</span>
+  </a>
+  <nav class="main-nav" aria-label="Hauptnavigation">
+    {links.map(([href,label]) => <a href={href} aria-current={current === href ? 'page' : undefined}>{label}</a>)}
+  </nav>
+  <a class="header-cta" href="/immobilie-verkaufen/">Immobilie verkaufen <span>→</span></a>
+</header>
