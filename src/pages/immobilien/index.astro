@@ -1,11 +1,31 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { properties } from '../../data/properties.js';
+
+const site = Astro.site ?? new URL('https://immo-hoehn.de');
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Höhn Immobilien',
+      item: new URL('/', site).href,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Immobilien',
+    },
+  ],
+};
 ---
 <BaseLayout
   title="Immobilien an der Ostseeküste | Höhn Immobilien"
   description="Aktuelle Häuser, Wohnungen und Grundstücke von Höhn Immobilien an der Ostseeküste entdecken. Alle Angebote mit realen Objektdaten und direkter Anfrage."
 >
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
   <main class="page-main">
     <section class="page-hero">
       <div class="page-hero-copy">
