@@ -9,7 +9,7 @@ import { properties } from '../data/properties.js';
 >
   <main id="top">
     <section class="hero" aria-labelledby="hero-title">
-      <figure class="hero-photo" aria-hidden="true"><img src="/assets/hero-coast.webp" alt="" /></figure>
+      <figure class="hero-photo" aria-hidden="true"><img src="/assets/hero-coast.webp" alt="" fetchpriority="high" decoding="async" /></figure>
       <div class="hero-photo-fade" aria-hidden="true"></div>
 
       <div class="hero-copy">
@@ -18,7 +18,7 @@ import { properties } from '../data/properties.js';
         <p class="hero-intro">Persönliche Begleitung bei Verkauf, Wertermittlung und Vermittlung – seit 1986.</p>
         <div class="place-row"><span class="short-rule"></span><span>Dassow · Pötenitz · Rosenhagen · Ostseeküste</span></div>
         <div class="hero-actions">
-          <a class="btn-primary" href="/immobilie-verkaufen/">Immobilie verkaufen <span>→</span></a>
+          <a class="btn-primary" href="/immobilie-verkaufen/">Immobilie verkaufen <span aria-hidden="true">→</span></a>
           <a class="text-link" href="/immobilien/">Immobilien entdecken</a>
         </div>
         <div class="hero-meta">
@@ -36,16 +36,16 @@ import { properties } from '../data/properties.js';
 
     <section id="regionen" class="region-section" aria-labelledby="region-heading">
       <div class="map-panel">
-        <img class="map-art" src="/assets/region-map.webp" alt="Illustrative Küstenkarte im Raum Dassow" />
+        <img class="map-art" src="/assets/region-map.webp" alt="Illustrative Küstenkarte im Raum Dassow" loading="lazy" decoding="async" />
         <span class="map-caption">Unsere Region</span>
-        <span class="map-compass" aria-hidden="true"><img src="/assets/compass.png" alt="" /></span>
+        <span class="map-compass" aria-hidden="true"><img src="/assets/compass.png" alt="" loading="lazy" decoding="async" /></span>
         <p class="map-coordinates">DASSOW<br />PÖTENITZ<br />ROSENHAGEN</p>
       </div>
 
       <div class="region-list" aria-label="Regionen">
-        <article><h3><a href="/regionen/dassow/">DASSOW</a></h3><p>Unternehmensregion und lokaler Hub</p></article>
-        <article><h3><a href="/regionen/poetenitz/">PÖTENITZ</a></h3><p>Standort und aktueller Wohnbestand</p></article>
-        <article><h3><a href="/regionen/rosenhagen/">ROSENHAGEN</a></h3><p>Grundstücke mit konkretem Küstenbezug</p></article>
+        <article><p class="region-title"><a href="/regionen/dassow/">DASSOW</a></p><p>Unternehmensregion und lokaler Hub</p></article>
+        <article><p class="region-title"><a href="/regionen/poetenitz/">PÖTENITZ</a></p><p>Standort und aktueller Wohnbestand</p></article>
+        <article><p class="region-title"><a href="/regionen/rosenhagen/">ROSENHAGEN</a></p><p>Grundstücke mit konkretem Küstenbezug</p></article>
       </div>
 
       <div class="region-story">
@@ -55,7 +55,7 @@ import { properties } from '../data/properties.js';
       </div>
 
       <div class="grass-panel" aria-hidden="true">
-        <img src="/assets/region-dune-grass.webp" alt="" />
+        <img src="/assets/region-dune-grass.webp" alt="" loading="lazy" decoding="async" />
         <p class="micro-note">REGION<br />OBJEKT<br />VERTRAUEN</p>
       </div>
     </section>
@@ -90,7 +90,7 @@ import { properties } from '../data/properties.js';
     <section id="ueber-uns" class="heritage" aria-labelledby="heritage-title">
       <div class="heritage-year"><span>Seit</span><strong id="heritage-title">1986</strong><i></i></div>
       <div class="heritage-copy"><p>INHABERGEFÜHRT<br />PERSÖNLICH<br />AN DER OSTSEEKÜSTE.</p></div>
-      <figure class="heritage-sketch"><img src="/assets/heritage-house.webp" alt="Illustration eines norddeutschen Hauses" /></figure>
+      <figure class="heritage-sketch"><img src="/assets/heritage-house.webp" alt="Illustration eines norddeutschen Hauses" loading="lazy" decoding="async" /></figure>
       <p class="heritage-note">Wert<br />begleiten.</p>
       <div class="heritage-values">
         <div><strong>INHABERGEFÜHRT</strong><span>Christine Bringmann</span></div>
