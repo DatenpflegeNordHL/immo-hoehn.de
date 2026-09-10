@@ -45,7 +45,7 @@ copy_media 'Luftbild-Annimation-Rosenhagen-Kopie-2' 'rosenhagen-projekt.webp'
 copy_media 'Bildschirmfoto-2026-07-20-um-20.53.07' 'rosenhagen-kataster.png'
 copy_media 'Luftbild-Rosenhagen2' 'rosenhagen-luftbild.webp'
 copy_media 'Strandvilla-front' 'strandvilla-visualisierung.webp'
-copy_media 'Expose-Terrasse' 'terrasse-visualisierung.webp'
+copy_media 'Expose-Terrasse' 'terrasse-visualisierung.png'
 copy_media 'Strand-1' 'rosenhagen-strand-1.webp'
 copy_media 'Strand-4' 'rosenhagen-strand-4.webp'
 
