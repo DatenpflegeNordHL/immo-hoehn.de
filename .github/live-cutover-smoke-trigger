@@ -1,4 +1,5 @@
-Run live verification after deployment
+Run live verification after landline-removal deployment
 2026-09-10
-Deployed source parent: 895d2a2db734fd684d8617d471b4f79ed79f3118
-Deploy trigger commit: dcc0d090b5dac376c516858029247cc1cad431c8
+Deploy source: da646f799b9a691c1e88fd694631e97b8a4a291e
+Check every public live page for obsolete Höhn landline 038826 80911 and tel:+493882680911.
+Keep authority telephone 038828 3300 untouched.
