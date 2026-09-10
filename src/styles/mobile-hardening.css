@@ -120,6 +120,14 @@
 
 @media (max-width: 360px) {
   .site-header .main-nav {
-    gap: 12px;
+    gap: 0;
+    justify-content: space-between;
+    overflow-x: visible;
+  }
+
+  .site-header .main-nav a {
+    flex: 0 1 auto;
+    padding: 0 2px;
+    font-size: 9.5px;
   }
 }
