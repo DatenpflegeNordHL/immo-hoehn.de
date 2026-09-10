@@ -85,6 +85,9 @@ for (const file of htmlFiles) {
   const html = readFileSync(file, 'utf8');
 
   if (/hoehn\.immobilien@t-online\.de/i.test(html)) fail(`${route}: alte T-Online-Adresse im Build gefunden.`);
+  if (/038826(?:\s|&nbsp;)*80911|\+49(?:\s|&nbsp;)*38826(?:\s|&nbsp;)*80911/i.test(html)) {
+    fail(`${route}: alte Höhn-Festnetznummer im öffentlichen Build gefunden.`);
+  }
   if (/DatenpflegeNord/i.test(html)) fail(`${route}: fremdes Projektbranding im öffentlichen Build gefunden.`);
   if (/Staging-(?:Fassung|Platzhalter)|Staging-Fassung|Staging-Platzhalter|Arbeitsbranch noch nicht für den Produktivbetrieb/i.test(html)) {
     fail(`${route}: Staging-/Arbeitsbranch-Text im Production-Build gefunden.`);
