@@ -1,57 +1,29 @@
-/* Live presentation corrections, 2026-09-10.
-   Loaded after the bundled site CSS. The homepage uses three art-directed
-   compositions (hero, region, heritage). On mobile their text and imagery
-   remain inside the same visual canvas instead of becoming stacked blocks. */
+/* Mobile art-direction lock, 2026-09-10.
+   Hero, region and heritage are each a single visual composition. On phones
+   the artwork is the section background and the copy lives inside it. */
 
 @media (max-width: 900px) {
-  /* HERO: copy and coast photograph are one composition. */
+  /* 1. HERO */
   .hero {
     position: relative;
     display: block;
     height: clamp(700px, 178vw, 820px);
     min-height: 700px;
-    padding-top: 0;
+    padding: 0;
     isolation: isolate;
     overflow: hidden;
-    background: var(--paper);
+    background-color: var(--paper);
+    background-image:
+      linear-gradient(180deg, rgba(245,244,240,.44) 0%, rgba(245,244,240,.30) 30%, rgba(245,244,240,.16) 52%, rgba(245,244,240,.04) 72%, rgba(245,244,240,0) 86%),
+      url('/assets/hero-coast-960.webp');
+    background-size: cover;
+    background-position: 64% 64%;
+    background-repeat: no-repeat;
   }
 
-  .hero-photo {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-  }
-
-  .hero-photo img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    aspect-ratio: auto;
-    object-fit: cover;
-    object-position: 64% 64%;
-  }
-
+  .hero-photo,
   .hero-photo-fade {
-    display: block;
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    background: linear-gradient(
-      180deg,
-      rgba(245, 244, 240, .66) 0%,
-      rgba(245, 244, 240, .60) 28%,
-      rgba(245, 244, 240, .46) 45%,
-      rgba(245, 244, 240, .25) 60%,
-      rgba(245, 244, 240, .08) 72%,
-      rgba(245, 244, 240, 0) 84%
-    );
+    display: none;
   }
 
   .hero-copy {
@@ -66,6 +38,16 @@
     background: transparent;
   }
 
+  .hero-copy::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0 0 auto 0;
+    height: 62%;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(245,244,240,.48), rgba(245,244,240,.14) 72%, transparent);
+  }
+
   .hero-actions {
     gap: 16px;
     flex-wrap: wrap;
@@ -78,7 +60,7 @@
     margin-top: 32px;
   }
 
-  /* REGION: story + locations stay over one continuous map canvas. */
+  /* 2. REGION */
   .region-section {
     position: relative;
     display: block;
@@ -87,18 +69,17 @@
     min-height: 780px;
     overflow: hidden;
     isolation: isolate;
-    background: var(--paper-region);
+    background-color: var(--paper-region);
+    background-image:
+      linear-gradient(180deg, rgba(245,245,243,.32) 0%, rgba(245,245,243,.12) 42%, rgba(245,245,243,.08) 70%, rgba(245,245,243,.28) 100%),
+      url('/assets/region-map-960.webp');
+    background-size: cover;
+    background-position: center 46%;
+    background-repeat: no-repeat;
   }
 
   .region-section::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background:
-      linear-gradient(180deg, rgba(245,245,243,.36) 0%, rgba(245,245,243,.18) 32%, rgba(245,245,243,.08) 60%, rgba(245,245,243,.30) 100%),
-      url('/assets/region-map-960.webp') center 46% / cover no-repeat;
+    display: none;
   }
 
   .region-section > .map-panel,
@@ -114,6 +95,7 @@
     min-height: 0;
     overflow: hidden;
     pointer-events: none;
+    background: transparent;
   }
 
   .map-art {
@@ -125,7 +107,7 @@
     left: auto;
     right: 24px;
     font-size: 20px;
-    opacity: .68;
+    opacity: .72;
   }
 
   .map-compass {
@@ -135,7 +117,7 @@
     bottom: 26px;
     width: 40px;
     height: 40px;
-    opacity: .38;
+    opacity: .42;
   }
 
   .map-coordinates {
@@ -150,7 +132,7 @@
     min-height: 0;
     padding: 54px 22px 24px;
     border: 0;
-    background: linear-gradient(180deg, rgba(245,245,243,.34), rgba(245,245,243,.08));
+    background: linear-gradient(180deg, rgba(245,245,243,.38), rgba(245,245,243,.08));
   }
 
   .region-story h2 {
@@ -164,7 +146,7 @@
     max-width: 560px;
     font-size: 11px;
     line-height: 1.48;
-    color: #314b57;
+    color: #294856;
   }
 
   .region-list {
@@ -178,7 +160,7 @@
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 17px 24px;
-    background: rgba(245,245,243,.12);
+    background: rgba(245,245,243,.10);
   }
 
   .region-list article {
@@ -195,20 +177,20 @@
     overflow: hidden;
     z-index: 1 !important;
     pointer-events: none;
+    background: transparent;
   }
 
   .grass-panel img {
     display: block;
     position: absolute;
     right: -7%;
-    top: auto;
     bottom: 0;
     width: 58%;
     height: 48%;
     object-fit: cover;
     object-position: 72% 50%;
     mix-blend-mode: multiply;
-    opacity: .22;
+    opacity: .18;
     filter: saturate(.68) contrast(.95) brightness(1.02);
   }
 
@@ -219,7 +201,7 @@
     opacity: .72;
   }
 
-  /* HERITAGE: year, house drawing and values stay on one visual field. */
+  /* 3. HERITAGE */
   .heritage {
     position: relative;
     display: block;
@@ -227,26 +209,35 @@
     min-height: 560px;
     overflow: hidden;
     isolation: isolate;
-    background: rgba(241,240,236,.94);
+    background-color: rgba(241,240,236,.94);
+    background-image:
+      linear-gradient(180deg, rgba(241,240,236,.28), rgba(241,240,236,.10) 60%, rgba(241,240,236,.32)),
+      url('/assets/heritage-house-600.webp');
+    background-size: auto, min(104%, 760px);
+    background-position: center, center 42%;
+    background-repeat: no-repeat;
+  }
+
+  .heritage-sketch {
+    display: none;
   }
 
   .heritage-year,
   .heritage-copy,
-  .heritage-sketch,
   .heritage-note,
   .heritage-values {
     position: absolute;
     right: auto;
     margin: 0;
+    z-index: 3;
   }
 
   .heritage-year {
     left: 22px;
     top: 42px;
-    z-index: 3;
     width: 158px;
     height: 160px;
-    border-right: 1px solid rgba(23,58,74,.14);
+    border-right: 1px solid rgba(23,58,74,.18);
   }
 
   .heritage-year span {
@@ -260,50 +251,26 @@
   .heritage-copy {
     left: 205px;
     top: 62px;
-    z-index: 3;
     width: 150px;
-  }
-
-  .heritage-sketch {
-    left: 0;
-    top: 40px;
-    z-index: 1;
-    width: 100%;
-    height: 430px;
-    overflow: hidden;
-  }
-
-  .heritage-sketch img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-    mix-blend-mode: multiply;
-    opacity: .68;
-    filter: saturate(.50) contrast(1.02) brightness(1.02);
   }
 
   .heritage-note {
     left: auto;
     right: 34px;
     top: 325px;
-    z-index: 3;
     width: 105px;
   }
 
   .heritage-values {
     left: 22px;
     right: 22px;
-    top: auto;
     bottom: 30px;
-    z-index: 3;
     height: auto;
-    margin: 0;
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    border-left: 1px solid rgba(23,58,74,.14);
-    border-top: 1px solid rgba(23,58,74,.14);
-    background: rgba(241,240,236,.42);
+    border-left: 1px solid rgba(23,58,74,.16);
+    border-top: 1px solid rgba(23,58,74,.16);
+    background: rgba(241,240,236,.36);
   }
 
   .heritage-values div {
@@ -314,6 +281,7 @@
 @media (max-width: 580px) {
   .hero {
     height: clamp(700px, 194vw, 790px);
+    background-position: 61% 64%;
   }
 
   .hero-copy {
@@ -323,6 +291,7 @@
   .region-section {
     height: clamp(810px, 210vw, 940px);
     min-height: 810px;
+    background-position: 46% 46%;
   }
 
   .region-story {
@@ -353,6 +322,8 @@
   .heritage {
     height: 620px;
     min-height: 620px;
+    background-size: auto, 120%;
+    background-position: center, center 44%;
   }
 
   .heritage-year {
@@ -370,13 +341,6 @@
     right: 22px;
     top: 62px;
     width: 128px;
-  }
-
-  .heritage-sketch {
-    left: 0;
-    top: 38px;
-    width: 100%;
-    height: 420px;
   }
 
   .heritage-note {
