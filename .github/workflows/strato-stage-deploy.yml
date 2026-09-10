@@ -53,6 +53,9 @@ jobs:
       - name: Validate contact endpoint syntax
         run: php -l public/api/contact.php
 
+      - name: Verify legacy property image sources
+        run: node scripts/property-media-preflight.mjs
+
       - name: Build production-intent site
         env:
           PUBLIC_SITE_NOINDEX: 'false'
@@ -171,6 +174,7 @@ jobs:
             echo
             echo "- Commit: $GITHUB_SHA"
             echo "- Zielordner: \`$STRATO_DEPLOY_DIR\`"
+            echo '- Immobilienbild-Preflight: PASS'
             echo '- Produktionsbuild + Readiness Gate: PASS'
             echo '- Upload: PASS'
             echo '- Alte WordPress-Produktion wurde nicht verändert.'
