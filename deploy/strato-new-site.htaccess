@@ -10,6 +10,7 @@ ErrorDocument 404 /404.html
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  Header always set Strict-Transport-Security "max-age=15552000"
 </IfModule>
 
 <IfModule mod_rewrite.c>
@@ -43,6 +44,7 @@ ErrorDocument 404 /404.html
   # RewriteRule ^immobilienangebote/kaufen/grundstuecke/rosenhagen-von-privat/?$ /immobilien/baugrundstuecke-rosenhagen-von-privat/ [R=301,L,NE]
 </IfModule>
 
+# Nach Live-Verifikation aktiviert:
+# - HSTS: max-age=15552000, bewusst ohne includeSubDomains und preload.
 # Bewusst nicht voraktiviert:
-# - HSTS, bis HTTPS und alle Hostvarianten auf Produktion geprüft sind und der Live-Header separat verifiziert wurde.
 # - CSP, bis die echte Produktionsseite mit ihren legitimen Inline-Anteilen geprüft ist.
