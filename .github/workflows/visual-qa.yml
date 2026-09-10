@@ -32,8 +32,13 @@ jobs:
           npm install --no-save --package-lock=false playwright@1.63.0
           npx playwright install --with-deps chromium
 
-      - name: Build staging site
+      - name: Build production-intent audit site
+        env:
+          PUBLIC_SITE_NOINDEX: 'false'
         run: npm run build
+
+      - name: Run production readiness gate
+        run: node scripts/production-readiness.mjs
 
       - name: Reject removed legacy contact data
         run: node scripts/legacy-contact-qa.mjs
