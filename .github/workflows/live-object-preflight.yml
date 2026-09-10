@@ -1,4 +1,4 @@
-name: Höhn Live Object Preflight
+name: Höhn Historical Object Safety Preflight
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ permissions:
   contents: read
 
 jobs:
-  live-object-preflight:
+  historical-object-safety:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
@@ -19,5 +19,5 @@ jobs:
         with:
           node-version: 22
 
-      - name: Re-check four public Höhn object pages
+      - name: Verify historical/noindex object safety state
         run: node scripts/live-object-preflight.mjs
