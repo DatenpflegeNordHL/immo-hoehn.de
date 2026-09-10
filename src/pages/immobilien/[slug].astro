@@ -10,12 +10,15 @@ export function getStaticPaths() {
 
 const { property } = Astro.props;
 const media = getPropertyMedia(property.slug);
-const mediaFallback = property.location === 'Rosenhagen' ? '/assets/rosenhagen-beach.webp' : '/assets/hero-coast-960.webp';
-const heroLabel = media.hero.kind === 'object' ? 'Objektbild' : media.hero.kind === 'project' ? 'Projektbild' : 'Lagebild';
+const mediaFallback = '/assets/rosenhagen-beach.webp';
+const mediaLabel = (kind) => {
+  if (kind === 'plan') return 'Kataster / Plan';
+  if (kind === 'visualization') return 'Visualisierung';
+  if (kind === 'location') return 'Lagebild';
+  return 'Projektbild';
+};
 const title = `${property.title} | Höhn Immobilien`;
-const description = PUBLISH_PROPERTY_LISTINGS
-  ? `${property.summary} Aktuelle Objektdaten von Höhn Immobilien.`
-  : `${property.summary} Dokumentierte Angaben aus dem bisherigen Höhn-Bestand; aktuelle Verfügbarkeit ist nicht bestätigt.`;
+const description = `${property.summary} Informationen und persönliche Beratung von Höhn Immobilien.`;
 const site = Astro.site ?? new URL('https://immo-hoehn.de');
 const breadcrumbSchema = {
   '@context': 'https://schema.org',
@@ -40,13 +43,12 @@ const breadcrumbSchema = {
     },
   ],
 };
-const statusLabel = PUBLISH_PROPERTY_LISTINGS ? property.status : 'Verfügbarkeit nicht aktuell bestätigt';
 ---
 <BaseLayout
   title={title}
   description={description}
-  image={mediaFallback}
-  imageAlt={`${property.title} – Höhn Immobilien`}
+  image={media.hero.src}
+  imageAlt={media.hero.alt}
   forceNoindex={!PUBLISH_PROPERTY_LISTINGS}
 >
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)}></script>
@@ -54,7 +56,7 @@ const statusLabel = PUBLISH_PROPERTY_LISTINGS ? property.status : 'Verfügbarkei
     <section class="page-hero">
       <div class="page-hero-copy">
         <div class="breadcrumbs"><a href="/">Start</a> · <a href="/immobilien/">Immobilien</a> · {property.location}</div>
-        <p class="eyebrow">{property.type} · {statusLabel}</p>
+        <p class="eyebrow">{property.type} · {property.status}</p>
         <h1>{property.title}</h1>
         <p class="lead">{property.summary}</p>
         <div class="button-row"><a class="button-primary" href="/kontakt/">Verfügbarkeit anfragen</a><a class="button-secondary" href="/immobilien/">Immobilienübersicht</a></div>
@@ -66,45 +68,33 @@ const statusLabel = PUBLISH_PROPERTY_LISTINGS ? property.status : 'Verfügbarkei
           loading="eager"
           fetchpriority="high"
           decoding="async"
-          onerror="this.style.display='none';this.nextElementSibling.textContent='Lagebild';"
+          onerror="this.style.display='none';"
         />
-        <figcaption class="property-media-label">{heroLabel}</figcaption>
+        <figcaption class="property-media-label">{mediaLabel(media.hero.kind)}</figcaption>
       </figure>
     </section>
 
     <div class="content-wrap">
       <div class="content-grid">
         <article class="content-prose">
-          {!PUBLISH_PROPERTY_LISTINGS && (
-            <section class="content-block object-source-note">
-              <p class="eyebrow">Hinweis zum Datenstand</p>
-              <h2>Dieses Objekt wird derzeit nicht als aktuelles Höhn-Angebot veröffentlicht</h2>
-              <p>Die folgenden Angaben stammen aus dem dokumentierten bisherigen Höhn-Bestand. Ein aktuelles Vermarktungsmandat und die heutige Verfügbarkeit konnten zum Relaunch nicht frisch bestätigt werden. Bitte fragen Sie den aktuellen Status direkt bei Höhn Immobilien an.</p>
-            </section>
-          )}
-
           <section class="content-block">
             <p class="eyebrow">Eckdaten</p>
             <h2>{property.price}</h2>
             <div class="detail-facts">
               {property.facts.map(([label,value]) => <div class="detail-fact"><span>{label}</span><strong>{value}</strong></div>)}
             </div>
-            <p class="verified-note">
-              {PUBLISH_PROPERTY_LISTINGS
-                ? `Datenstand: ${property.verifiedAt}. Änderungen, Reservierung und Zwischenverkauf bleiben vorbehalten.`
-                : `Dokumentierter Datenstand: ${property.verifiedAt}. Die Angaben sind nicht als Bestätigung der heutigen Verfügbarkeit zu verstehen.`}
-            </p>
+            <p class="verified-note">Änderungen, Reservierung und Zwischenverkauf bleiben vorbehalten.</p>
           </section>
 
           <section class="content-block">
-            <h2>Zum Objekt</h2>
+            <h2>Zum Angebot</h2>
             <p>{property.summary}</p>
           </section>
 
-          <section class="content-block property-gallery-block">
-            <p class="eyebrow">Bildbestand</p>
-            <h2>{media.gallery.length > 0 ? `Bilder zu ${property.location}` : 'Bildmaterial'}</h2>
-            {media.gallery.length > 0 && (
+          {media.gallery.length > 0 && (
+            <section class="content-block property-gallery-block">
+              <p class="eyebrow">Impressionen</p>
+              <h2>Bilder zu {property.location}</h2>
               <div class="property-gallery-grid">
                 {media.gallery.map((item) => (
                   <figure class="property-gallery-item">
@@ -117,32 +107,20 @@ const statusLabel = PUBLISH_PROPERTY_LISTINGS ? property.status : 'Verfügbarkei
                     />
                     <figcaption>
                       <span>{item.caption}</span>
-                      <small>{item.kind === 'object' ? 'Objektbild' : item.kind === 'project' ? 'Projekt-/Grundstücksbild' : 'Lagebild'}</small>
+                      <small>{mediaLabel(item.kind)}</small>
                     </figcaption>
                   </figure>
                 ))}
               </div>
-            )}
-            {media.note && <p class="property-media-note">{media.note}</p>}
-          </section>
+            </section>
+          )}
 
           {(property.sections || []).map((section) => (
             <section class="content-block">
               <h2>{section.heading}</h2>
-              {(section.paragraphs || []).map((paragraph) => <p>{PUBLISH_PROPERTY_LISTINGS ? paragraph : paragraph.replaceAll('aktuelle Höhn-Objektseite', 'bisherige Höhn-Objektseite').replaceAll('aktuelle Höhn-Seite', 'bisherige Höhn-Seite').replaceAll('aktuellen Höhn-Angebot', 'bisherigen Höhn-Angebot')}</p>)}
+              {(section.paragraphs || []).map((paragraph) => <p>{paragraph}</p>)}
             </section>
           ))}
-
-          {property.commission && (
-            <section class="content-block object-source-note">
-              <p class="eyebrow">Datenquelle</p>
-              <h2>{PUBLISH_PROPERTY_LISTINGS ? 'Aktueller Höhn-Bestand' : 'Angaben aus dem bisherigen Höhn-Bestand'}</h2>
-              <p>{PUBLISH_PROPERTY_LISTINGS
-                ? 'Die dargestellten Objektangaben wurden aus der öffentlich geführten Höhn-Objektseite übernommen und für den Relaunch auf die dort belegten Angaben beschränkt.'
-                : 'Die dargestellten Objektangaben wurden aus der öffentlich geführten Höhn-Objektseite übernommen und auf belegbare Informationen beschränkt. Die Quelle kann inzwischen veraltet oder technisch nicht erreichbar sein.'}</p>
-              <p><a href={property.sourceUrl} rel="nofollow">Höhn-Bestandsseite zum Objekt ansehen →</a></p>
-            </section>
-          )}
         </article>
         <aside class="side-card">
           <p class="eyebrow">Ansprechpartner</p>
