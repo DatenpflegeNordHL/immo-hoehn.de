@@ -1,9 +1,11 @@
-/* Live presentation correction, 2026-09-10.
-   Loaded after the bundled site CSS. The property imagery now has semantic
-   markup in the Astro templates; this file only keeps the validated mobile
-   homepage hero continuity fix. */
+/* Live presentation corrections, 2026-09-10.
+   Loaded after the bundled site CSS. The homepage uses three art-directed
+   compositions (hero, region, heritage). On mobile their text and imagery
+   must remain inside the same visual canvas instead of becoming stacked,
+   disconnected blocks. */
 
 @media (max-width: 900px) {
+  /* HERO: keep copy and coast photograph in one composition. */
   .hero {
     position: relative;
     display: block;
@@ -18,8 +20,6 @@
   .hero-photo {
     position: absolute;
     inset: 0;
-    left: 0;
-    top: 0;
     z-index: 0;
     width: 100%;
     height: 100%;
@@ -40,8 +40,6 @@
     display: block;
     position: absolute;
     inset: 0;
-    left: 0;
-    top: 0;
     z-index: 1;
     width: 100%;
     height: 100%;
@@ -81,6 +79,239 @@
     bottom: auto;
     margin-top: 32px;
   }
+
+  /* REGION: desktop is one four-part composition. Mobile keeps the same
+     relationship by placing story + locations over one continuous map canvas. */
+  .region-section {
+    position: relative;
+    display: block;
+    grid-template-columns: none;
+    height: clamp(780px, 132vw, 930px);
+    min-height: 780px;
+    overflow: hidden;
+    isolation: isolate;
+    background: var(--paper-region);
+  }
+
+  .region-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgba(245,245,243,.95) 0%, rgba(245,245,243,.78) 32%, rgba(245,245,243,.54) 62%, rgba(245,245,243,.84) 100%),
+      url('/assets/region-map-960.webp') center 46% / cover no-repeat;
+  }
+
+  .region-section > .map-panel,
+  .region-section > .region-list,
+  .region-section > .region-story,
+  .region-section > .grass-panel {
+    position: absolute;
+    z-index: 2;
+  }
+
+  .map-panel {
+    inset: 0;
+    min-height: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .map-art {
+    display: none;
+  }
+
+  .map-caption {
+    top: 30px;
+    left: auto;
+    right: 24px;
+    font-size: 20px;
+    opacity: .72;
+  }
+
+  .map-compass {
+    display: block;
+    left: auto;
+    right: 24px;
+    bottom: 26px;
+    width: 40px;
+    height: 40px;
+    opacity: .33;
+  }
+
+  .map-coordinates {
+    left: 22px;
+    bottom: 25px;
+    font-size: 5.5px;
+    opacity: .86;
+  }
+
+  .region-story {
+    inset: 0 0 auto 0;
+    min-height: 0;
+    padding: 54px 22px 24px;
+    border: 0;
+    background: transparent;
+  }
+
+  .region-story h2 {
+    max-width: 470px;
+    font-size: clamp(48px, 11vw, 62px);
+    line-height: .91;
+    margin-bottom: 20px;
+  }
+
+  .region-copy {
+    max-width: 560px;
+    font-size: 11px;
+    line-height: 1.48;
+    color: #3c555f;
+  }
+
+  .region-list {
+    left: 22px;
+    right: 22px;
+    bottom: 92px;
+    min-height: 0;
+    padding: 18px 0 0;
+    border: 0;
+    border-top: 1px solid rgba(23,58,74,.14);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 17px 24px;
+    background: transparent;
+  }
+
+  .region-list article {
+    min-width: 0;
+  }
+
+  .region-list article p {
+    white-space: normal;
+  }
+
+  .grass-panel {
+    inset: 0;
+    min-height: 0;
+    overflow: hidden;
+    z-index: 1 !important;
+    pointer-events: none;
+  }
+
+  .grass-panel img {
+    display: block;
+    position: absolute;
+    right: -7%;
+    top: auto;
+    bottom: 0;
+    width: 58%;
+    height: 48%;
+    object-fit: cover;
+    object-position: 72% 50%;
+    mix-blend-mode: multiply;
+    opacity: .12;
+    filter: saturate(.68) contrast(.91) brightness(1.04);
+  }
+
+  .micro-note {
+    left: auto;
+    right: 77px;
+    bottom: 26px;
+    opacity: .72;
+  }
+
+  /* HERITAGE: keep year, house drawing and values on one visual field. */
+  .heritage {
+    position: relative;
+    display: block;
+    height: clamp(560px, 116vw, 690px);
+    min-height: 560px;
+    overflow: hidden;
+    isolation: isolate;
+    background: rgba(241,240,236,.94);
+  }
+
+  .heritage-year,
+  .heritage-copy,
+  .heritage-sketch,
+  .heritage-note,
+  .heritage-values {
+    position: absolute;
+    right: auto;
+    margin: 0;
+  }
+
+  .heritage-year {
+    left: 22px;
+    top: 42px;
+    z-index: 3;
+    width: 158px;
+    height: 160px;
+    border-right: 1px solid rgba(23,58,74,.14);
+  }
+
+  .heritage-year span {
+    margin-left: 0;
+  }
+
+  .heritage-year strong {
+    font-size: 70px;
+  }
+
+  .heritage-copy {
+    left: 205px;
+    top: 62px;
+    z-index: 3;
+    width: 150px;
+  }
+
+  .heritage-sketch {
+    left: 10%;
+    top: 125px;
+    z-index: 1;
+    width: 88%;
+    height: 330px;
+    overflow: hidden;
+  }
+
+  .heritage-sketch img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    mix-blend-mode: multiply;
+    opacity: .36;
+    filter: saturate(.45) contrast(.88) brightness(1.06);
+  }
+
+  .heritage-note {
+    left: auto;
+    right: 34px;
+    top: 325px;
+    z-index: 3;
+    width: 105px;
+  }
+
+  .heritage-values {
+    left: 22px;
+    right: 22px;
+    top: auto;
+    bottom: 30px;
+    z-index: 3;
+    height: auto;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-left: 1px solid rgba(23,58,74,.14);
+    border-top: 1px solid rgba(23,58,74,.14);
+    background: rgba(241,240,236,.52);
+  }
+
+  .heritage-values div {
+    min-height: 66px;
+  }
 }
 
 @media (max-width: 580px) {
@@ -90,5 +321,73 @@
 
   .hero-copy {
     padding-top: 28px;
+  }
+
+  .region-section {
+    height: clamp(810px, 210vw, 940px);
+    min-height: 810px;
+  }
+
+  .region-story {
+    padding-top: 46px;
+  }
+
+  .region-story h2 {
+    max-width: 340px;
+    font-size: clamp(45px, 13vw, 56px);
+  }
+
+  .region-copy {
+    max-width: 94%;
+    font-size: 10.5px;
+  }
+
+  .region-list {
+    grid-template-columns: 1fr;
+    gap: 13px;
+    bottom: 82px;
+  }
+
+  .region-list article p {
+    font-size: 9.5px;
+    line-height: 1.35;
+  }
+
+  .heritage {
+    height: 620px;
+    min-height: 620px;
+  }
+
+  .heritage-year {
+    left: 22px;
+    top: 38px;
+    width: 145px;
+  }
+
+  .heritage-year strong {
+    font-size: 64px;
+  }
+
+  .heritage-copy {
+    left: auto;
+    right: 22px;
+    top: 62px;
+    width: 128px;
+  }
+
+  .heritage-sketch {
+    left: 0;
+    top: 145px;
+    width: 100%;
+    height: 300px;
+  }
+
+  .heritage-note {
+    right: 25px;
+    top: 330px;
+  }
+
+  .heritage-values {
+    bottom: 24px;
   }
 }
