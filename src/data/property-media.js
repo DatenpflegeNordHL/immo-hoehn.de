@@ -41,7 +41,7 @@ export const propertyMedia = {
         'visualization',
       ),
       image(
-        '/assets/wp02/terrasse-visualisierung.webp',
+        '/assets/wp02/terrasse-visualisierung.png',
         'Visualisierung einer möglichen Garten- und Terrassengestaltung in Rosenhagen',
         'Beispielhafte Visualisierung, KI-generiert',
         'visualization',
