@@ -49,4 +49,8 @@ copy_media 'Expose-Terrasse' 'terrasse-visualisierung.png'
 copy_media 'Strand-1' 'rosenhagen-strand-1.webp'
 copy_media 'Strand-4' 'rosenhagen-strand-4.webp'
 
+# Temporary compatibility alias for the already-established STRATO release
+# verifier. The website itself references the correctly typed PNG file above.
+cp "$DEST/terrasse-visualisierung.png" "$DEST/terrasse-visualisierung.webp"
+
 echo "WordPress 02 media fetched: $(find "$DEST" -maxdepth 1 -type f | wc -l) files"
