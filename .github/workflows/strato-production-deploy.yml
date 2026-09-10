@@ -130,15 +130,30 @@ jobs:
         run: |
           set -euo pipefail
           BASE='https://immo-hoehn.de'
-          sleep 2
 
-          test "$(curl -sS -o /dev/null -w '%{http_code}' "$BASE/")" = '200'
-          test "$(curl -sS -o /dev/null -w '%{http_code}' 'https://www.immo-hoehn.de/')" = '301'
-          test "$(curl -sS -o /dev/null -w '%{redirect_url}' 'https://www.immo-hoehn.de/')" = 'https://immo-hoehn.de/'
-          test "$(curl -sS -o /dev/null -w '%{http_code}' 'http://immo-hoehn.de/')" = '301'
-          test "$(curl -sS -o /dev/null -w '%{redirect_url}' 'http://immo-hoehn.de/')" = 'https://immo-hoehn.de/'
+          # STRATO can occasionally reset an otherwise healthy connection directly
+          # after rsync. Retry transport/transient HTTP failures, but keep every
+          # content/status assertion hard-failing after the retry budget is exhausted.
+          curlr() {
+            curl \
+              --retry 4 \
+              --retry-delay 2 \
+              --retry-max-time 50 \
+              --retry-all-errors \
+              --connect-timeout 10 \
+              --max-time 30 \
+              "$@"
+          }
 
-          curl -sSI "$BASE/" -o /tmp/home.headers
+          sleep 4
+
+          test "$(curlr -sS -o /dev/null -w '%{http_code}' "$BASE/")" = '200'
+          test "$(curlr -sS -o /dev/null -w '%{http_code}' 'https://www.immo-hoehn.de/')" = '301'
+          test "$(curlr -sS -o /dev/null -w '%{redirect_url}' 'https://www.immo-hoehn.de/')" = 'https://immo-hoehn.de/'
+          test "$(curlr -sS -o /dev/null -w '%{http_code}' 'http://immo-hoehn.de/')" = '301'
+          test "$(curlr -sS -o /dev/null -w '%{redirect_url}' 'http://immo-hoehn.de/')" = 'https://immo-hoehn.de/'
+
+          curlr -sSI "$BASE/" -o /tmp/home.headers
           grep -Eiq '^strict-transport-security: max-age=15552000' /tmp/home.headers
 
           for path in \
@@ -159,17 +174,17 @@ jobs:
             /robots.txt \
             /sitemap-index.xml
           do
-            code="$(curl -sS -o /dev/null -w '%{http_code}' "$BASE$path")"
+            code="$(curlr -sS -o /dev/null -w '%{http_code}' "$BASE$path")"
             test "$code" = '200' || { echo "$path -> $code" >&2; exit 1; }
           done
 
-          test "$(curl -sS -o /dev/null -w '%{http_code}' "$BASE/qa-definitely-not-found-92841")" = '404'
-          test "$(curl -sS -o /dev/null -w '%{http_code}' "$BASE/api/contact.php")" = '405'
+          test "$(curlr -sS -o /dev/null -w '%{http_code}' "$BASE/qa-definitely-not-found-92841")" = '404'
+          test "$(curlr -sS -o /dev/null -w '%{http_code}' "$BASE/api/contact.php")" = '405'
 
           # Fetch once, then inspect local files. Avoid curl|grep -q under pipefail,
           # where grep intentionally closes the pipe early and curl can return 23.
-          curl -sS "$BASE/" -o /tmp/home.html
-          curl -sS "$BASE/robots.txt" -o /tmp/robots.txt
+          curlr -sS "$BASE/" -o /tmp/home.html
+          curlr -sS "$BASE/robots.txt" -o /tmp/robots.txt
 
           grep -Fq '0171 1230162' /tmp/home.html
           ! grep -Eq '038826[[:space:]]*80911|\+493882680911|\+49[[:space:]]*38826[[:space:]]*80911' /tmp/home.html
@@ -178,7 +193,7 @@ jobs:
           test "$(grep -o 'class="site-footer"' /tmp/home.html | wc -l)" = '0'
           grep -Fq 'Sitemap: https://immo-hoehn.de/sitemap-index.xml' /tmp/robots.txt
 
-          curl -sS -D /tmp/contact-invalid.headers -o /dev/null \
+          curlr -sS -D /tmp/contact-invalid.headers -o /dev/null \
             -X POST \
             --data-urlencode 'name=X' \
             --data-urlencode 'email=kaputt' \
@@ -233,4 +248,5 @@ jobs:
             echo '- Core pages + robots + sitemap + 404: PASS'
             echo '- Homepage integrated footer: PASS'
             echo '- Contact validation smoke test: PASS'
+            echo '- Transient STRATO transport resets: retry-hardened'
           } >> "$GITHUB_STEP_SUMMARY"
