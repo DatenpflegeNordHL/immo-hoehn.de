@@ -3,11 +3,16 @@ name: Astro Build Validation
 on:
   push:
     branches:
+      - main
       - redesign/coastal-blueprint
   workflow_dispatch:
 
 permissions:
   contents: read
+
+concurrency:
+  group: astro-build-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -74,3 +79,9 @@ jobs:
 
       - name: Run production readiness gate
         run: node scripts/production-readiness.mjs
+
+      - name: Reject removed legacy contact data
+        run: node scripts/legacy-contact-qa.mjs
+
+      - name: Run duplicate-content gate
+        run: node scripts/content-duplication-qa.mjs
