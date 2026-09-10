@@ -27,6 +27,7 @@
 .main-nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:rgba(23,58,74,.42);transform:scaleX(0);transform-origin:left;transition:transform .18s ease}
 .main-nav a:hover::after,.main-nav a:focus-visible::after{transform:scaleX(1)}
 .main-nav a:focus-visible{outline:1px solid rgba(23,58,74,.35);outline-offset:4px}
+.header-cta-short{display:none}
 
 /* Current content pass: no placeholder property discovery; selling/contact become the primary conversion path. */
 .hero-actions{gap:24px}
@@ -41,14 +42,14 @@
 .contact-intro{max-width:430px}
 .contact-intro h2{font-family:var(--serif);font-size:52px;font-weight:400;line-height:.94;letter-spacing:-.025em;margin:12px 0 16px}
 .contact-intro>p:not(.eyebrow){font-size:11px;line-height:1.55;color:#4e636d;max-width:390px;margin:0}
-.contact-meta{display:flex;flex-direction:column;gap:5px;margin-top:22px;padding-top:14px;border-top:1px solid rgba(23,58,74,.14);font-size:7.5px;letter-spacing:.08em;text-transform:uppercase;color:#758992}
+.contact-meta{display:flex;flex-direction:column;gap:5px;margin-top:22px;padding-top:14px;border-top:1px solid rgba(23,58,74,.14);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:#758992}
 .contact-meta a{width:max-content;text-decoration:none;text-transform:none;letter-spacing:.04em;color:#526d79}
 .contact-meta a:hover,.contact-meta a:focus-visible{text-decoration:underline;text-underline-offset:3px}
 
 .contact-form{display:grid;gap:18px;padding-top:0}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .contact-form label{display:flex;flex-direction:column;gap:6px}
-.contact-form label>span:first-child{font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;color:#5f7580}
+.contact-form label>span:first-child{font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:#5f7580}
 .contact-form input,.contact-form select,.contact-form textarea{width:100%;border:0;border-bottom:1px solid rgba(23,58,74,.28);border-radius:0;background:transparent;color:var(--ink);font:300 12px/1.4 var(--sans);padding:8px 0 9px;outline:none}
 .contact-form select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,#7894a2 50%),linear-gradient(135deg,#7894a2 50%,transparent 50%);background-position:calc(100% - 10px) 50%,calc(100% - 6px) 50%;background-size:4px 4px,4px 4px;background-repeat:no-repeat;padding-right:24px}
 .contact-form textarea{min-height:96px;resize:vertical}
@@ -56,17 +57,22 @@
 .form-message{margin-top:0}
 .consent-row{display:grid!important;grid-template-columns:14px 1fr;gap:10px!important;align-items:start;margin-top:0}
 .consent-row input{width:13px;height:13px;margin:2px 0 0;accent-color:#718f9f}
-.consent-row span{font-size:8px!important;line-height:1.45;letter-spacing:0!important;text-transform:none!important;color:#61757e!important}
+.consent-row span{font-size:9.5px!important;line-height:1.45;letter-spacing:0!important;text-transform:none!important;color:#61757e!important}
 .form-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .form-actions button{height:38px;padding:0 20px;border:0;border-radius:0;background:#718f9f;color:#fff;font:400 9px var(--sans);display:inline-flex;align-items:center;gap:10px;cursor:pointer}
-.form-actions small{max-width:330px;font-size:7.5px;line-height:1.4;color:#7b8b92}
+.form-actions small{max-width:330px;font-size:9px;line-height:1.4;color:#7b8b92}
 
-@media (max-width:900px){
+/* Header switches to the two-row tablet/mobile construction before the desktop nav can collide with the CTA. */
+@media (max-width:1024px){
   .site-header{height:108px}
   .site-header .brand{left:22px;top:14px}
   .site-header .main-nav{display:flex;left:22px;right:22px;top:65px;height:43px;gap:22px;overflow-x:auto;overflow-y:hidden;white-space:nowrap;scrollbar-width:none;border-top:1px solid rgba(23,58,74,.08)}
   .site-header .main-nav::-webkit-scrollbar{display:none}
-  .site-header .main-nav a{font-size:8.5px;flex:0 0 auto}
+  .site-header .main-nav a{font-size:9.5px;flex:0 0 auto}
+  .site-header .header-cta{right:18px}
+}
+
+@media (max-width:900px){
   .sell-section{min-height:0;padding:40px 22px 42px}
   .sell-section h2{font-size:44px}
   .contact-section{grid-template-columns:1fr;gap:34px;padding:42px 22px 48px}
@@ -76,8 +82,15 @@
 
 @media (max-width:580px){
   .site-header .main-nav{gap:17px}
+  .site-header .header-cta{width:106px;font-size:8.5px}
+  .header-cta-full{display:none}
+  .header-cta-short{display:inline}
   .form-row{grid-template-columns:1fr;gap:18px}
   .contact-intro h2{font-size:41px}
   .form-actions{align-items:flex-start;flex-direction:column}
   .sell-section h2{font-size:39px}
+  .map-panel{min-height:240px}
+  .region-list{min-height:0;padding:34px 22px 32px}
+  .region-story{min-height:0;padding:34px 22px 38px}
+  .grass-panel{display:none}
 }
