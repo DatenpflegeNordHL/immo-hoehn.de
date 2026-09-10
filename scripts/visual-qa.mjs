@@ -57,6 +57,7 @@ const report = {
     gridClippingFailures: 0,
     headerDuplicateHrefFailures: 0,
     smallNavTargetFailures: 0,
+    standaloneMobileMediaFailures: 0,
     brokenImageFailures: 0,
     h1Failures: 0,
     consoleErrors: 0,
@@ -122,7 +123,6 @@ for (const route of routes) {
         .slice(0, 20);
 
       // Detect grid children that are being silently cut off by overflow:hidden.
-      // The old QA treated every such case as intentional, which masked the 901–1023px region-grid bug.
       const gridClipping = [];
       for (const grid of visible.filter((el) => getComputedStyle(el).display === 'grid')) {
         const gs = getComputedStyle(grid);
@@ -168,6 +168,30 @@ for (const route of routes) {
         })
         .filter((target) => target.width < 24 || target.height < 24);
 
+      // On phones, large decorative media must not become its own tall block in normal flow.
+      // This catches the text -> giant image -> text pattern visible in the real-device screenshot.
+      const standaloneMobileMedia = vw <= 580
+        ? ['.hero-photo', '.page-hero-media', '.map-panel', '.heritage-sketch']
+            .flatMap((selector) => [...document.querySelectorAll(selector)].map((el) => ({ selector, el })))
+            .filter(({ el }) => {
+              const style = getComputedStyle(el);
+              const r = el.getBoundingClientRect();
+              if (style.display === 'none' || style.visibility === 'hidden' || r.width <= 0 || r.height <= 0) return false;
+              const layered = style.position === 'absolute' || style.position === 'fixed';
+              return !layered && r.height > Math.max(180, vw * 0.55);
+            })
+            .map(({ selector, el }) => {
+              const r = el.getBoundingClientRect();
+              const style = getComputedStyle(el);
+              return {
+                selector,
+                height: Math.round(r.height),
+                width: Math.round(r.width),
+                position: style.position,
+              };
+            })
+        : [];
+
       const brokenImages = [...document.images]
         .filter((img) => img.complete && img.naturalWidth === 0)
         .map((img) => img.currentSrc || img.src || img.alt || '(unknown)');
@@ -181,6 +205,7 @@ for (const route of routes) {
         gridClipping: gridClipping.slice(0, 20),
         headerDuplicateHrefs,
         smallNavTargets,
+        standaloneMobileMedia,
         brokenImages,
         h1Count: document.querySelectorAll('h1').length,
         title: document.title,
@@ -204,6 +229,7 @@ for (const route of routes) {
     if (metrics.gridClipping.length) report.summary.gridClippingFailures += 1;
     if (metrics.headerDuplicateHrefs.length) report.summary.headerDuplicateHrefFailures += 1;
     if (metrics.smallNavTargets.length) report.summary.smallNavTargetFailures += 1;
+    if (metrics.standaloneMobileMedia.length) report.summary.standaloneMobileMediaFailures += 1;
     if (metrics.brokenImages.length) report.summary.brokenImageFailures += 1;
     if (metrics.h1Count !== 1) report.summary.h1Failures += 1;
     report.summary.consoleErrors += consoleErrors.length;
@@ -232,6 +258,7 @@ const lines = [
   `Grid clipping failures: ${report.summary.gridClippingFailures}`,
   `Header duplicate href failures: ${report.summary.headerDuplicateHrefFailures}`,
   `Small nav target failures: ${report.summary.smallNavTargetFailures}`,
+  `Standalone mobile media failures: ${report.summary.standaloneMobileMediaFailures}`,
   `Broken image failures: ${report.summary.brokenImageFailures}`,
   `H1 failures: ${report.summary.h1Failures}`,
   `Console errors: ${report.summary.consoleErrors}`,
@@ -241,7 +268,7 @@ const lines = [
   ''
 ];
 
-const failed = report.routes.filter((r) => r.status !== 200 || r.horizontalOverflow || r.offscreen.length || r.gridClipping.length || r.headerDuplicateHrefs.length || r.smallNavTargets.length || r.brokenImages.length || r.h1Count !== 1 || r.consoleErrors.length || r.pageErrors.length);
+const failed = report.routes.filter((r) => r.status !== 200 || r.horizontalOverflow || r.offscreen.length || r.gridClipping.length || r.headerDuplicateHrefs.length || r.smallNavTargets.length || r.standaloneMobileMedia.length || r.brokenImages.length || r.h1Count !== 1 || r.consoleErrors.length || r.pageErrors.length);
 if (!failed.length) {
   lines.push('No automated viewport failures detected.');
 } else {
@@ -253,6 +280,7 @@ if (!failed.length) {
     lines.push(`- clipped grid children: ${r.gridClipping.length}`);
     lines.push(`- duplicate header hrefs: ${r.headerDuplicateHrefs.length}`);
     lines.push(`- small nav targets: ${r.smallNavTargets.length}`);
+    lines.push(`- standalone mobile media: ${r.standaloneMobileMedia.length}`);
     lines.push(`- broken images: ${r.brokenImages.length}`);
     lines.push(`- H1 count: ${r.h1Count}`);
     lines.push(`- console errors: ${r.consoleErrors.length}`);
@@ -261,6 +289,7 @@ if (!failed.length) {
     if (r.gridClipping.length) lines.push(`- first clipped grid child: \`${JSON.stringify(r.gridClipping[0])}\``);
     if (r.headerDuplicateHrefs.length) lines.push(`- duplicate header hrefs: \`${JSON.stringify(r.headerDuplicateHrefs)}\``);
     if (r.smallNavTargets.length) lines.push(`- small nav targets: \`${JSON.stringify(r.smallNavTargets)}\``);
+    if (r.standaloneMobileMedia.length) lines.push(`- standalone mobile media: \`${JSON.stringify(r.standaloneMobileMedia)}\``);
     lines.push('');
   }
 }
