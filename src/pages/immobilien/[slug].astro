@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { properties } from '../../data/properties.js';
+import { getPropertyMedia } from '../../data/property-media.js';
 import { PUBLISH_PROPERTY_LISTINGS } from '../../data/launch-config.js';
 
 export function getStaticPaths() {
@@ -8,6 +9,9 @@ export function getStaticPaths() {
 }
 
 const { property } = Astro.props;
+const media = getPropertyMedia(property.slug);
+const mediaFallback = property.location === 'Rosenhagen' ? '/assets/rosenhagen-beach.webp' : '/assets/hero-coast-960.webp';
+const heroLabel = media.hero.kind === 'object' ? 'Objektbild' : media.hero.kind === 'project' ? 'Projektbild' : 'Lagebild';
 const title = `${property.title} | Höhn Immobilien`;
 const description = PUBLISH_PROPERTY_LISTINGS
   ? `${property.summary} Aktuelle Objektdaten von Höhn Immobilien.`
@@ -36,20 +40,12 @@ const breadcrumbSchema = {
     },
   ],
 };
-const isRosenhagen = property.location === 'Rosenhagen';
-const hero = isRosenhagen
-  ? { src: '/assets/rosenhagen-beach.webp', srcset: undefined, sizes: undefined }
-  : {
-      src: '/assets/hero-coast-960.webp',
-      srcset: '/assets/hero-coast-480.webp 480w, /assets/hero-coast-960.webp 960w, /assets/hero-coast-1440.webp 1440w',
-      sizes: '(max-width: 900px) 100vw, 50vw',
-    };
 const statusLabel = PUBLISH_PROPERTY_LISTINGS ? property.status : 'Verfügbarkeit nicht aktuell bestätigt';
 ---
 <BaseLayout
   title={title}
   description={description}
-  image={isRosenhagen ? '/assets/rosenhagen-beach.webp' : '/assets/hero-coast-1440.webp'}
+  image={mediaFallback}
   imageAlt={`${property.title} – Höhn Immobilien`}
   forceNoindex={!PUBLISH_PROPERTY_LISTINGS}
 >
@@ -63,16 +59,16 @@ const statusLabel = PUBLISH_PROPERTY_LISTINGS ? property.status : 'Verfügbarkei
         <p class="lead">{property.summary}</p>
         <div class="button-row"><a class="button-primary" href="/kontakt/">Verfügbarkeit anfragen</a><a class="button-secondary" href="/immobilien/">Immobilienübersicht</a></div>
       </div>
-      <figure class="page-hero-media">
+      <figure class="page-hero-media property-hero-media" style={`background-image:url('${mediaFallback}')`}>
         <img
-          src={hero.src}
-          srcset={hero.srcset}
-          sizes={hero.sizes}
-          alt=""
+          src={media.hero.src}
+          alt={media.hero.alt}
           loading="eager"
           fetchpriority="high"
           decoding="async"
+          onerror="this.style.display='none';this.nextElementSibling.textContent='Lagebild';"
         />
+        <figcaption class="property-media-label">{heroLabel}</figcaption>
       </figure>
     </section>
 
@@ -103,6 +99,31 @@ const statusLabel = PUBLISH_PROPERTY_LISTINGS ? property.status : 'Verfügbarkei
           <section class="content-block">
             <h2>Zum Objekt</h2>
             <p>{property.summary}</p>
+          </section>
+
+          <section class="content-block property-gallery-block">
+            <p class="eyebrow">Bildbestand</p>
+            <h2>{media.gallery.length > 0 ? `Bilder zu ${property.location}` : 'Bildmaterial'}</h2>
+            {media.gallery.length > 0 && (
+              <div class="property-gallery-grid">
+                {media.gallery.map((item) => (
+                  <figure class="property-gallery-item">
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      loading="lazy"
+                      decoding="async"
+                      onerror="this.closest('figure').hidden=true;"
+                    />
+                    <figcaption>
+                      <span>{item.caption}</span>
+                      <small>{item.kind === 'object' ? 'Objektbild' : item.kind === 'project' ? 'Projekt-/Grundstücksbild' : 'Lagebild'}</small>
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            )}
+            {media.note && <p class="property-media-note">{media.note}</p>}
           </section>
 
           {(property.sections || []).map((section) => (
