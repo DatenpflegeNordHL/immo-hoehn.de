@@ -1,177 +1,71 @@
 export const properties = [
   {
-    slug: 'einfamilienhaus-poetenitz-1724',
-    type: 'Haus',
-    location: 'Pötenitz',
-    title: 'Einfamilienhaus in Pötenitz',
-    price: '585.000 €',
-    status: 'Kaufangebot',
-    verifiedAt: '2026-09-09',
-    sourceUrl: 'https://www.immo-hoehn.de/immobilienangebote/kaufen/haeuser/efh-poetenitz',
-    summary: 'Gepflegtes Einfamilienhaus aus dem Jahr 2010 mit rund 170 m² Wohn-/Nutzfläche auf 739 m² Grundstück.',
-    commission: '3,57 % inkl. 19 % MwSt. jeweils für Käufer und Verkäufer; fällig mit Abschluss des notariellen Kaufvertrags.',
-    facts: [
-      ['Objektnummer','1724'],
-      ['Wohn-/Nutzfläche','170 m²'],
-      ['Grundstück','739 m²'],
-      ['Zimmer','5 + Studio'],
-      ['Baujahr','2010'],
-      ['Terrassen','3'],
-      ['Heizung','Luft-/Wasser-Wärmepumpe'],
-      ['Energiekennwert','38 kWh/(m²·a)'],
-    ],
-    sections: [
-      {
-        heading: 'Ausstattung und Energie',
-        paragraphs: [
-          'Das Einfamilienhaus wird auf der aktuellen Höhn-Objektseite mit Luft-/Wasser-Wärmepumpe, Fußbodenheizung und drei Terrassen beschrieben. Die Wärmepumpe wurde dort mit einer Erneuerung im Jahr 2022 angegeben.',
-          'Für das Objekt ist ein Energieausweis ausgewiesen. Der veröffentlichte Energiekennwert beträgt 38 kWh/(m²·a).'
-        ],
-      },
-      {
-        heading: 'Lage',
-        paragraphs: [
-          'Das Haus liegt in Pötenitz im Stadtgebiet Dassow. Nach der aktuellen Objektbeschreibung sind Dassow und Travemünde jeweils in weniger als zehn Fahrminuten erreichbar. Lübeck wird mit rund 25 Minuten, die A20-Anschlussstelle Schönberg mit rund 15 Minuten Fahrzeit angegeben.'
-        ],
-      },
-      {
-        heading: 'Courtage',
-        paragraphs: [
-          'Die aktuelle Höhn-Objektseite weist eine Käufer- und Verkäufercourtage von jeweils 3,57 % inklusive 19 % Mehrwertsteuer aus. Sie ist mit Abschluss des notariellen Kaufvertrags fällig.'
-        ],
-      },
-    ],
-  },
-  {
-    slug: 'eigentumswohnung-poetenitz-1722',
-    type: 'Wohnung',
-    location: 'Pötenitz',
-    title: 'Eigentumswohnung in Pötenitz',
-    price: '429.000 €',
-    status: 'Kaufangebot',
-    verifiedAt: '2026-09-09',
-    sourceUrl: 'https://www.immo-hoehn.de/immobilienangebote/kaufen/wohnungen/eigentumswohung',
-    summary: 'Barrierefreie Erdgeschoss-Eigentumswohnung mit rund 105,10 m² Wohnfläche, drei Terrassen und zwei Stellplätzen.',
-    commission: '3,57 % inkl. 19 % MwSt. jeweils für Käufer und Verkäufer; fällig mit Abschluss des notariellen Kaufvertrags.',
-    facts: [
-      ['Objektnummer','1722'],
-      ['Wohnfläche','105,10 m²'],
-      ['Nutzfläche','7,80 m²'],
-      ['Grundstück gesamt','715 m²'],
-      ['Terrassen','3'],
-      ['Stellplätze','2'],
-      ['Außenabstellraum','1'],
-      ['Baujahr','2014'],
-      ['Zustand','neuwertig / gepflegt'],
-    ],
-    sections: [
-      {
-        heading: 'Grundriss und Ausstattung',
-        paragraphs: [
-          'Die barrierefreie Erdgeschosswohnung verfügt laut aktueller Höhn-Objektbeschreibung über einen offenen Wohn-, Ess- und Küchenbereich, zwei Schlafzimmer, Bad, Gäste-WC sowie einen Flur mit Garderobenbereich.',
-          'In den Wohnräumen ist Laminat angegeben, das Bad ist gefliest. Die Wohnung besitzt Fußbodenheizung, drei teilweise überdachte Terrassen, einen Außenabstellraum und zwei Stellplätze.'
-        ],
-      },
-      {
-        heading: 'Grundstück und Nutzung',
-        paragraphs: [
-          'Die Wohnung befindet sich in einem Zweifamilienhaus. Zur Einheit wird auf der Bestandsseite ein Gartenanteil entsprechend den dort genannten Teilungs- beziehungsweise Zuordnungsunterlagen beschrieben.'
-        ],
-      },
-      {
-        heading: 'Lage',
-        paragraphs: [
-          'Die Immobilie liegt in Pötenitz. Die aktuelle Höhn-Seite nennt für Travemünde und Dassow jeweils weniger als zehn Fahrminuten, für Lübeck rund 25 Minuten und für die A20-Anschlussstelle Schönberg rund 15 Minuten.'
-        ],
-      },
-      {
-        heading: 'Courtage',
-        paragraphs: [
-          'Die aktuelle Höhn-Objektseite weist eine Käufer- und Verkäufercourtage von jeweils 3,57 % inklusive 19 % Mehrwertsteuer aus. Sie ist mit Abschluss des notariellen Kaufvertrags fällig.'
-        ],
-      },
-    ],
-  },
-  {
-    slug: 'baugrundstuecke-rosenhagen',
+    slug: 'grundstuecke-rosenhagen-623-743',
     type: 'Grundstück',
     location: 'Rosenhagen',
-    title: 'Erschlossene Baugrundstücke in Rosenhagen',
+    title: 'Grundstücksangebote in Rosenhagen',
     price: 'ab 349.000 €',
-    status: 'Verfügbarkeit prüfen',
-    verifiedAt: '2026-09-09',
-    sourceUrl: 'https://www.immo-hoehn.de/immobilienangebote/kaufen/grundstuecke/rosenhagen',
-    summary: 'Auf der Bestandsseite werden vier voll erschlossene Grundstücke geführt. Drei sind mit Kaufpreisen ausgewiesen, eines als verkauft markiert.',
-    commission: '3 % zzgl. 19 % MwSt. Käufercourtage; fällig mit Abschluss des notariellen Kaufvertrags.',
+    status: 'Verfügbarkeit anfragen',
+    verifiedAt: '2026-09-10',
+    summary: 'Vier Grundstücke in Rosenhagen mit 623 m², 630 m², 666 m² und 743 m². Drei werden mit Kaufpreis angeboten; Grundstück Nr. 4 ist als verkauft gekennzeichnet.',
     facts: [
-      ['Grundstück 1','623 m² · 349.000 €'],
-      ['Grundstück 2','630 m² · 354.000 €'],
-      ['Grundstück 3','666 m² · 379.000 €'],
-      ['Grundstück 4','743 m² · verkauft'],
-      ['Erschließung','voll erschlossen'],
-      ['Nutzung laut Bestandsseite','Erstwohnsitz'],
-      ['Region','Rosenhagen / Dassow'],
+      ['Grundstück 1', '623 m² · 349.000 €'],
+      ['Grundstück 2', '630 m² · 354.000 €'],
+      ['Grundstück 3', '666 m² · 379.000 €'],
+      ['Grundstück 4', '743 m² · verkauft'],
+      ['Ort', 'Rosenhagen'],
     ],
     sections: [
       {
-        heading: 'Grundstücke und Nutzung',
+        heading: 'Die Grundstücke',
         paragraphs: [
-          'Höhn Immobilien führt auf der aktuellen Bestandsseite vier voll erschlossene Grundstücke in Rosenhagen. Drei Grundstücke werden mit Kaufpreisen angeboten; das Grundstück mit 743 m² ist dort als verkauft markiert.',
-          'Als Nutzung wird auf der Bestandsseite Erstwohnsitz angegeben. Aussagen zur konkreten Bebaubarkeit werden auf der neuen Website nicht darüber hinaus verallgemeinert.'
+          'In Rosenhagen werden drei Grundstücke mit 623 m², 630 m² und 666 m² zu Kaufpreisen von 349.000 €, 354.000 € und 379.000 € angeboten.',
+          'Ein weiteres Grundstück mit 743 m² ist bereits als verkauft gekennzeichnet. Angaben zur aktuellen Reservierung oder Zwischenvergabe erhalten Interessenten direkt bei Höhn Immobilien.',
         ],
       },
       {
-        heading: 'Lage an der Ostseeküste',
+        heading: 'Rosenhagen an der Ostseeküste',
         paragraphs: [
-          'Die aktuelle Höhn-Objektseite nennt eine Entfernung von rund 300 Metern zum Naturstrand. Zwischen den Grundstücken und dem Küstenbereich liegt nach der Objektbeschreibung eine geschützte Grünfläche.',
-          'Der Ostseeküsten-Radweg wird ebenfalls mit rund 300 Metern Entfernung angegeben. Die A20-Anschlussstelle Schönberg liegt laut Bestandsseite rund 15 Fahrminuten entfernt.'
-        ],
-      },
-      {
-        heading: 'Courtage',
-        paragraphs: [
-          'Für die angebotenen Rosenhagen-Grundstücke weist die aktuelle Höhn-Seite eine Käufercourtage von 3 % zuzüglich 19 % Mehrwertsteuer aus. Sie ist mit Abschluss des notariellen Kaufvertrags fällig.'
+          'Rosenhagen liegt an der Ostseeküste im Stadtgebiet Dassow. Für weitere Informationen zur Lage und zum jeweiligen Grundstück steht Höhn Immobilien persönlich zur Verfügung.',
         ],
       },
     ],
   },
   {
-    slug: 'baugrundstuecke-rosenhagen-von-privat',
+    slug: 'baugrundstuecke-rosenhagen-1599-1999',
     type: 'Grundstück',
     location: 'Rosenhagen',
-    title: 'Baugrundstücke in Rosenhagen von privat',
-    price: '900 € / m²',
-    status: 'Privatangebot · provisionsfrei',
-    verifiedAt: '2026-09-09',
-    sourceUrl: 'https://www.immo-hoehn.de/immobilienangebote/kaufen/grundstuecke/rosenhagen-von-privat',
-    summary: 'Zwei voll erschlossene Grundstücke in Rosenhagen mit 1.600 m² und 2.005 m², laut Bestandsseite provisionsfrei von privat.',
-    commission: 'Provisionsfrei von privat laut aktueller Bestandsseite.',
+    title: 'Zwei voll erschlossene Baugrundstücke in Rosenhagen',
+    price: 'Preis auf Anfrage',
+    status: 'Verfügbarkeit anfragen',
+    verifiedAt: '2026-09-10',
+    summary: 'Zwei voll erschlossene Baugrundstücke mit 1.599 m² und 1.999 m², nur rund 300 Meter vom Ostseestrand entfernt.',
     facts: [
-      ['Grundstück 1','1.600 m² · 900 € / m²'],
-      ['Grundstück 2','2.005 m² · 900 € / m²'],
-      ['Erschließung','voll erschlossen'],
-      ['Courtage','provisionsfrei von privat'],
-      ['Region','Rosenhagen / Dassow'],
+      ['Grundstück 1', '1.599 m² · Preis auf Anfrage'],
+      ['Grundstück 2', '1.999 m² · Preis auf Anfrage'],
+      ['Erschließung', 'voll erschlossen'],
+      ['Entfernung Ostseestrand', 'ca. 300 m'],
+      ['Bebauungsplan', 'Nr. 17 der Stadt Dassow'],
     ],
     sections: [
       {
-        heading: 'Privates Grundstücksangebot',
+        heading: 'Zwei besondere Grundstücke',
         paragraphs: [
-          'Die bestehende Höhn-Seite führt zwei voll erschlossene Grundstücke mit 1.600 m² und 2.005 m². Beide werden dort mit 900 Euro pro Quadratmeter und als provisionsfrei von privat angegeben.',
-          'Die Bestandsseite beschreibt eine mögliche Nutzung als Feriendomizil und nennt je Haus die Möglichkeit von zwei Ferienwohnungen. Diese Angabe wird nicht als pauschale baurechtliche Zusage übernommen; für einen Kauf sind die konkret geltenden Planungs- und Genehmigungsunterlagen maßgeblich.'
+          'Die beiden voll erschlossenen Baugrundstücke umfassen 1.599 m² und 1.999 m². Die Kaufpreise werden auf Anfrage mitgeteilt.',
+          'Der Ostseestrand liegt rund 300 Meter entfernt. Damit verbinden die Grundstücke großzügige Flächen mit einer unmittelbaren Nähe zur Küste.',
         ],
       },
       {
-        heading: 'Lage an der Ostsee',
+        heading: 'Bebauungsmöglichkeiten',
         paragraphs: [
-          'Die Grundstücke werden auf der aktuellen Höhn-Seite mit rund 300 Metern Entfernung zum Naturstrand beschrieben. Dazwischen liegt laut Bestandsseite eine geschützte Grünfläche.',
-          'Der Ostseeküsten-Radweg wird ebenfalls mit rund 300 Metern Entfernung angegeben. Lübeck liegt laut Objektbeschreibung rund 25 Autominuten entfernt, die A20-Anschlussstelle Schönberg rund 15 Minuten.'
+          'Die Grundstücke liegen im Geltungsbereich des Bebauungsplans Nr. 17 der Stadt Dassow. Vorgesehen sind Einzelhäuser in offener Bauweise mit maximal zwei Wohnungen je Gebäude, einer Grundfläche von 210 m², einer Geschossfläche von 340 m², zwei Vollgeschossen, Flachdach und einer Traufhöhe von 8,00 m.',
+          'Für die konkrete Planung sind die jeweils aktuellen planungs- und genehmigungsrechtlichen Unterlagen maßgeblich.',
         ],
       },
       {
-        heading: 'Provision',
+        heading: 'Wohnen nahe der Ostsee',
         paragraphs: [
-          'Das Angebot wird auf der aktuellen Höhn-Seite ausdrücklich als provisionsfrei von privat geführt.'
+          'Die Lage in Rosenhagen verbindet die Nähe zum Natur- und Küstenraum mit kurzen Wegen Richtung Dassow und Travemünde. Details zur Lage und zum Grundstück erhalten Interessenten im persönlichen Gespräch.',
         ],
       },
     ],
