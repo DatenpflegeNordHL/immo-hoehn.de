@@ -61,10 +61,8 @@ jobs:
           for name in STRATO_SSH_HOST STRATO_SSH_USER STRATO_SSH_PRIVATE_KEY_B64 STRATO_SSH_KNOWN_HOSTS STRATO_DEPLOY_DIR; do
             test -n "${!name:-}" || { echo "Abbruch: Secret $name fehlt." >&2; exit 1; }
           done
-
           case "${STRATO_DEPLOY_DIR%/}" in
-            /home/www/immo-hoehn-astro|home/www/immo-hoehn-astro|immo-hoehn-astro|./immo-hoehn-astro)
-              ;;
+            /home/www/immo-hoehn-astro|home/www/immo-hoehn-astro|immo-hoehn-astro|./immo-hoehn-astro) ;;
             *)
               echo "Abbruch: Production-Deploy ist ausschließlich für immo-hoehn-astro freigegeben: $STRATO_DEPLOY_DIR" >&2
               exit 1
@@ -140,7 +138,8 @@ jobs:
           test "$(curl -sS -o /dev/null -w '%{http_code}' 'http://immo-hoehn.de/')" = '301'
           test "$(curl -sS -o /dev/null -w '%{redirect_url}' 'http://immo-hoehn.de/')" = 'https://immo-hoehn.de/'
 
-          curl -sSI "$BASE/" | grep -Eiq '^strict-transport-security: max-age=15552000'
+          curl -sSI "$BASE/" -o /tmp/home.headers
+          grep -Eiq '^strict-transport-security: max-age=15552000' /tmp/home.headers
 
           for path in \
             / \
@@ -167,10 +166,17 @@ jobs:
           test "$(curl -sS -o /dev/null -w '%{http_code}' "$BASE/qa-definitely-not-found-92841")" = '404'
           test "$(curl -sS -o /dev/null -w '%{http_code}' "$BASE/api/contact.php")" = '405'
 
-          curl -sS "$BASE/" | grep -Fq '0171 1230162'
-          ! curl -sS "$BASE/" | grep -Eq '038826[[:space:]]*80911|\+493882680911|\+49[[:space:]]*38826[[:space:]]*80911'
-          curl -sS "$BASE/" | grep -Fq '<title>Höhn Immobilien | Immobilien an der Ostseeküste</title>'
-          curl -sS "$BASE/robots.txt" | grep -Fq 'Sitemap: https://immo-hoehn.de/sitemap-index.xml'
+          # Fetch once, then inspect local files. Avoid curl|grep -q under pipefail,
+          # where grep intentionally closes the pipe early and curl can return 23.
+          curl -sS "$BASE/" -o /tmp/home.html
+          curl -sS "$BASE/robots.txt" -o /tmp/robots.txt
+
+          grep -Fq '0171 1230162' /tmp/home.html
+          ! grep -Eq '038826[[:space:]]*80911|\+493882680911|\+49[[:space:]]*38826[[:space:]]*80911' /tmp/home.html
+          grep -Fq '<title>Höhn Immobilien | Immobilien an der Ostseeküste</title>' /tmp/home.html
+          grep -Fq 'class="heritage-footer"' /tmp/home.html
+          test "$(grep -o 'class="site-footer"' /tmp/home.html | wc -l)" = '0'
+          grep -Fq 'Sitemap: https://immo-hoehn.de/sitemap-index.xml' /tmp/robots.txt
 
           curl -sS -D /tmp/contact-invalid.headers -o /dev/null \
             -X POST \
@@ -225,5 +231,6 @@ jobs:
             echo '- HTTPS/non-www redirects: PASS'
             echo '- HSTS: PASS'
             echo '- Core pages + robots + sitemap + 404: PASS'
+            echo '- Homepage integrated footer: PASS'
             echo '- Contact validation smoke test: PASS'
           } >> "$GITHUB_STEP_SUMMARY"
