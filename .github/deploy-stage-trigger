@@ -1,4 +1,7 @@
 Höhn STRATO Live Deploy
-Ausgelöst am 2026-09-10 nach vollständiger Einbindung der verifizierten Immobilien- und Projektbilder.
+Ausgelöst am 2026-09-10 nach finaler Mobile-Integration von Hero, Region und Heritage.
 Ziel: /home/www/immo-hoehn-astro
-Geprüfter Stand vor Deploy: ecf2df88328c9ec18781f012c31067608baa1d22
+QA-geprüfter Stand: 895d2a2db734fd684d8617d471b4f79ed79f3118
+Astro Build: PASS
+Visual QA: PASS
+Lighthouse QA: PASS
