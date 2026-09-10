@@ -1,6 +1,7 @@
 Höhn STRATO Live Deploy
 Ausgelöst am 2026-09-10 nach Entfernung der alten Höhn-Festnetznummer 038826 80911 aus allen öffentlichen Ausgaben.
 Ziel: /home/www/immo-hoehn-astro
-Basisstand: d8014c73726815f0df0340b03135c89f40c87e14
+Basisstand: 59f5c84c34026a1e3a5d6291c2e0eac5c84be902
 Verbleibende öffentliche Höhn-Telefonnummer: 0171 1230162
 Production Gate blockiert die alte Festnetznummer künftig automatisch.
+STRATO-Medienabruf: SSH-Retry/Multiplexing aktiviert.
