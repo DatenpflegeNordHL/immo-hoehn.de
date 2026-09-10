@@ -42,7 +42,17 @@ const replacements = new Map([
 ]);
 
 function replaceText(value) {
-  return typeof value === 'string' ? (replacements.get(value) ?? value) : value;
+  if (typeof value !== 'string') return value;
+
+  const replaced = replacements.get(value) ?? value;
+
+  return replaced
+    .replace(/\nTelefon:\s*038826\s*80911(?=\n|$)/gi, '')
+    .replace(/^Telefon:\s*038826\s*80911\n?/gim, '')
+    .replace(/\+49\s*38826\s*80911/gi, '')
+    .replace(/038826\s*80911/gi, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
 }
 
 function deepReplace(value) {
