@@ -18,35 +18,42 @@
 }
 
 /* EFH 1724: no verified object photo is stored in the repository yet.
-   Deliberately use a clearly labelled Pötenitz location image instead of
-   presenting a generated house visual as the actual property. */
+   Use a clearly labelled Pötenitz location image instead of pretending a
+   representative house visual is the actual property. */
 .property-card:nth-child(1)::before {
   background-image: url('/assets/hero-coast-960.webp');
   background-position: 64% 58%;
 }
 .property-card:nth-child(1) .kicker::after { content: " · Lagebild"; }
 
-/* ETW 1722 and Rosenhagen: images recovered from the former Höhn/Webador
-   public media source. A neutral background remains if that legacy CDN is
-   temporarily unavailable. */
+/* ETW 1722: recovered Bestandsbild first, local coast image as resilient
+   fallback so a retired legacy CDN can never leave an empty grey card. */
 .property-card:nth-child(2)::before {
-  background-image: url('https://primary.jwwb.nl/public/m/j/i/temp-gokzzpyuwghsepdshzbs/poetenitz-25-05-06-03-high.jpg');
+  background-image:
+    url('https://primary.jwwb.nl/public/m/j/i/temp-gokzzpyuwghsepdshzbs/poetenitz-25-05-06-03-high.jpg'),
+    url('/assets/hero-coast-960.webp');
 }
 .property-card:nth-child(2) .kicker::after { content: " · Bestandsbild"; }
 
+/* Rosenhagen: retain the recovered former-site project media when available,
+   with the locally shipped Rosenhagen coast image underneath as fallback. */
 .property-card:nth-child(3)::before {
-  background-image: url('https://primary.jwwb.nl/public/m/j/i/temp-gokzzpyuwghsepdshzbs/wohnen-wie-im-urlaub-210302-rosenhagen-front-high.jpg');
+  background-image:
+    url('https://primary.jwwb.nl/public/m/j/i/temp-gokzzpyuwghsepdshzbs/wohnen-wie-im-urlaub-210302-rosenhagen-front-high.jpg'),
+    url('/assets/rosenhagen-beach.webp');
 }
-.property-card:nth-child(3) .kicker::after { content: " · Projektansicht"; }
+.property-card:nth-child(3) .kicker::after { content: " · Lagebild"; }
 
 .property-card:nth-child(4)::before {
-  background-image: url('https://primary.jwwb.nl/public/m/j/i/temp-gokzzpyuwghsepdshzbs/rosenhagen-210209-projekt-4-grundstuecke-high.jpg');
+  background-image:
+    url('https://primary.jwwb.nl/public/m/j/i/temp-gokzzpyuwghsepdshzbs/rosenhagen-210209-projekt-4-grundstuecke-high.jpg'),
+    url('/assets/rosenhagen-beach.webp');
 }
-.property-card:nth-child(4) .kicker::after { content: " · Bestandsbild"; }
+.property-card:nth-child(4) .kicker::after { content: " · Lagebild"; }
 
 /* Mobile hero: the base stylesheet changed the photo from an absolute layer
-   into a second flex item. That produced a hard section break on phones.
-   Keep copy + photo inside one hero and restore a soft paper-to-photo fade. */
+   into a second flex item. That produced the visible hard section break on
+   phones. Keep copy + photo inside one hero and blend paper into the photo. */
 @media (max-width: 900px) {
   .hero {
     position: relative;
@@ -77,7 +84,7 @@
     height: 100%;
     aspect-ratio: auto;
     object-fit: cover;
-    object-position: 64% 68%;
+    object-position: 64% 66%;
   }
 
   .hero-photo-fade {
@@ -93,12 +100,12 @@
     background: linear-gradient(
       180deg,
       rgba(245, 244, 240, 1) 0%,
-      rgba(245, 244, 240, .995) 39%,
-      rgba(245, 244, 240, .96) 49%,
-      rgba(245, 244, 240, .82) 58%,
-      rgba(245, 244, 240, .52) 68%,
-      rgba(245, 244, 240, .18) 79%,
-      rgba(245, 244, 240, 0) 91%
+      rgba(245, 244, 240, .99) 36%,
+      rgba(245, 244, 240, .90) 46%,
+      rgba(245, 244, 240, .70) 55%,
+      rgba(245, 244, 240, .40) 64%,
+      rgba(245, 244, 240, .12) 73%,
+      rgba(245, 244, 240, 0) 82%
     );
   }
 
