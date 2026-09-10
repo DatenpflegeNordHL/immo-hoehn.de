@@ -28,7 +28,7 @@ const publishedProperties = PUBLISH_PROPERTY_LISTINGS ? properties : [];
 
       <div class="hero-copy">
         <p class="eyebrow">Höhn Immobilien · Ostseeküste</p>
-        <h1 id="hero-title">Immobilien an<br />der Ostseeküste.</h1>
+        <h1 id="hero-title"><span class="hero-title-line">Immobilien an</span><span class="hero-title-line">der Ostseeküste.</span></h1>
         <p class="hero-intro">Persönliche Begleitung bei Verkauf, Wertermittlung und Vermittlung – seit 1986.</p>
         <div class="place-row"><span class="short-rule"></span><span>Dassow · Pötenitz · Rosenhagen · Travemünde · Priwall</span></div>
         <div class="hero-actions">
@@ -142,3 +142,133 @@ const publishedProperties = PUBLISH_PROPERTY_LISTINGS ? properties : [];
     </section>
   </main>
 </BaseLayout>
+
+<style is:inline>
+  .hero-title-line {
+    display: block;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 901px) {
+    .hero-copy {
+      width: min(520px, calc(100% - 190px));
+    }
+
+    .hero-copy h1 {
+      width: auto;
+      max-width: 520px;
+      font-size: clamp(56px, 5.1vw, 74px);
+      line-height: .88;
+      text-align: left;
+      margin: 19px 0 18px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .hero {
+      position: relative;
+      display: block;
+      height: calc(100svh - 108px);
+      min-height: 620px;
+      padding: 0;
+      overflow: hidden;
+      isolation: isolate;
+      background: var(--paper);
+    }
+
+    .hero-photo {
+      display: block !important;
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .hero-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      aspect-ratio: auto;
+      object-fit: cover;
+      object-position: 64% 58%;
+    }
+
+    .hero-photo-fade {
+      display: block !important;
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(245,244,240,.92) 0%, rgba(245,244,240,.74) 42%, rgba(245,244,240,.38) 66%, rgba(245,244,240,.18) 100%);
+      pointer-events: none;
+    }
+
+    .hero-copy {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      width: auto;
+      height: auto;
+      padding: 34px 22px 28px;
+      background: transparent;
+    }
+
+    .hero-copy::before {
+      display: none;
+    }
+
+    .hero-copy h1 {
+      width: 100%;
+      max-width: none;
+      font-size: clamp(42px, 11.8vw, 52px);
+      line-height: .9;
+      text-align: left;
+      margin: 18px 0 15px;
+    }
+
+    .hero-intro {
+      max-width: 340px;
+    }
+
+    .place-row {
+      max-width: 100%;
+      white-space: normal;
+    }
+
+    .hero-actions {
+      gap: 14px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta {
+      position: absolute;
+      left: 22px;
+      bottom: 24px;
+      margin: 0;
+    }
+  }
+
+  @media (max-width: 580px) {
+    .hero {
+      height: calc(100svh - 108px);
+      min-height: 620px;
+    }
+
+    .hero-copy {
+      padding-top: 30px;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(40px, 11.8vw, 48px);
+    }
+
+    .hero-actions .text-link {
+      font-size: 8.5px;
+    }
+  }
+</style>
