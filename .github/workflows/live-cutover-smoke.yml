@@ -45,6 +45,38 @@ jobs:
             test "$code" = 200
           done
 
+      - name: Obsolete Höhn landline absent on every live page
+        shell: bash
+        run: |
+          set -euo pipefail
+          pages=(
+            /
+            /immobilien/
+            /immobilie-verkaufen/
+            /grundstueck-verkaufen/
+            /immobilienbewertung/
+            /kontakt/
+            /impressum/
+            /datenschutz/
+            /ueber-uns/
+            /regionen/dassow/
+            /regionen/poetenitz/
+            /regionen/rosenhagen/
+            /regionen/travemuende/
+            /regionen/priwall/
+            /immobilien/grundstuecke-rosenhagen-623-743/
+            /immobilien/baugrundstuecke-rosenhagen-1599-1999/
+          )
+          for path in "${pages[@]}"; do
+            file="/tmp/live-$(printf '%s' "$path" | tr '/-' '__').html"
+            curl --retry 3 --retry-all-errors -LsS "https://immo-hoehn.de$path" -o "$file"
+            if grep -Eiq '038826([[:space:]]|&nbsp;)*80911|\+49([[:space:]]|&nbsp;)*38826([[:space:]]|&nbsp;)*80911|tel:\+493882680911' "$file"; then
+              echo "FAIL: alte Festnetznummer auf $path gefunden" >&2
+              exit 1
+            fi
+            echo "PASS no obsolete landline: $path"
+          done
+
       - name: Region routes respond 200
         continue-on-error: true
         shell: bash
