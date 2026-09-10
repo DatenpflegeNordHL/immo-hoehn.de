@@ -20,25 +20,46 @@ mkdir -p "$DEST"
 rm -f "$DEST"/*
 
 REMOTE_BASE='/home/www/STRATO-apps/wordpress_02/app/wp-content/uploads/2026/07'
-SSH=(ssh -o BatchMode=yes -o StrictHostKeyChecking=yes "$STRATO_SSH_USER@$STRATO_SSH_HOST")
+SSH=(
+  ssh
+  -o BatchMode=yes
+  -o StrictHostKeyChecking=yes
+  -o ConnectTimeout=15
+  -o ConnectionAttempts=3
+  -o ServerAliveInterval=15
+  -o ServerAliveCountMax=3
+  -o ControlMaster=auto
+  -o ControlPersist=60
+  -o ControlPath="$HOME/.ssh/strato-%C"
+  "$STRATO_SSH_USER@$STRATO_SSH_HOST"
+)
 
 copy_media() {
   local stem="$1"
   local target="$2"
-  local remote_file
+  local tmp="$DEST/.${target}.tmp"
+  local attempt
 
-  remote_file="$(${SSH[@]} "find '$REMOTE_BASE' -maxdepth 1 -type f \
-    \( -iname '${stem}.webp' -o -iname '${stem}.png' -o -iname '${stem}.jpg' -o -iname '${stem}.jpeg' \) \
-    -print -quit")"
+  rm -f "$tmp"
 
-  if [[ -z "$remote_file" ]]; then
-    echo "WordPress 02 source image not found for stem: $stem" >&2
-    exit 1
-  fi
+  for attempt in 1 2 3; do
+    if "${SSH[@]}" "set -e; remote_file=\$(find '$REMOTE_BASE' -maxdepth 1 -type f \
+      \( -iname '${stem}.webp' -o -iname '${stem}.png' -o -iname '${stem}.jpg' -o -iname '${stem}.jpeg' \) \
+      -print -quit); test -n \"\$remote_file\"; cat \"\$remote_file\"" > "$tmp"; then
+      if [[ -s "$tmp" ]]; then
+        mv "$tmp" "$DEST/$target"
+        echo "FETCHED $stem -> $target | mime=$(file --brief --mime-type "$DEST/$target")"
+        return 0
+      fi
+    fi
 
-  ${SSH[@]} "cat '$remote_file'" > "$DEST/$target"
-  test -s "$DEST/$target"
-  echo "FETCHED $stem -> $target | source=$(basename "$remote_file") | mime=$(file --brief --mime-type "$DEST/$target")"
+    rm -f "$tmp"
+    echo "Retry $attempt/3 for WordPress 02 media: $stem" >&2
+    sleep $((attempt * 2))
+  done
+
+  echo "WordPress 02 source image could not be fetched after retries: $stem" >&2
+  exit 1
 }
 
 copy_media 'Luftbild-Annimation-Rosenhagen-Kopie-2' 'rosenhagen-projekt.webp'
