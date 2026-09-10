@@ -62,6 +62,9 @@ jobs:
           grep -Fq 'HTTP/1.1 303 See Other' /tmp/contact-honeypot.headers
           grep -Fq 'Location: /kontakt/?kontakt=erfolg#kontaktformular' /tmp/contact-honeypot.headers
 
+      - name: Verify legacy property image sources
+        run: node scripts/property-media-preflight.mjs
+
       - name: Build staging site
         run: npm run build
 
