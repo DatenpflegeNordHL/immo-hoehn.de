@@ -35,6 +35,12 @@ jobs:
       - name: Run production readiness gate
         run: node scripts/production-readiness.mjs
 
+      - name: Reject removed legacy contact data
+        run: node scripts/legacy-contact-qa.mjs
+
+      - name: Run mathematical duplicate-content QA
+        run: node scripts/content-duplication-qa.mjs
+
       - name: Assemble release candidate
         shell: bash
         run: |
@@ -52,18 +58,21 @@ jobs:
           cat > release-candidate/README.txt <<'EOF'
           HÖHN IMMOBILIEN – RELEASE CANDIDATE
 
-          site/ enthält den geprüften Production-Intent-Build inklusive der für einen neuen,
-          leeren STRATO-Zielordner vorbereiteten .htaccess.
+          site/ enthält den geprüften Production-Intent-Build inklusive der für den
+          isolierten STRATO-Zielordner vorbereiteten .htaccess.
 
           deploy-notes/ enthält Launch-Unterlagen und Einzelvorlagen.
           Für den aktuellen Deploy-Weg ist STRATO-GITHUB-DEPLOY-SETUP-2026-09-09.md maßgeblich.
 
-          WICHTIG:
-          - Dieser Workflow deployt nichts.
-          - Alte WordPress-Dateien werden nicht benötigt oder überschrieben.
-          - HSTS/CSP und www/non-www-Zwang sind bewusst nicht voraktiviert.
-          - Objekt-Redirects bleiben bis zum unmittelbaren Browser-Recheck beim Cutover deaktiviert.
-          - Kontaktformular auf dem echten Höhn-STRATO-Webspace per realer Testanfrage prüfen.
+          AKTUELLER PRODUKTIONSSTAND:
+          - kanonischer Host: https://immo-hoehn.de
+          - HTTP sowie www werden per 301 auf HTTPS/non-www geführt
+          - HSTS ist nach Live-Verifikation mit max-age=15552000 aktiv
+          - CSP bleibt bis zu einem separaten CSP-Pass bewusst aus
+          - alte Festnetznummer ist im Production-Build verboten
+          - Duplicate-Content-Gate wird vor Freigabe ausgeführt
+          - Objekt-Redirects bleiben bis zur aktuellen Objektbestätigung deaktiviert
+          - echte Kontaktformular-Zustellung nach jedem relevanten Server-/Mail-Change erneut prüfen
           EOF
 
       - name: Upload release candidate
