@@ -36,12 +36,9 @@ copy_media() {
     exit 1
   fi
 
-  # STRATO shell access can see the full webspace path even when its SFTP
-  # namespace cannot address that same absolute path. Stream the original
-  # bytes through SSH instead of relying on scp path translation.
   ${SSH[@]} "cat '$remote_file'" > "$DEST/$target"
   test -s "$DEST/$target"
-  echo "FETCHED $stem -> $target"
+  echo "FETCHED $stem -> $target | source=$(basename "$remote_file") | mime=$(file --brief --mime-type "$DEST/$target")"
 }
 
 copy_media 'Luftbild-Annimation-Rosenhagen-Kopie-2' 'rosenhagen-projekt.webp'
