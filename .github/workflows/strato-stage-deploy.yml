@@ -61,6 +61,12 @@ jobs:
       - name: Run production readiness gate
         run: node scripts/production-readiness.mjs
 
+      - name: Reject removed legacy contact data
+        run: node scripts/legacy-contact-qa.mjs
+
+      - name: Run mathematical duplicate-content QA
+        run: node scripts/content-duplication-qa.mjs
+
       - name: Add clean STRATO htaccess to build
         run: cp deploy/strato-new-site.htaccess dist/.htaccess
 
@@ -171,7 +177,7 @@ jobs:
             echo
             echo "- Commit: $GITHUB_SHA"
             echo "- Zielordner: \`$STRATO_DEPLOY_DIR\`"
-            echo '- Produktionsbuild + Readiness Gate: PASS'
+            echo '- Produktionsbuild + Readiness + Legacy-Contact + Duplicate-Content Gates: PASS'
             echo '- Upload: PASS'
             echo '- Alte WordPress-Produktion wurde nicht verändert.'
             echo '- Domain-Umschaltung ist ausdrücklich NICHT Bestandteil dieses Workflows.'
