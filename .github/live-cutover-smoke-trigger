@@ -1,2 +1,4 @@
-Live cutover smoke trigger
-2026-09-10 rerun 2
+Run live verification after deployment
+2026-09-10
+Deployed source parent: 895d2a2db734fd684d8617d471b4f79ed79f3118
+Deploy trigger commit: dcc0d090b5dac376c516858029247cc1cad431c8
