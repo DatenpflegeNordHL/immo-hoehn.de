@@ -154,4 +154,133 @@ const publishedProperties = PUBLISH_PROPERTY_LISTINGS ? properties : [];
       <div class="heritage-footer-copy">© 2026 Höhn Immobilien</div>
     </div>
   </footer>
+
+  <style>
+    .heritage-footer {
+      max-width: 1440px;
+      margin: 0 auto;
+      background: rgba(241, 240, 236, .94);
+      border-top: 1px solid rgba(23, 58, 74, .04);
+    }
+
+    .heritage-footer .heritage {
+      border-top: 0;
+    }
+
+    .heritage-footer-meta {
+      display: grid;
+      grid-template-columns: minmax(280px, 1.6fr) minmax(180px, .8fr) auto auto;
+      align-items: center;
+      gap: 24px;
+      padding: 18px 46px 22px;
+      border-top: 1px solid rgba(23, 58, 74, .10);
+      color: #526a75;
+    }
+
+    .heritage-footer-identity {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .heritage-footer-identity strong {
+      font: 400 20px/1 var(--serif);
+      color: var(--ink);
+    }
+
+    .heritage-footer-identity span,
+    .heritage-footer-contact a,
+    .heritage-footer-nav a,
+    .heritage-footer-copy {
+      font-size: 9px;
+      line-height: 1.5;
+    }
+
+    .heritage-footer-contact {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .heritage-footer-contact a,
+    .heritage-footer-nav a {
+      min-height: 28px;
+      display: inline-flex;
+      align-items: center;
+      text-underline-offset: 3px;
+    }
+
+    .heritage-footer-nav {
+      display: flex;
+      gap: 16px;
+      white-space: nowrap;
+    }
+
+    .heritage-footer-copy {
+      white-space: nowrap;
+      color: #788a92;
+    }
+
+    @media (max-width: 900px) {
+      .heritage-footer-meta {
+        grid-template-columns: 1fr 1fr;
+        gap: 14px 28px;
+        padding: 20px 22px 24px;
+      }
+
+      .heritage-footer-nav {
+        justify-self: start;
+      }
+
+      .heritage-footer-copy {
+        justify-self: end;
+      }
+    }
+
+    @media (max-width: 580px) {
+      .heritage-footer-meta {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 20px 22px 24px;
+      }
+
+      .heritage-footer-identity {
+        gap: 6px;
+      }
+
+      .heritage-footer-identity strong {
+        font-size: 22px;
+      }
+
+      .heritage-footer-identity span,
+      .heritage-footer-contact a,
+      .heritage-footer-nav a,
+      .heritage-footer-copy {
+        font-size: 11px;
+      }
+
+      .heritage-footer-contact {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 4px 18px;
+      }
+
+      .heritage-footer-contact a,
+      .heritage-footer-nav a {
+        min-height: 36px;
+      }
+
+      .heritage-footer-nav {
+        gap: 18px;
+        flex-wrap: wrap;
+      }
+
+      .heritage-footer-copy {
+        justify-self: start;
+        padding-top: 2px;
+        font-size: 10px;
+      }
+    }
+  </style>
 </BaseLayout>
