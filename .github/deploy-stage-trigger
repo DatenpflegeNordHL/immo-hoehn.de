@@ -1,8 +1,9 @@
 Höhn STRATO Live Deploy
-Ausgelöst am 2026-09-10 nach vollständiger Entfernung der alten Höhn-Festnetznummer 038826 80911 aus allen öffentlichen Ausgaben.
+Ausgelöst am 2026-09-10 für den korrigierten Startseiten-Hero.
 Ziel: /home/www/immo-hoehn-astro
-Basisstand: 3a3737f4dad7b8d694326b7d35f32664e50ee182
-Verbleibende öffentliche Höhn-Telefonnummer: 0171 1230162
-Production Gate blockiert die alte Festnetznummer künftig automatisch.
-Live-Smoke prüft die alte Nummer anschließend auf allen öffentlichen Seiten.
-STRATO-Transport: Retry für SSH, Zielprüfung, rsync und Release-Verifikation aktiviert.
+Basisstand: 005104450c969b35561f3da992cf98a8f8f301c0
+Hero-Fix: Überschrift „Immobilien an der Ostseeküste.“ auf Desktop und Mobil fest auf zwei saubere Zeilen gesetzt.
+Mobile Hero: echtes Full-Bleed-Bild, korrekte 108-px-Headerhöhe, viewportbezogene Höhe und überlagerter Inhalt.
+Desktop Hero: breiter Textbereich, linksbündige zweizeilige Überschrift ohne ungewollten Umbruch.
+Alte Höhn-Festnetznummer 038826 80911 bleibt vollständig blockiert; öffentlich bleibt 0171 1230162.
+Production Gate und Live-Smoke bleiben aktiv.
