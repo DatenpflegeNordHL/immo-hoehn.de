@@ -1,79 +1,76 @@
-const targets = [
-  {
-    name: 'Einfamilienhaus Pötenitz 1724',
-    url: 'https://immo-hoehn.de/immobilienangebote/kaufen/haeuser/efh-poetenitz',
-    needles: ['1724', '585.000', '170'],
-  },
-  {
-    name: 'Eigentumswohnung Pötenitz 1722',
-    url: 'https://immo-hoehn.de/immobilienangebote/kaufen/wohnungen/eigentumswohung',
-    needles: ['1722', '429.000', '105'],
-  },
-  {
-    name: 'Baugrundstücke Rosenhagen',
-    url: 'https://immo-hoehn.de/immobilienangebote/kaufen/grundstuecke/rosenhagen',
-    needles: ['623', '349.000', '630', '354.000', '666', '379.000'],
-  },
-  {
-    name: 'Baugrundstücke Rosenhagen von privat',
-    url: 'https://immo-hoehn.de/immobilienangebote/kaufen/grundstuecke/rosenhagen-von-privat',
-    needles: ['1.600', '2.005', '900'],
-  },
+const base = 'https://immo-hoehn.de';
+
+const historicalPages = [
+  '/immobilien/einfamilienhaus-poetenitz-1724/',
+  '/immobilien/eigentumswohnung-poetenitz-1722/',
+  '/immobilien/baugrundstuecke-rosenhagen/',
+  '/immobilien/baugrundstuecke-rosenhagen-von-privat/',
 ];
 
-const browserHeaders = {
-  'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36',
-  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-  'accept-language': 'de-DE,de;q=0.9,en;q=0.7',
+const legacyObjectPaths = [
+  '/immobilienangebote/kaufen/haeuser/efh-poetenitz/',
+  '/immobilienangebote/kaufen/wohnungen/eigentumswohung/',
+  '/immobilienangebote/kaufen/grundstuecke/rosenhagen/',
+  '/immobilienangebote/kaufen/grundstuecke/rosenhagen-von-privat/',
+];
+
+const headers = {
+  'user-agent': 'Mozilla/5.0 (compatible; HoehnProductionQA/1.0)',
+  accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
   'cache-control': 'no-cache',
   pragma: 'no-cache',
 };
 
-function normalize(text) {
-  return text
-    .replace(/&nbsp;|&#160;/gi, ' ')
-    .replace(/\u00a0/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
+function fail(message) {
+  console.error(`FAIL: ${message}`);
+  process.exitCode = 1;
 }
 
-let failed = false;
+async function fetchText(path, options = {}) {
+  const response = await fetch(`${base}${path}`, {
+    headers,
+    redirect: options.redirect ?? 'manual',
+    signal: AbortSignal.timeout(30000),
+  });
+  const body = await response.text();
+  return { response, body };
+}
 
-for (const target of targets) {
-  try {
-    const response = await fetch(target.url, {
-      redirect: 'follow',
-      headers: browserHeaders,
-      signal: AbortSignal.timeout(30000),
-    });
+console.log('HÖHN HISTORICAL OBJECT SAFETY PREFLIGHT');
 
-    const body = normalize(await response.text());
-    const missing = target.needles.filter((needle) => !body.includes(needle));
+const sitemap = await fetchText('/sitemap-0.xml', { redirect: 'follow' });
+if (!sitemap.response.ok) fail(`Sitemap HTTP ${sitemap.response.status}`);
 
-    console.log(`\n[${target.name}]`);
-    console.log(`URL: ${target.url}`);
-    console.log(`HTTP: ${response.status}`);
-    console.log(`Final URL: ${response.url}`);
-    console.log(`Expected markers: ${target.needles.join(', ')}`);
+for (const path of historicalPages) {
+  const { response, body } = await fetchText(path, { redirect: 'follow' });
+  console.log(`${path} -> ${response.status}`);
 
-    if (!response.ok) {
-      console.error(`FAIL: HTTP ${response.status}`);
-      failed = true;
-      continue;
-    }
+  if (response.status !== 200) {
+    fail(`${path} muss als historische Informationsseite 200 liefern.`);
+    continue;
+  }
 
-    if (missing.length) {
-      console.error(`FAIL: erwartete Marker fehlen: ${missing.join(', ')}`);
-      failed = true;
-      continue;
-    }
+  if (!/<meta\s+name=["']robots["']\s+content=["'][^"']*noindex[^"']*["']/i.test(body)
+      && !/<meta\s+content=["'][^"']*noindex[^"']*["']\s+name=["']robots["']/i.test(body)) {
+    fail(`${path} muss noindex sein, solange die aktuelle Verfügbarkeit nicht bestätigt ist.`);
+  }
 
-    console.log('PASS: Seite erreichbar und bekannte Kernwerte vorhanden.');
-  } catch (error) {
-    failed = true;
-    console.error(`\n[${target.name}] FAIL: ${error?.message || error}`);
+  if (sitemap.body.includes(`${base}${path}`)) {
+    fail(`${path} darf nicht in der Sitemap stehen, solange die Seite noindex/historisch ist.`);
+  }
+
+  if (!/Verfügbarkeit nicht aktuell bestätigt|nicht als aktuelles Höhn-Angebot|aktuelle Verfügbarkeit ist nicht bestätigt/i.test(body)) {
+    fail(`${path} enthält keinen klaren Hinweis auf den historischen/unbestätigten Status.`);
   }
 }
 
-if (failed) process.exit(1);
-console.log('\nLIVE OBJECT PREFLIGHT PASS: alle vier Höhn-Bestandsseiten erreichbar und Kernwerte bestätigt.');
+for (const path of legacyObjectPaths) {
+  const { response } = await fetchText(path, { redirect: 'manual' });
+  console.log(`${path} -> ${response.status}`);
+  if (response.status !== 404) {
+    fail(`${path} muss bis zur bestätigten Entity-Zuordnung 404 liefern, nicht redirecten oder 200 ausgeben.`);
+  }
+}
+
+if (process.exitCode) process.exit(1);
+console.log('HISTORICAL OBJECT SAFETY PREFLIGHT PASS: historische Seiten noindex + sitemap-frei; unsichere Legacy-Objektpfade bleiben 404.');
