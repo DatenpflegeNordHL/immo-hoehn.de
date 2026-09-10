@@ -52,5 +52,41 @@ main{display:block}
 .region-list article .region-title{font-size:8px;letter-spacing:.06em;font-weight:500;margin:0 0 3px;color:#314b57}
 .region-list article .region-title a{text-decoration:none}
 
-@media(max-width:900px){.page-hero{grid-template-columns:minmax(0,1fr)}.page-hero-media{min-height:260px}.content-grid{grid-template-columns:1fr}.side-card{position:relative;top:auto}.property-cards{grid-template-columns:1fr 1fr}.site-footer{grid-template-columns:1fr 1fr}}
-@media(max-width:580px){.page-hero-copy{padding:52px 22px 46px}.page-hero-copy h1{font-size:clamp(42px,13vw,50px)}.content-wrap,.property-section{padding-left:22px;padding-right:22px}.property-cards,.site-footer{grid-template-columns:1fr}.property-section-head{display:block}.property-section-head p{margin-top:14px}.detail-facts{grid-template-columns:1fr}.site-footer{padding:38px 22px 28px}}
+/* Tablet content pages stay side-by-side instead of becoming alternating text/image slabs. */
+@media(max-width:900px){
+  .page-hero{grid-template-columns:minmax(0,1.1fr) minmax(240px,.9fr);min-height:390px}
+  .page-hero--text{grid-template-columns:minmax(0,1fr)}
+  .page-hero-copy{padding:58px 32px 52px}
+  .page-hero-media{min-height:0}
+  .content-grid{grid-template-columns:1fr;gap:42px}
+  .side-card{position:relative;top:auto}
+  .property-cards{grid-template-columns:1fr 1fr}
+  .site-footer{grid-template-columns:1fr 1fr}
+}
+
+/* Phone content pages use imagery as a background layer, not as a standalone block between text sections. */
+@media(max-width:580px){
+  .page-hero{display:block;position:relative;min-height:0;overflow:hidden;background:rgba(245,244,240,.96)}
+  .page-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(245,244,240,.98) 0%,rgba(245,244,240,.90) 58%,rgba(245,244,240,.64) 100%);z-index:1;pointer-events:none}
+  .page-hero--text::after{display:none}
+  .page-hero-copy{position:relative;z-index:2;padding:46px 22px 48px}
+  .page-hero-copy h1{font-size:clamp(42px,13vw,50px);margin-bottom:18px}
+  .page-hero-copy .lead{font-size:14px;line-height:1.6}
+  .page-hero-media{position:absolute;inset:0;z-index:0;min-height:0;height:100%;background:rgba(245,244,240,.96)}
+  .page-hero-media img{width:100%;height:100%;object-fit:cover;opacity:.20;filter:saturate(.72) contrast(.9);object-position:58% 50%}
+  .breadcrumbs{margin-bottom:18px}
+
+  .content-wrap{padding:44px 22px 56px}
+  .content-grid{gap:32px}
+  .content-block{padding-bottom:28px;margin-bottom:30px}
+  .content-block h2{margin-bottom:14px}
+  .content-block p{line-height:1.68}
+  .side-card{padding:22px;box-shadow:0 12px 34px rgba(23,58,74,.06)}
+
+  .property-section{padding:44px 22px 56px}
+  .property-cards,.site-footer{grid-template-columns:1fr}
+  .property-section-head{display:block;margin-bottom:24px}
+  .property-section-head p{margin-top:14px}
+  .detail-facts{grid-template-columns:1fr}
+  .site-footer{padding:38px 22px 28px}
+}
