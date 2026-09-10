@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { properties } from '../../data/properties.js';
+import { getPropertyMedia } from '../../data/property-media.js';
 import { PUBLISH_PROPERTY_LISTINGS } from '../../data/launch-config.js';
 
 const site = Astro.site ?? new URL('https://immo-hoehn.de');
@@ -56,13 +57,30 @@ const breadcrumbSchema = {
       </div>
       {publishedProperties.length > 0 ? (
         <div class="property-cards">
-          {publishedProperties.map((property) => <article class="property-card">
-            <p class="kicker">{property.type} · {property.location}</p>
-            <h3>{property.title}</h3>
-            <p class="price">{property.price}</p>
-            <p class="facts">{property.summary}</p>
-            <a href={`/immobilien/${property.slug}/`}>Details ansehen →</a>
-          </article>)}
+          {publishedProperties.map((property) => {
+            const media = getPropertyMedia(property.slug);
+            const fallback = property.location === 'Rosenhagen' ? '/assets/rosenhagen-beach.webp' : '/assets/hero-coast-960.webp';
+            const label = media.hero.kind === 'object' ? 'Objektbild' : media.hero.kind === 'project' ? 'Projektbild' : 'Lagebild';
+            return (
+              <article class="property-card">
+                <div class="property-card-media" style={`background-image:url('${fallback}')`}>
+                  <img
+                    src={media.hero.src}
+                    alt={media.hero.alt}
+                    loading="lazy"
+                    decoding="async"
+                    onerror="this.style.display='none';this.nextElementSibling.textContent='Lagebild';"
+                  />
+                  <span class="property-media-label">{label}</span>
+                </div>
+                <p class="kicker">{property.type} · {property.location}</p>
+                <h3>{property.title}</h3>
+                <p class="price">{property.price}</p>
+                <p class="facts">{property.summary}</p>
+                <a href={`/immobilien/${property.slug}/`}>Details ansehen →</a>
+              </article>
+            );
+          })}
         </div>
       ) : (
         <div class="content-prose">
