@@ -1,0 +1,115 @@
+name: Höhn Live Cutover Smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - redesign/coastal-blueprint
+    paths:
+      - '.github/live-cutover-smoke-trigger'
+
+permissions:
+  contents: read
+
+jobs:
+  live-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Verify live production routes and metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='https://immo-hoehn.de'
+          tmp="$(mktemp -d)"
+          trap 'rm -rf "$tmp"' EXIT
+
+          check_200() {
+            local path="$1"
+            local name
+            name="$(printf '%s' "$path" | tr '/?' '__')"
+            local code
+            code="$(curl --retry 3 --retry-delay 2 --retry-all-errors --silent --show-error --max-time 25 --location --output "$tmp/$name" --write-out '%{http_code}' "$base$path")"
+            printf '%-46s %s\n' "$path" "$code"
+            test "$code" = '200'
+          }
+
+          for path in \
+            / \
+            /immobilien/ \
+            /immobilie-verkaufen/ \
+            /grundstueck-verkaufen/ \
+            /immobilienbewertung/ \
+            /regionen/dassow/ \
+            /regionen/poetenitz/ \
+            /regionen/rosenhagen/ \
+            /regionen/travemuende/ \
+            /regionen/priwall/ \
+            /kontakt/ \
+            /impressum/ \
+            /datenschutz/ \
+            /robots.txt \
+            /sitemap-index.xml
+          do
+            check_200 "$path"
+          done
+
+          curl --retry 3 --retry-all-errors --silent --show-error --max-time 25 "$base/" > "$tmp/home.html"
+          grep -Fq 'Immobilien an' "$tmp/home.html"
+          grep -Fq 'der Ostseeküste' "$tmp/home.html"
+          grep -Fq 'https://immo-hoehn.de/' "$tmp/home.html"
+          if grep -Eiq '<meta[^>]+name=["'"']robots["'"'][^>]+noindex|<meta[^>]+content=["'"'][^"'"']*noindex' "$tmp/home.html"; then
+            echo 'FAIL: Startseite enthält noindex.' >&2
+            exit 1
+          fi
+
+          curl --silent --show-error --max-time 25 "$base/robots.txt" > "$tmp/robots.txt"
+          grep -Fq 'Sitemap: https://immo-hoehn.de/sitemap-index.xml' "$tmp/robots.txt"
+          if grep -Eq '^Disallow:[[:space:]]*/[[:space:]]*$' "$tmp/robots.txt"; then
+            echo 'FAIL: robots.txt sperrt die komplette Website.' >&2
+            exit 1
+          fi
+
+          curl --silent --show-error --max-time 25 "$base/sitemap-index.xml" > "$tmp/sitemap.xml"
+          grep -Fq 'https://immo-hoehn.de/' "$tmp/sitemap.xml"
+
+          curl --silent --show-error --max-time 25 "$base/impressum/" > "$tmp/impressum.html"
+          grep -Fq 'Christine Bringmann' "$tmp/impressum.html"
+          grep -Fq 'Amt Schönberger Land' "$tmp/impressum.html"
+          grep -Fq 'info@immo-hoehn.de' "$tmp/impressum.html"
+          if grep -Fq 't-online.de' "$tmp/impressum.html"; then
+            echo 'FAIL: alte öffentliche E-Mail im Impressum gefunden.' >&2
+            exit 1
+          fi
+
+          echo 'LIVE ROUTES + METADATA PASS'
+
+      - name: Verify safe legacy redirects
+        shell: bash
+        run: |
+          set -euo pipefail
+          base='https://immo-hoehn.de'
+          check_redirect() {
+            local path="$1"
+            local expected="$2"
+            local out code target
+            out="$(curl --retry 3 --retry-all-errors --silent --show-error --max-time 25 --output /dev/null --write-out '%{http_code} %{redirect_url}' "$base$path")"
+            code="${out%% *}"
+            target="${out#* }"
+            printf '%-28s -> %-48s [%s]\n' "$path" "$target" "$code"
+            [[ "$code" = '301' || "$code" = '308' ]]
+            [[ "$target" = "$base$expected" ]]
+            final="$(curl --silent --show-error --max-time 25 --location --output /dev/null --write-out '%{http_code} %{num_redirects} %{url_effective}' "$base$path")"
+            [[ "$final" = "200 1 $base$expected" ]]
+          }
+          check_redirect '/verkaufen' '/immobilie-verkaufen/'
+          check_redirect '/aktuelle-angebote' '/immobilien/'
+          check_redirect '/datenschutzerklaerung' '/datenschutz/'
+          echo 'LEGACY REDIRECTS PASS'
+
+      - name: Verify production contact endpoint
+        shell: bash
+        run: bash scripts/post-deploy-contact-smoke.sh
