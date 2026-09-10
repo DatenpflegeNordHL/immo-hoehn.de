@@ -35,7 +35,6 @@ const publishedProperties = PUBLISH_PROPERTY_LISTINGS ? properties : [];
           <a class="text-link" href="/immobilien/">Immobilien entdecken</a>
         </div>
         <div class="hero-meta">
-          <div class="pager"><span>01</span><span class="pager-line"></span><span>03</span></div>
           <p>Standort in<br />Dassow OT Pötenitz.</p>
         </div>
       </div>
@@ -64,17 +63,17 @@ const publishedProperties = PUBLISH_PROPERTY_LISTINGS ? properties : [];
       </div>
 
       <div class="region-list" aria-label="Regionen">
-        <article><p class="region-title"><a href="/regionen/dassow/">DASSOW</a></p><p>Unternehmensregion und lokaler Hub</p></article>
-        <article><p class="region-title"><a href="/regionen/poetenitz/">PÖTENITZ</a></p><p>Standort von Höhn Immobilien</p></article>
-        <article><p class="region-title"><a href="/regionen/rosenhagen/">ROSENHAGEN</a></p><p>Dokumentierter Grundstücks- und Küstenbezug</p></article>
-        <article><p class="region-title"><a href="/regionen/travemuende/">TRAVEMÜNDE</a></p><p>Lokaler Tätigkeitsbereich für Verkauf & Bewertung</p></article>
-        <article><p class="region-title"><a href="/regionen/priwall/">PRIWALL</a></p><p>Lokaler Tätigkeitsbereich an Trave und Ostsee</p></article>
+        <article><p class="region-title"><a href="/regionen/dassow/">DASSOW</a></p><p>Standortregion von Höhn Immobilien</p></article>
+        <article><p class="region-title"><a href="/regionen/poetenitz/">PÖTENITZ</a></p><p>Unternehmensstandort an der Ostseeküste</p></article>
+        <article><p class="region-title"><a href="/regionen/rosenhagen/">ROSENHAGEN</a></p><p>Grundstücke und Küstenlage</p></article>
+        <article><p class="region-title"><a href="/regionen/travemuende/">TRAVEMÜNDE</a></p><p>Verkauf, Bewertung und Vermittlung</p></article>
+        <article><p class="region-title"><a href="/regionen/priwall/">PRIWALL</a></p><p>Immobilien zwischen Trave und Ostsee</p></article>
       </div>
 
       <div class="region-story">
         <p class="eyebrow">Unsere Region</p>
         <h2 id="region-heading">Eine Küste.<br />Konkrete<br />Lagen.</h2>
-        <p class="region-copy">Standort, bestätigte Tätigkeitsbereiche und dokumentierte Objektlagen werden getrennt dargestellt. So bleibt jede Regionsseite nachvollziehbar statt bloß ein Ortsname für Suchmaschinen zu sein.</p>
+        <p class="region-copy">Von Dassow und Pötenitz bis Travemünde und Priwall: Höhn Immobilien begleitet Eigentümer und Interessenten in ausgewählten Lagen entlang der Ostseeküste persönlich und objektbezogen.</p>
       </div>
 
       <div class="grass-panel" aria-hidden="true">
@@ -86,7 +85,7 @@ const publishedProperties = PUBLISH_PROPERTY_LISTINGS ? properties : [];
     <section class="property-section" aria-labelledby="property-heading">
       <div class="property-section-head">
         <div><p class="eyebrow">Immobilienangebote</p><h2 id="property-heading">Aktuell heißt:<br />wirklich bestätigt.</h2></div>
-        <p>Objekte erscheinen hier erst, wenn Verfügbarkeit und aktuelles Höhn-Mandat frisch bestätigt sind.</p>
+        <p>Objekte erscheinen hier erst, wenn Verfügbarkeit und Vermarktungsstatus aktuell bestätigt sind.</p>
       </div>
       {publishedProperties.length > 0 ? (
         <div class="property-cards">
@@ -101,7 +100,7 @@ const publishedProperties = PUBLISH_PROPERTY_LISTINGS ? properties : [];
       ) : (
         <div class="content-prose">
           <h3>Derzeit keine Angebote als aktuell bestätigt</h3>
-          <p>Die bisher dokumentierten Objekte werden zum Relaunch nicht als aktueller Bestand ausgegeben. Für aktuelle Kauf- oder Grundstücksanfragen erreichen Sie Höhn Immobilien direkt.</p>
+          <p>Aktuell ist kein Objektbestand zur Veröffentlichung bestätigt. Für Kauf- oder Grundstücksanfragen erreichen Sie Höhn Immobilien direkt.</p>
           <div class="button-row"><a class="button-primary" href="/kontakt/">Aktuelle Angebote anfragen</a><a class="button-secondary" href="/immobilien/">Zur Immobilienübersicht</a></div>
         </div>
       )}
