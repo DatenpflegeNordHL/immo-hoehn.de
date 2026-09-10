@@ -1,52 +1,39 @@
+import { existsSync, statSync } from 'node:fs';
+import { join } from 'node:path';
 import { propertyMedia } from '../src/data/property-media.js';
 
-const remoteUrls = [...new Set(
+const sources = [...new Set(
   Object.values(propertyMedia)
     .flatMap((entry) => [entry.hero, ...(entry.gallery ?? [])])
     .map((item) => item?.src)
-    .filter((src) => typeof src === 'string' && /^https:\/\//i.test(src)),
+    .filter((src) => typeof src === 'string' && src.length > 0),
 )];
 
-async function checkImage(url) {
-  const response = await fetch(url, {
-    method: 'GET',
-    redirect: 'follow',
-    headers: {
-      Range: 'bytes=0-1023',
-      'User-Agent': 'Hoehn-Immobilien-Media-Preflight/1.0',
-    },
-    signal: AbortSignal.timeout(15000),
-  });
-
-  const contentType = response.headers.get('content-type') ?? '';
-  await response.body?.cancel();
-
-  if (!response.ok) {
-    throw new Error(`HTTP ${response.status}`);
-  }
-  if (!contentType.toLowerCase().startsWith('image/')) {
-    throw new Error(`unerwarteter Content-Type: ${contentType || 'leer'}`);
-  }
-
-  return `${response.status} ${contentType}`;
-}
-
-console.log(`Property media preflight: ${remoteUrls.length} eindeutige externe Bilddateien`);
-
 const failures = [];
-for (const url of remoteUrls) {
-  try {
-    const result = await checkImage(url);
-    console.log(`PASS ${result} ${url}`);
-  } catch (error) {
-    failures.push({ url, error: error instanceof Error ? error.message : String(error) });
-    console.error(`FAIL ${url}: ${failures.at(-1).error}`);
+
+for (const src of sources) {
+  if (/^https?:\/\//i.test(src)) {
+    failures.push(`${src}: externe Objektbildquelle ist nicht zulässig; WordPress-02-Medien müssen lokal in den Build übernommen werden.`);
+    continue;
   }
+
+  const relativePath = src.replace(/^\//, '');
+  const file = join(process.cwd(), 'public', relativePath.replace(/^assets\//, 'assets/'));
+  if (!existsSync(file)) {
+    failures.push(`${src}: Datei fehlt im Build-Input.`);
+    continue;
+  }
+  if (!statSync(file).isFile() || statSync(file).size === 0) {
+    failures.push(`${src}: Datei ist leer oder ungültig.`);
+    continue;
+  }
+  console.log(`PASS ${src}`);
 }
 
 if (failures.length > 0) {
-  console.error(`Property media preflight FAILED: ${failures.length} Bildquelle(n) nicht valide.`);
+  console.error(`Property media preflight FAILED (${failures.length}):`);
+  for (const failure of failures) console.error(`- ${failure}`);
   process.exit(1);
 }
 
-console.log('Property media preflight PASS');
+console.log(`Property media preflight PASS: ${sources.length} lokale WordPress-02-Bilddateien geprüft.`);
