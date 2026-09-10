@@ -1,0 +1,44 @@
+name: Höhn Live Deep Audit
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/live-deep-audit-trigger'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hoehn-live-deep-audit
+  cancel-in-progress: true
+
+jobs:
+  live-deep-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Use Node 22
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Run live deep audit
+        env:
+          LIVE_AUDIT_BASE: https://immo-hoehn.de/
+        run: node scripts/live-deep-audit.mjs
+
+      - name: Upload live audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-deep-audit-${{ github.sha }}
+          path: |
+            live-deep-audit.md
+            live-deep-audit.json
+          if-no-files-found: warn
+          retention-days: 14
