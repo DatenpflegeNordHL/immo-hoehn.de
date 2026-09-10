@@ -1,0 +1,229 @@
+name: Höhn STRATO Production Deploy
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/deploy-production-trigger'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hoehn-strato-production
+  cancel-in-progress: false
+
+jobs:
+  deploy-production:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Use Node 22
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Validate contact endpoint syntax
+        run: php -l public/api/contact.php
+
+      - name: Build production site
+        env:
+          PUBLIC_SITE_NOINDEX: 'false'
+        run: npm run build
+
+      - name: Run production gates
+        run: |
+          set -euo pipefail
+          node scripts/production-readiness.mjs
+          node scripts/legacy-contact-qa.mjs
+          node scripts/content-duplication-qa.mjs
+          cp deploy/strato-new-site.htaccess dist/.htaccess
+
+      - name: Validate production target and secrets
+        env:
+          STRATO_SSH_HOST: ${{ secrets.STRATO_SSH_HOST }}
+          STRATO_SSH_USER: ${{ secrets.STRATO_SSH_USER }}
+          STRATO_SSH_PRIVATE_KEY_B64: ${{ secrets.STRATO_SSH_PRIVATE_KEY_B64 }}
+          STRATO_SSH_KNOWN_HOSTS: ${{ secrets.STRATO_SSH_KNOWN_HOSTS }}
+          STRATO_DEPLOY_DIR: ${{ secrets.STRATO_DEPLOY_DIR }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          for name in STRATO_SSH_HOST STRATO_SSH_USER STRATO_SSH_PRIVATE_KEY_B64 STRATO_SSH_KNOWN_HOSTS STRATO_DEPLOY_DIR; do
+            test -n "${!name:-}" || { echo "Abbruch: Secret $name fehlt." >&2; exit 1; }
+          done
+
+          case "${STRATO_DEPLOY_DIR%/}" in
+            /home/www/immo-hoehn-astro|home/www/immo-hoehn-astro|immo-hoehn-astro|./immo-hoehn-astro)
+              ;;
+            *)
+              echo "Abbruch: Production-Deploy ist ausschließlich für immo-hoehn-astro freigegeben: $STRATO_DEPLOY_DIR" >&2
+              exit 1
+              ;;
+          esac
+
+      - name: Configure SSH
+        env:
+          STRATO_SSH_PRIVATE_KEY_B64: ${{ secrets.STRATO_SSH_PRIVATE_KEY_B64 }}
+          STRATO_SSH_KNOWN_HOSTS: ${{ secrets.STRATO_SSH_KNOWN_HOSTS }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          install -d -m 700 ~/.ssh
+          printf '%s' "$STRATO_SSH_PRIVATE_KEY_B64" | base64 --decode > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keygen -y -f ~/.ssh/id_ed25519 >/dev/null
+          printf '%s\n' "$STRATO_SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Verify SSH and create rollback snapshot
+        env:
+          STRATO_SSH_HOST: ${{ secrets.STRATO_SSH_HOST }}
+          STRATO_SSH_USER: ${{ secrets.STRATO_SSH_USER }}
+          STRATO_DEPLOY_DIR: ${{ secrets.STRATO_DEPLOY_DIR }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          TARGET="${STRATO_DEPLOY_DIR%/}"
+          BACKUP="${TARGET}.rollback-${GITHUB_SHA:0:12}"
+          ssh -o BatchMode=yes -o StrictHostKeyChecking=yes "$STRATO_SSH_USER@$STRATO_SSH_HOST" "
+            set -e
+            test -d '$TARGET'
+            rm -rf -- '$BACKUP'
+            cp -a -- '$TARGET' '$BACKUP'
+            test -f '$BACKUP/index.html'
+          "
+          echo "ROLLBACK_DIR=$BACKUP" >> "$GITHUB_ENV"
+
+      - name: Deploy checked build
+        id: deploy
+        continue-on-error: true
+        env:
+          STRATO_SSH_HOST: ${{ secrets.STRATO_SSH_HOST }}
+          STRATO_SSH_USER: ${{ secrets.STRATO_SSH_USER }}
+          STRATO_DEPLOY_DIR: ${{ secrets.STRATO_DEPLOY_DIR }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          rsync \
+            --archive \
+            --compress \
+            --delete-delay \
+            --delay-updates \
+            --human-readable \
+            --itemize-changes \
+            -e 'ssh -o BatchMode=yes -o StrictHostKeyChecking=yes' \
+            dist/ "$STRATO_SSH_USER@$STRATO_SSH_HOST:${STRATO_DEPLOY_DIR%/}/"
+
+      - name: Verify live production
+        id: livecheck
+        if: steps.deploy.outcome == 'success'
+        continue-on-error: true
+        shell: bash
+        run: |
+          set -euo pipefail
+          BASE='https://immo-hoehn.de'
+          sleep 2
+
+          test "$(curl -sS -o /dev/null -w '%{http_code}' "$BASE/")" = '200'
+          test "$(curl -sS -o /dev/null -w '%{http_code}' 'https://www.immo-hoehn.de/')" = '301'
+          test "$(curl -sS -o /dev/null -w '%{redirect_url}' 'https://www.immo-hoehn.de/')" = 'https://immo-hoehn.de/'
+          test "$(curl -sS -o /dev/null -w '%{http_code}' 'http://immo-hoehn.de/')" = '301'
+          test "$(curl -sS -o /dev/null -w '%{redirect_url}' 'http://immo-hoehn.de/')" = 'https://immo-hoehn.de/'
+
+          curl -sSI "$BASE/" | grep -Eiq '^strict-transport-security: max-age=15552000'
+
+          for path in \
+            / \
+            /immobilie-verkaufen/ \
+            /grundstueck-verkaufen/ \
+            /immobilienbewertung/ \
+            /immobilien/ \
+            /ueber-uns/ \
+            /kontakt/ \
+            /impressum/ \
+            /datenschutz/ \
+            /regionen/dassow/ \
+            /regionen/poetenitz/ \
+            /regionen/rosenhagen/ \
+            /regionen/travemuende/ \
+            /regionen/priwall/ \
+            /robots.txt \
+            /sitemap-index.xml
+          do
+            code="$(curl -sS -o /dev/null -w '%{http_code}' "$BASE$path")"
+            test "$code" = '200' || { echo "$path -> $code" >&2; exit 1; }
+          done
+
+          test "$(curl -sS -o /dev/null -w '%{http_code}' "$BASE/qa-definitely-not-found-92841")" = '404'
+          test "$(curl -sS -o /dev/null -w '%{http_code}' "$BASE/api/contact.php")" = '405'
+
+          curl -sS "$BASE/" | grep -Fq '0171 1230162'
+          ! curl -sS "$BASE/" | grep -Eq '038826[[:space:]]*80911|\+493882680911|\+49[[:space:]]*38826[[:space:]]*80911'
+          curl -sS "$BASE/" | grep -Fq '<title>Höhn Immobilien | Immobilien an der Ostseeküste</title>'
+          curl -sS "$BASE/robots.txt" | grep -Fq 'Sitemap: https://immo-hoehn.de/sitemap-index.xml'
+
+          curl -sS -D /tmp/contact-invalid.headers -o /dev/null \
+            -X POST \
+            --data-urlencode 'name=X' \
+            --data-urlencode 'email=kaputt' \
+            --data-urlencode 'anliegen=allgemeine-anfrage' \
+            --data-urlencode 'nachricht=zu kurz' \
+            --data-urlencode 'datenschutz=1' \
+            "$BASE/api/contact.php"
+          grep -Eiq '^HTTP/.* 303' /tmp/contact-invalid.headers
+          grep -Fiq 'location: /kontakt/?kontakt=ungueltig#kontaktformular' /tmp/contact-invalid.headers
+
+      - name: Roll back failed production deploy
+        if: steps.deploy.outcome == 'failure' || steps.livecheck.outcome == 'failure'
+        env:
+          STRATO_SSH_HOST: ${{ secrets.STRATO_SSH_HOST }}
+          STRATO_SSH_USER: ${{ secrets.STRATO_SSH_USER }}
+          STRATO_DEPLOY_DIR: ${{ secrets.STRATO_DEPLOY_DIR }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          TARGET="${STRATO_DEPLOY_DIR%/}"
+          FAILED="${TARGET}.failed-${GITHUB_SHA:0:12}"
+          ssh "$STRATO_SSH_USER@$STRATO_SSH_HOST" "
+            set -e
+            test -d '$ROLLBACK_DIR'
+            rm -rf -- '$FAILED'
+            if test -d '$TARGET'; then mv -- '$TARGET' '$FAILED'; fi
+            mv -- '$ROLLBACK_DIR' '$TARGET'
+          "
+          echo 'Production wurde wegen eines fehlgeschlagenen Gates auf den vorherigen Stand zurückgesetzt.' >&2
+          exit 1
+
+      - name: Remove rollback snapshot after successful verification
+        if: steps.deploy.outcome == 'success' && steps.livecheck.outcome == 'success'
+        env:
+          STRATO_SSH_HOST: ${{ secrets.STRATO_SSH_HOST }}
+          STRATO_SSH_USER: ${{ secrets.STRATO_SSH_USER }}
+        run: ssh "$STRATO_SSH_USER@$STRATO_SSH_HOST" "rm -rf -- '$ROLLBACK_DIR'"
+
+      - name: Production summary
+        if: steps.deploy.outcome == 'success' && steps.livecheck.outcome == 'success'
+        run: |
+          {
+            echo '## Höhn Production Deploy PASS'
+            echo
+            echo "- Commit: $GITHUB_SHA"
+            echo '- Production build/readiness: PASS'
+            echo '- Legacy Festnetz gate: PASS'
+            echo '- Duplicate-content gate: PASS'
+            echo '- STRATO upload: PASS'
+            echo '- HTTPS/non-www redirects: PASS'
+            echo '- HSTS: PASS'
+            echo '- Core pages + robots + sitemap + 404: PASS'
+            echo '- Contact validation smoke test: PASS'
+          } >> "$GITHUB_STEP_SUMMARY"
