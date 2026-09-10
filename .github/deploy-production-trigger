@@ -1,4 +1,5 @@
 Höhn Immobilien production deploy
-Source QA commit: 9613d1069bc5f3771e50c6faa1e9cb79acb1ec61
-QA: Astro Build PASS; Visual QA 306/306 PASS; Lighthouse mobile >=96, home mobile 99, desktop 100; Accessibility/Best Practices/SEO 100.
+Source QA commit: 9ff9f78cb53d9de143b7531be17fdc7a16fe303f
+Change: Homepage now has one integrated heritage footer; duplicate global homepage footer removed.
+QA: Astro Build PASS; Visual QA PASS; Lighthouse PASS; production-readiness/legacy-contact/duplicate-content gates PASS.
 Triggered: 2026-09-10
