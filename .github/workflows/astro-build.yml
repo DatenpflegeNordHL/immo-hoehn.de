@@ -27,6 +27,14 @@ jobs:
       - name: Install locked dependencies
         run: npm ci --no-audit --no-fund
 
+      - name: Fetch WordPress 02 offer media
+        env:
+          STRATO_SSH_HOST: ${{ secrets.STRATO_SSH_HOST }}
+          STRATO_SSH_USER: ${{ secrets.STRATO_SSH_USER }}
+          STRATO_SSH_PRIVATE_KEY_B64: ${{ secrets.STRATO_SSH_PRIVATE_KEY_B64 }}
+          STRATO_SSH_KNOWN_HOSTS: ${{ secrets.STRATO_SSH_KNOWN_HOSTS }}
+        run: bash scripts/fetch-wp02-media.sh
+
       - name: Validate contact endpoint syntax
         run: php -l public/api/contact.php
 
@@ -62,7 +70,7 @@ jobs:
           grep -Fq 'HTTP/1.1 303 See Other' /tmp/contact-honeypot.headers
           grep -Fq 'Location: /kontakt/?kontakt=erfolg#kontaktformular' /tmp/contact-honeypot.headers
 
-      - name: Verify legacy property image sources
+      - name: Verify WordPress 02 property media
         run: node scripts/property-media-preflight.mjs
 
       - name: Build staging site
