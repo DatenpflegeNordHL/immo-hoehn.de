@@ -1,11 +1,10 @@
 /* Live presentation corrections, 2026-09-10.
    Loaded after the bundled site CSS. The homepage uses three art-directed
    compositions (hero, region, heritage). On mobile their text and imagery
-   must remain inside the same visual canvas instead of becoming stacked,
-   disconnected blocks. */
+   remain inside the same visual canvas instead of becoming stacked blocks. */
 
 @media (max-width: 900px) {
-  /* HERO: keep copy and coast photograph in one composition. */
+  /* HERO: copy and coast photograph are one composition. */
   .hero {
     position: relative;
     display: block;
@@ -33,7 +32,7 @@
     height: 100%;
     aspect-ratio: auto;
     object-fit: cover;
-    object-position: 64% 66%;
+    object-position: 64% 64%;
   }
 
   .hero-photo-fade {
@@ -46,13 +45,12 @@
     pointer-events: none;
     background: linear-gradient(
       180deg,
-      rgba(245, 244, 240, 1) 0%,
-      rgba(245, 244, 240, .99) 36%,
-      rgba(245, 244, 240, .90) 46%,
-      rgba(245, 244, 240, .70) 55%,
-      rgba(245, 244, 240, .40) 64%,
-      rgba(245, 244, 240, .12) 73%,
-      rgba(245, 244, 240, 0) 82%
+      rgba(245, 244, 240, .92) 0%,
+      rgba(245, 244, 240, .84) 28%,
+      rgba(245, 244, 240, .66) 45%,
+      rgba(245, 244, 240, .36) 60%,
+      rgba(245, 244, 240, .12) 72%,
+      rgba(245, 244, 240, 0) 84%
     );
   }
 
@@ -80,8 +78,7 @@
     margin-top: 32px;
   }
 
-  /* REGION: desktop is one four-part composition. Mobile keeps the same
-     relationship by placing story + locations over one continuous map canvas. */
+  /* REGION: story + locations stay over one continuous map canvas. */
   .region-section {
     position: relative;
     display: block;
@@ -100,7 +97,7 @@
     z-index: 0;
     pointer-events: none;
     background:
-      linear-gradient(180deg, rgba(245,245,243,.95) 0%, rgba(245,245,243,.78) 32%, rgba(245,245,243,.54) 62%, rgba(245,245,243,.84) 100%),
+      linear-gradient(180deg, rgba(245,245,243,.78) 0%, rgba(245,245,243,.46) 30%, rgba(245,245,243,.26) 58%, rgba(245,245,243,.50) 100%),
       url('/assets/region-map-960.webp') center 46% / cover no-repeat;
   }
 
@@ -124,11 +121,11 @@
   }
 
   .map-caption {
-    top: 30px;
+    top: 24px;
     left: auto;
     right: 24px;
     font-size: 20px;
-    opacity: .72;
+    opacity: .68;
   }
 
   .map-compass {
@@ -167,7 +164,7 @@
     max-width: 560px;
     font-size: 11px;
     line-height: 1.48;
-    color: #3c555f;
+    color: #314b57;
   }
 
   .region-list {
@@ -177,7 +174,7 @@
     min-height: 0;
     padding: 18px 0 0;
     border: 0;
-    border-top: 1px solid rgba(23,58,74,.14);
+    border-top: 1px solid rgba(23,58,74,.18);
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 17px 24px;
@@ -211,7 +208,7 @@
     object-fit: cover;
     object-position: 72% 50%;
     mix-blend-mode: multiply;
-    opacity: .12;
+    opacity: .16;
     filter: saturate(.68) contrast(.91) brightness(1.04);
   }
 
@@ -222,7 +219,7 @@
     opacity: .72;
   }
 
-  /* HERITAGE: keep year, house drawing and values on one visual field. */
+  /* HERITAGE: year, house drawing and values stay on one visual field. */
   .heritage {
     position: relative;
     display: block;
@@ -268,11 +265,11 @@
   }
 
   .heritage-sketch {
-    left: 10%;
-    top: 125px;
+    left: 4%;
+    top: 72px;
     z-index: 1;
-    width: 88%;
-    height: 330px;
+    width: 96%;
+    height: 400px;
     overflow: hidden;
   }
 
@@ -282,7 +279,7 @@
     object-fit: contain;
     object-position: center;
     mix-blend-mode: multiply;
-    opacity: .36;
+    opacity: .34;
     filter: saturate(.45) contrast(.88) brightness(1.06);
   }
 
@@ -306,7 +303,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     border-left: 1px solid rgba(23,58,74,.14);
     border-top: 1px solid rgba(23,58,74,.14);
-    background: rgba(241,240,236,.52);
+    background: rgba(241,240,236,.54);
   }
 
   .heritage-values div {
@@ -377,9 +374,9 @@
 
   .heritage-sketch {
     left: 0;
-    top: 145px;
+    top: 70px;
     width: 100%;
-    height: 300px;
+    height: 390px;
   }
 
   .heritage-note {
