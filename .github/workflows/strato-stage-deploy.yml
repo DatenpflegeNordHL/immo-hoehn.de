@@ -127,7 +127,20 @@ jobs:
         env:
           STRATO_SSH_HOST: ${{ secrets.STRATO_SSH_HOST }}
           STRATO_SSH_USER: ${{ secrets.STRATO_SSH_USER }}
-        run: ssh -o BatchMode=yes -o StrictHostKeyChecking=yes "$STRATO_SSH_USER@$STRATO_SSH_HOST" 'printf "STRATO SSH PASS\n"'
+        shell: bash
+        run: |
+          set -uo pipefail
+          for attempt in 1 2 3 4; do
+            output="$(ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=20 -o ServerAliveInterval=10 -o ServerAliveCountMax=6 "$STRATO_SSH_USER@$STRATO_SSH_HOST" 'printf "STRATO SSH PASS\n"' 2>&1)"
+            status=$?
+            printf '%s\n' "$output"
+            if grep -q 'STRATO SSH PASS' <<<"$output"; then
+              exit 0
+            fi
+            echo "STRATO SSH verify retry $attempt/4 (exit $status)" >&2
+            sleep $((attempt * 3))
+          done
+          exit 1
 
       - name: Create isolated target directory
         env:
@@ -136,8 +149,18 @@ jobs:
           STRATO_DEPLOY_DIR: ${{ secrets.STRATO_DEPLOY_DIR }}
         shell: bash
         run: |
-          set -euo pipefail
-          ssh "$STRATO_SSH_USER@$STRATO_SSH_HOST" "mkdir -p -- '$STRATO_DEPLOY_DIR'"
+          set -uo pipefail
+          for attempt in 1 2 3 4; do
+            output="$(ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=20 "$STRATO_SSH_USER@$STRATO_SSH_HOST" "mkdir -p -- '$STRATO_DEPLOY_DIR' && printf 'TARGET DIR PASS\\n'" 2>&1)"
+            status=$?
+            printf '%s\n' "$output"
+            if grep -q 'TARGET DIR PASS' <<<"$output"; then
+              exit 0
+            fi
+            echo "STRATO target-dir retry $attempt/4 (exit $status)" >&2
+            sleep $((attempt * 3))
+          done
+          exit 1
 
       - name: Upload Höhn release to isolated STRATO directory
         env:
@@ -146,15 +169,24 @@ jobs:
           STRATO_DEPLOY_DIR: ${{ secrets.STRATO_DEPLOY_DIR }}
         shell: bash
         run: |
-          set -euo pipefail
-          rsync \
-            --archive \
-            --compress \
-            --delete \
-            --human-readable \
-            --itemize-changes \
-            -e 'ssh -o BatchMode=yes -o StrictHostKeyChecking=yes' \
-            dist/ "$STRATO_SSH_USER@$STRATO_SSH_HOST:$STRATO_DEPLOY_DIR/"
+          set -uo pipefail
+          for attempt in 1 2 3 4; do
+            if rsync \
+              --archive \
+              --compress \
+              --delete \
+              --human-readable \
+              --itemize-changes \
+              --timeout=60 \
+              -e 'ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=20 -o ServerAliveInterval=10 -o ServerAliveCountMax=6' \
+              dist/ "$STRATO_SSH_USER@$STRATO_SSH_HOST:$STRATO_DEPLOY_DIR/"; then
+              echo 'STRATO RSYNC PASS'
+              exit 0
+            fi
+            echo "STRATO rsync retry $attempt/4" >&2
+            sleep $((attempt * 3))
+          done
+          exit 1
 
       - name: Verify uploaded release files and offer media
         env:
@@ -163,8 +195,8 @@ jobs:
           STRATO_DEPLOY_DIR: ${{ secrets.STRATO_DEPLOY_DIR }}
         shell: bash
         run: |
-          set -euo pipefail
-          ssh "$STRATO_SSH_USER@$STRATO_SSH_HOST" "
+          set -uo pipefail
+          remote_check="
             test -f '$STRATO_DEPLOY_DIR/index.html' &&
             test -f '$STRATO_DEPLOY_DIR/api/contact.php' &&
             test -f '$STRATO_DEPLOY_DIR/.htaccess' &&
@@ -174,8 +206,19 @@ jobs:
             test -s '$STRATO_DEPLOY_DIR/assets/wp02/rosenhagen-luftbild.webp' &&
             test -s '$STRATO_DEPLOY_DIR/assets/wp02/strandvilla-visualisierung.webp' &&
             test -s '$STRATO_DEPLOY_DIR/assets/wp02/terrasse-visualisierung.webp' &&
-            printf 'STRATO RELEASE FILE CHECK PASS\n'
+            printf 'STRATO RELEASE FILE CHECK PASS\\n'
           "
+          for attempt in 1 2 3 4; do
+            output="$(ssh -o BatchMode=yes -o StrictHostKeyChecking=yes -o ConnectTimeout=20 "$STRATO_SSH_USER@$STRATO_SSH_HOST" "$remote_check" 2>&1)"
+            status=$?
+            printf '%s\n' "$output"
+            if grep -q 'STRATO RELEASE FILE CHECK PASS' <<<"$output"; then
+              exit 0
+            fi
+            echo "STRATO release verify retry $attempt/4 (exit $status)" >&2
+            sleep $((attempt * 3))
+          done
+          exit 1
 
       - name: Write deployment summary
         env:
