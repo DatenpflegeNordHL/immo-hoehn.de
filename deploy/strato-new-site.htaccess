@@ -1,5 +1,5 @@
 # Höhn Immobilien – neue Astro-Produktion auf STRATO
-# Stand: 2026-09-09
+# Stand: 2026-09-10
 # Für einen NEUEN, leeren Zielordner. Nicht über eine bestehende WordPress-.htaccess legen.
 
 DirectoryIndex index.html
@@ -14,6 +14,11 @@ ErrorDocument 404 /404.html
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
+
+  # Kanonischer Host: immer HTTPS + non-www
+  RewriteCond %{HTTPS} !=on [OR]
+  RewriteCond %{HTTP_HOST} ^www\.immo-hoehn\.de$ [NC]
+  RewriteRule ^ https://immo-hoehn.de%{REQUEST_URI} [R=301,L,NE]
 
   # Sichere, inhaltsgleiche Legacy-Redirects
   RewriteRule ^verkaufen/?$ /immobilie-verkaufen/ [R=301,L,NE]
@@ -39,6 +44,5 @@ ErrorDocument 404 /404.html
 </IfModule>
 
 # Bewusst nicht voraktiviert:
-# - HSTS, bis HTTPS und alle Hostvarianten auf Produktion geprüft sind.
+# - HSTS, bis HTTPS und alle Hostvarianten auf Produktion geprüft sind und der Live-Header separat verifiziert wurde.
 # - CSP, bis die echte Produktionsseite mit ihren legitimen Inline-Anteilen geprüft ist.
-# - www/non-www-Zwang, bis die STRATO-Domainzuordnung live verifiziert wurde.
