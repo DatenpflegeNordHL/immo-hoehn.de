@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactPanel from '../components/ContactPanel.astro';
 import { properties } from '../data/properties.js';
+import { getPropertyMedia } from '../data/property-media.js';
 import { PUBLISH_PROPERTY_LISTINGS } from '../data/launch-config.js';
 
 const publishedProperties = PUBLISH_PROPERTY_LISTINGS ? properties : [];
@@ -66,7 +67,7 @@ const publishedProperties = PUBLISH_PROPERTY_LISTINGS ? properties : [];
       <div class="region-list" aria-label="Regionen">
         <article><p class="region-title"><a href="/regionen/dassow/">DASSOW</a></p><p>Unternehmensregion und lokaler Hub</p></article>
         <article><p class="region-title"><a href="/regionen/poetenitz/">PÖTENITZ</a></p><p>Standort von Höhn Immobilien</p></article>
-        <article><p class="region-title"><a href="/regionen/rosenhagen/">ROSENHAGEN</a></p><p>Dokumentierter Grundstücks- und Küstenbezug</p></article>
+        <article><p class="region-title"><a href="/regionen/rosenhagen/">ROSENHAGEN</a></p><p>Grundstücke und Küstenlage</p></article>
         <article><p class="region-title"><a href="/regionen/travemuende/">TRAVEMÜNDE</a></p><p>Lokaler Tätigkeitsbereich für Verkauf & Bewertung</p></article>
         <article><p class="region-title"><a href="/regionen/priwall/">PRIWALL</a></p><p>Lokaler Tätigkeitsbereich an Trave und Ostsee</p></article>
       </div>
@@ -74,7 +75,7 @@ const publishedProperties = PUBLISH_PROPERTY_LISTINGS ? properties : [];
       <div class="region-story">
         <p class="eyebrow">Unsere Region</p>
         <h2 id="region-heading">Eine Küste.<br />Konkrete<br />Lagen.</h2>
-        <p class="region-copy">Standort, bestätigte Tätigkeitsbereiche und dokumentierte Objektlagen werden getrennt dargestellt. So bleibt jede Regionsseite nachvollziehbar statt bloß ein Ortsname für Suchmaschinen zu sein.</p>
+        <p class="region-copy">Von Dassow und Pötenitz über Rosenhagen bis Travemünde und Priwall: Höhn Immobilien begleitet Eigentümer und Interessenten persönlich in der Region.</p>
       </div>
 
       <div class="grass-panel" aria-hidden="true">
@@ -85,23 +86,32 @@ const publishedProperties = PUBLISH_PROPERTY_LISTINGS ? properties : [];
 
     <section class="property-section" aria-labelledby="property-heading">
       <div class="property-section-head">
-        <div><p class="eyebrow">Immobilienangebote</p><h2 id="property-heading">Aktuell heißt:<br />wirklich bestätigt.</h2></div>
-        <p>Objekte erscheinen hier erst, wenn Verfügbarkeit und aktuelles Höhn-Mandat frisch bestätigt sind.</p>
+        <div><p class="eyebrow">Immobilienangebote</p><h2 id="property-heading">Aktuelle Angebote<br />in Rosenhagen.</h2></div>
+        <p>Grundstücke nahe der Ostseeküste. Weitere Informationen und den aktuellen Status erhalten Sie direkt bei Höhn Immobilien.</p>
       </div>
       {publishedProperties.length > 0 ? (
         <div class="property-cards">
-          {publishedProperties.map((property) => <article class="property-card">
-            <p class="kicker">{property.type} · {property.location}</p>
-            <h3>{property.title}</h3>
-            <p class="price">{property.price}</p>
-            <p class="facts">{property.summary}</p>
-            <a href={`/immobilien/${property.slug}/`}>Objekt ansehen →</a>
-          </article>)}
+          {publishedProperties.map((property) => {
+            const media = getPropertyMedia(property.slug);
+            return (
+              <article class="property-card">
+                <div class="property-card-media" style="background-image:url('/assets/rosenhagen-beach.webp')">
+                  <img src={media.hero.src} alt={media.hero.alt} loading="lazy" decoding="async" onerror="this.style.display='none';" />
+                  <span class="property-media-label">{media.hero.kind === 'plan' ? 'Kataster / Plan' : media.hero.kind === 'visualization' ? 'Visualisierung' : media.hero.kind === 'location' ? 'Lagebild' : 'Projektbild'}</span>
+                </div>
+                <p class="kicker">{property.type} · {property.location}</p>
+                <h3>{property.title}</h3>
+                <p class="price">{property.price}</p>
+                <p class="facts">{property.summary}</p>
+                <a href={`/immobilien/${property.slug}/`}>Angebot ansehen →</a>
+              </article>
+            );
+          })}
         </div>
       ) : (
         <div class="content-prose">
-          <h3>Derzeit keine Angebote als aktuell bestätigt</h3>
-          <p>Die bisher dokumentierten Objekte werden zum Relaunch nicht als aktueller Bestand ausgegeben. Für aktuelle Kauf- oder Grundstücksanfragen erreichen Sie Höhn Immobilien direkt.</p>
+          <h3>Derzeit keine veröffentlichten Angebote</h3>
+          <p>Für aktuelle Kauf- oder Grundstücksanfragen erreichen Sie Höhn Immobilien direkt.</p>
           <div class="button-row"><a class="button-primary" href="/kontakt/">Aktuelle Angebote anfragen</a><a class="button-secondary" href="/immobilien/">Zur Immobilienübersicht</a></div>
         </div>
       )}
