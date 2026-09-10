@@ -27,6 +27,9 @@ jobs:
         with:
           node-version: 22
 
+      - name: Inspect live image dimensions
+        run: node scripts/live-image-dimensions.mjs
+
       - name: Run live deep audit
         env:
           LIVE_AUDIT_BASE: https://immo-hoehn.de/
