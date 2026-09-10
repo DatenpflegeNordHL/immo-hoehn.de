@@ -1,59 +1,8 @@
-/* Live presentation corrections, 2026-09-10.
-   Loaded after the bundled site CSS so mobile hero continuity and listing media
-   stay stable without changing the validated desktop composition. */
+/* Live presentation correction, 2026-09-10.
+   Loaded after the bundled site CSS. The property imagery now has semantic
+   markup in the Astro templates; this file only keeps the validated mobile
+   homepage hero continuity fix. */
 
-/* Property cards: restore the visual media layer that was lost when the
-   confirmed live listings replaced the original preview cards. */
-.property-card::before {
-  content: "";
-  display: block;
-  flex: 0 0 auto;
-  width: auto;
-  aspect-ratio: 16 / 10;
-  margin: -24px -24px 20px;
-  background-color: #e6e8e5;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-}
-
-/* EFH 1724: no verified object photo is stored in the repository yet.
-   Use a clearly labelled Pötenitz location image instead of pretending a
-   representative house visual is the actual property. */
-.property-card:nth-child(1)::before {
-  background-image: url('/assets/hero-coast-960.webp');
-  background-position: 64% 58%;
-}
-.property-card:nth-child(1) .kicker::after { content: " · Lagebild"; }
-
-/* ETW 1722: recovered Bestandsbild first, local coast image as resilient
-   fallback so a retired legacy CDN can never leave an empty grey card. */
-.property-card:nth-child(2)::before {
-  background-image:
-    url('https://primary.jwwb.nl/public/m/j/i/temp-gokzzpyuwghsepdshzbs/poetenitz-25-05-06-03-high.jpg'),
-    url('/assets/hero-coast-960.webp');
-}
-.property-card:nth-child(2) .kicker::after { content: " · Bestandsbild"; }
-
-/* Rosenhagen: retain the recovered former-site project media when available,
-   with the locally shipped Rosenhagen coast image underneath as fallback. */
-.property-card:nth-child(3)::before {
-  background-image:
-    url('https://primary.jwwb.nl/public/m/j/i/temp-gokzzpyuwghsepdshzbs/wohnen-wie-im-urlaub-210302-rosenhagen-front-high.jpg'),
-    url('/assets/rosenhagen-beach.webp');
-}
-.property-card:nth-child(3) .kicker::after { content: " · Lagebild"; }
-
-.property-card:nth-child(4)::before {
-  background-image:
-    url('https://primary.jwwb.nl/public/m/j/i/temp-gokzzpyuwghsepdshzbs/rosenhagen-210209-projekt-4-grundstuecke-high.jpg'),
-    url('/assets/rosenhagen-beach.webp');
-}
-.property-card:nth-child(4) .kicker::after { content: " · Lagebild"; }
-
-/* Mobile hero: the base stylesheet changed the photo from an absolute layer
-   into a second flex item. That produced the visible hard section break on
-   phones. Keep copy + photo inside one hero and blend paper into the photo. */
 @media (max-width: 900px) {
   .hero {
     position: relative;
@@ -141,9 +90,5 @@
 
   .hero-copy {
     padding-top: 28px;
-  }
-
-  .property-card::before {
-    aspect-ratio: 4 / 3;
   }
 }
