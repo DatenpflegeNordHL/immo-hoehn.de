@@ -1,5 +1,4 @@
-// Launch publication switches for Höhn Immobilien.
-// The four property/project listings below were cross-checked against the
-// existing public Höhn website immediately before launch and are intended
-// to remain visible on the rebuilt site.
+// Launch publication switch for Höhn Immobilien.
+// The public offer inventory is sourced exclusively from the verified
+// "Aktuelle Angebote" content in STRATO wordpress_02.
 export const PUBLISH_PROPERTY_LISTINGS = true;
