@@ -31,7 +31,7 @@ jobs:
               exit 1
             }
           elif [[ "$GITHUB_EVENT_NAME" == "push" ]]; then
-            echo "Stage-Deploy wurde kontrolliert über .github/deploy-stage-trigger ausgelöst."
+            echo "Deploy wurde kontrolliert über .github/deploy-stage-trigger ausgelöst."
           else
             echo "Abbruch: unerwartetes Event $GITHUB_EVENT_NAME." >&2
             exit 1
@@ -50,10 +50,18 @@ jobs:
       - name: Install locked dependencies
         run: npm ci --no-audit --no-fund
 
+      - name: Fetch canonical WordPress 02 offer media
+        env:
+          STRATO_SSH_HOST: ${{ secrets.STRATO_SSH_HOST }}
+          STRATO_SSH_USER: ${{ secrets.STRATO_SSH_USER }}
+          STRATO_SSH_PRIVATE_KEY_B64: ${{ secrets.STRATO_SSH_PRIVATE_KEY_B64 }}
+          STRATO_SSH_KNOWN_HOSTS: ${{ secrets.STRATO_SSH_KNOWN_HOSTS }}
+        run: bash scripts/fetch-wp02-media.sh
+
       - name: Validate contact endpoint syntax
         run: php -l public/api/contact.php
 
-      - name: Verify legacy property image sources
+      - name: Verify WordPress 02 property media
         run: node scripts/property-media-preflight.mjs
 
       - name: Build production-intent site
@@ -148,7 +156,7 @@ jobs:
             -e 'ssh -o BatchMode=yes -o StrictHostKeyChecking=yes' \
             dist/ "$STRATO_SSH_USER@$STRATO_SSH_HOST:$STRATO_DEPLOY_DIR/"
 
-      - name: Verify uploaded release files
+      - name: Verify uploaded release files and offer media
         env:
           STRATO_SSH_HOST: ${{ secrets.STRATO_SSH_HOST }}
           STRATO_SSH_USER: ${{ secrets.STRATO_SSH_USER }}
@@ -161,7 +169,12 @@ jobs:
             test -f '$STRATO_DEPLOY_DIR/api/contact.php' &&
             test -f '$STRATO_DEPLOY_DIR/.htaccess' &&
             test -f '$STRATO_DEPLOY_DIR/sitemap-index.xml' &&
-            printf 'STRATO STAGE FILE CHECK PASS\n'
+            test -s '$STRATO_DEPLOY_DIR/assets/wp02/rosenhagen-projekt.webp' &&
+            test -s '$STRATO_DEPLOY_DIR/assets/wp02/rosenhagen-kataster.png' &&
+            test -s '$STRATO_DEPLOY_DIR/assets/wp02/rosenhagen-luftbild.webp' &&
+            test -s '$STRATO_DEPLOY_DIR/assets/wp02/strandvilla-visualisierung.webp' &&
+            test -s '$STRATO_DEPLOY_DIR/assets/wp02/terrasse-visualisierung.webp' &&
+            printf 'STRATO RELEASE FILE CHECK PASS\n'
           "
 
       - name: Write deployment summary
@@ -170,13 +183,13 @@ jobs:
         shell: bash
         run: |
           {
-            echo '## Höhn STRATO Stage Deploy'
+            echo '## Höhn STRATO Deploy'
             echo
             echo "- Commit: $GITHUB_SHA"
             echo "- Zielordner: \`$STRATO_DEPLOY_DIR\`"
-            echo '- Immobilienbild-Preflight: PASS'
+            echo '- Angebotsquelle: STRATO wordpress_02'
+            echo '- WordPress-02-Bilder: PASS'
             echo '- Produktionsbuild + Readiness Gate: PASS'
             echo '- Upload: PASS'
-            echo '- Alte WordPress-Produktion wurde nicht verändert.'
-            echo '- Domain-Umschaltung ist ausdrücklich NICHT Bestandteil dieses Workflows.'
+            echo '- WordPress-Installationen wurden nicht verändert.'
           } >> "$GITHUB_STEP_SUMMARY"
