@@ -1,0 +1,4 @@
+Höhn Immobilien production deploy
+Source QA commit: 9613d1069bc5f3771e50c6faa1e9cb79acb1ec61
+QA: Astro Build PASS; Visual QA 306/306 PASS; Lighthouse mobile >=96, home mobile 99, desktop 100; Accessibility/Best Practices/SEO 100.
+Triggered: 2026-09-10
