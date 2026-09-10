@@ -9,6 +9,7 @@ const publishedProperties = PUBLISH_PROPERTY_LISTINGS ? properties : [];
 <BaseLayout
   title="Höhn Immobilien | Immobilien an der Ostseeküste"
   description="Höhn Immobilien begleitet Eigentümer und Käufer an der Ostseeküste bei Verkauf, Wertermittlung und Vermittlung – persönlich und erfahren seit 1986."
+  hideFooter={true}
 >
   <main id="top">
     <section class="hero" aria-labelledby="hero-title">
@@ -120,8 +121,10 @@ const publishedProperties = PUBLISH_PROPERTY_LISTINGS ? properties : [];
     </section>
 
     <ContactPanel compact={true} />
+  </main>
 
-    <section id="ueber-uns" class="heritage" aria-labelledby="heritage-title">
+  <footer id="ueber-uns" class="heritage-footer" aria-labelledby="heritage-title">
+    <div class="heritage">
       <div class="heritage-year"><span>Seit</span><strong id="heritage-title">1986</strong><i></i></div>
       <div class="heritage-copy"><p>INHABERGEFÜHRT<br />PERSÖNLICH<br />AN DER OSTSEEKÜSTE.</p></div>
       <figure class="heritage-sketch"><img src="/assets/heritage-house-600.webp" width="600" height="300" alt="Illustration eines norddeutschen Hauses" loading="lazy" decoding="async" /></figure>
@@ -132,6 +135,23 @@ const publishedProperties = PUBLISH_PROPERTY_LISTINGS ? properties : [];
         <div><strong>VERMITTLUNG</strong><span>Wohn- & Gewerbe</span></div>
         <div><strong>ERFAHREN</strong><span>seit 1986</span></div>
       </div>
-    </section>
-  </main>
+    </div>
+
+    <div class="heritage-footer-meta">
+      <div class="heritage-footer-identity">
+        <strong>Höhn Immobilien</strong>
+        <span>Christine Bringmann · Trakehnerstraße 11 · 23942 Dassow OT Pötenitz</span>
+      </div>
+      <div class="heritage-footer-contact">
+        <a href="tel:+491711230162">0171 1230162</a>
+        <a href="mailto:info@immo-hoehn.de">info@immo-hoehn.de</a>
+      </div>
+      <nav class="heritage-footer-nav" aria-label="Fußnavigation">
+        <a href="/kontakt/">Kontakt</a>
+        <a href="/impressum/">Impressum</a>
+        <a href="/datenschutz/">Datenschutz</a>
+      </nav>
+      <div class="heritage-footer-copy">© 2026 Höhn Immobilien</div>
+    </div>
+  </footer>
 </BaseLayout>
