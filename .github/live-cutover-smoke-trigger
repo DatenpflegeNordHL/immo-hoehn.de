@@ -1,5 +1,6 @@
-Run live verification after landline-removal deployment
+Run live verification after responsive homepage-hero deployment
 2026-09-10
-Deploy source: da646f799b9a691c1e88fd694631e97b8a4a291e
+Deploy source: e5016f86ac888c31eef72a72b5ba9ff45a105592
+Verify the new Astro homepage is live and still contains both intended headline fragments: Immobilien an / der Ostseeküste.
 Check every public live page for obsolete Höhn landline 038826 80911 and tel:+493882680911.
 Keep authority telephone 038828 3300 untouched.
