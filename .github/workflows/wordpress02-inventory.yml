@@ -59,31 +59,29 @@ jobs:
           global $wpdb;
           echo "WP02_SITE=" . home_url('/') . "\n";
           echo "WP02_PUBLIC_CONTENT_BEGIN\n";
-          $rows = $wpdb->get_results("SELECT ID,post_type,post_title,post_name,post_date,post_content FROM {$wpdb->posts} WHERE post_status='publish' AND post_type <> 'attachment' ORDER BY post_type,post_date DESC,ID DESC");
+          $rows = $wpdb->get_results("SELECT ID,post_type,post_title,post_name,post_date FROM {$wpdb->posts} WHERE post_status='publish' AND post_type <> 'attachment' ORDER BY post_type,post_date DESC,ID DESC");
           foreach ($rows as $row) {
             $title = preg_replace('/[\\r\\n\\t]+/', ' ', wp_strip_all_tags($row->post_title));
             $url = get_permalink($row->ID);
             echo "CONTENT\t{$row->ID}\t{$row->post_type}\t{$row->post_name}\t{$title}\t{$url}\n";
-            $ids = [];
-            if (preg_match_all('/wp-image-(\\d+)/i', $row->post_content, $m)) $ids = array_merge($ids, $m[1]);
-            if (preg_match_all('/(?:attachment_id|image|media|id)["\\'=: ]+(\\d{2,})/i', $row->post_content, $m2)) $ids = array_merge($ids, $m2[1]);
+            $media = get_attached_media('image', $row->ID);
             $thumb = get_post_thumbnail_id($row->ID);
-            if ($thumb) $ids[] = $thumb;
-            $ids = array_values(array_unique(array_map('intval', $ids)));
-            foreach ($ids as $aid) {
-              $src = wp_get_attachment_url($aid);
-              if ($src) echo "MEDIA\t{$row->ID}\t{$aid}\t" . basename(parse_url($src, PHP_URL_PATH)) . "\t{$src}\n";
+            if ($thumb && !isset($media[$thumb])) {
+              $thumbPost = get_post($thumb);
+              if ($thumbPost) $media[$thumb] = $thumbPost;
             }
-            if (preg_match_all('~https?://[^"\\'<> ]+\\.(?:jpe?g|png|webp)(?:\\?[^"\\'<> ]*)?~i', $row->post_content, $urls)) {
-              foreach (array_values(array_unique($urls[0])) as $src) {
-                echo "MEDIAURL\t{$row->ID}\t" . basename(parse_url($src, PHP_URL_PATH)) . "\t{$src}\n";
+            foreach ($media as $attachment) {
+              $src = wp_get_attachment_url($attachment->ID);
+              if ($src) {
+                $file = basename(parse_url($src, PHP_URL_PATH));
+                echo "MEDIA\t{$row->ID}\t{$attachment->ID}\t{$file}\t{$src}\n";
               }
             }
           }
           echo "WP02_PUBLIC_CONTENT_END\n";
-          echo "WP02_RELEVANT_UPLOAD_NAMES_BEGIN\n";
           PHP
           php /tmp/wp02-public-inventory.php
+          echo 'WP02_RELEVANT_UPLOAD_NAMES_BEGIN'
           find "$ROOT/wp-content/uploads" -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) 2>/dev/null \
             | grep -Ei '(immob|objekt|haus|wohnung|grund|poeten|pöten|rosenh|travem|priwall|172[0-9]|17[0-9][0-9])' \
             | sed "s#^$ROOT/wp-content/uploads/##" \
