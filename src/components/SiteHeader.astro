@@ -16,5 +16,9 @@ const links = [
   <nav class="main-nav" aria-label="Hauptnavigation">
     {links.map(([href,label]) => <a href={href} aria-current={current === href ? 'page' : undefined}>{label}</a>)}
   </nav>
-  <a class="header-cta" href="/immobilie-verkaufen/">Immobilie verkaufen <span aria-hidden="true">→</span></a>
+  <a class="header-cta" href="/immobilie-verkaufen/">
+    <span class="header-cta-full">Immobilie verkaufen</span>
+    <span class="header-cta-short">Verkaufen</span>
+    <span aria-hidden="true">→</span>
+  </a>
 </header>
