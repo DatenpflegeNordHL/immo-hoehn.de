@@ -36,9 +36,10 @@ copy_media() {
     exit 1
   fi
 
-  scp -q -o BatchMode=yes -o StrictHostKeyChecking=yes \
-    "$STRATO_SSH_USER@$STRATO_SSH_HOST:$remote_file" \
-    "$DEST/$target"
+  # STRATO shell access can see the full webspace path even when its SFTP
+  # namespace cannot address that same absolute path. Stream the original
+  # bytes through SSH instead of relying on scp path translation.
+  ${SSH[@]} "cat '$remote_file'" > "$DEST/$target"
   test -s "$DEST/$target"
   echo "FETCHED $stem -> $target"
 }
