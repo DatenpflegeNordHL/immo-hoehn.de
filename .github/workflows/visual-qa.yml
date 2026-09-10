@@ -26,6 +26,17 @@ jobs:
       - name: Install locked dependencies
         run: npm ci --no-audit --no-fund
 
+      - name: Fetch WordPress 02 offer media
+        env:
+          STRATO_SSH_HOST: ${{ secrets.STRATO_SSH_HOST }}
+          STRATO_SSH_USER: ${{ secrets.STRATO_SSH_USER }}
+          STRATO_SSH_PRIVATE_KEY_B64: ${{ secrets.STRATO_SSH_PRIVATE_KEY_B64 }}
+          STRATO_SSH_KNOWN_HOSTS: ${{ secrets.STRATO_SSH_KNOWN_HOSTS }}
+        run: bash scripts/fetch-wp02-media.sh
+
+      - name: Verify WordPress 02 property media
+        run: node scripts/property-media-preflight.mjs
+
       - name: Install Playwright for QA
         run: |
           npm install --no-save --package-lock=false playwright@1.63.0
