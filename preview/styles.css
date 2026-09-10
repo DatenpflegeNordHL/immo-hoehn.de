@@ -6,6 +6,8 @@
   .hero-photo img{object-position:50% 50%}
   .hero-photo-fade{left:0;top:0;width:560px;height:503px;background:linear-gradient(90deg,rgba(245,244,240,.98) 0%,rgba(245,244,240,.95) 24%,rgba(245,244,240,.82) 46%,rgba(245,244,240,.50) 68%,rgba(245,244,240,0) 100%)}
 
+  /* Percentage grid starts immediately above the mobile breakpoint. The former fixed 1024px grid clipped 901–1023px viewports. */
+  .region-section{grid-template-columns:31.25% 23.046875% 32.8125% 12.890625%}
   .region-section::before{content:"";position:absolute;inset:0;background:url('/assets/region-map-960.webp') center/100% 100% no-repeat;opacity:.22;mix-blend-mode:multiply;pointer-events:none;z-index:0}
   .region-section>.map-panel,.region-section>.region-list,.region-section>.region-story,.region-section>.grass-panel{position:relative;z-index:1}
   .map-art,.grass-panel img,.map-compass{display:none}
@@ -15,21 +17,20 @@
   .heritage-sketch img{object-fit:contain;object-position:50% 50%;mix-blend-mode:multiply;opacity:.46;filter:saturate(.45) contrast(.88) brightness(1.06)}
 }
 
-/* Wide desktop pass. The 1024px reference remains untouched; larger viewports expand coherently instead of leaving a dead strip on the right. */
+/* Wide desktop pass. */
 @media (min-width:1025px){
   .site-header,.hero,.region-section,.heritage,.after-reference,.contact-section{width:100%;max-width:1440px;margin-left:auto;margin-right:auto}
   .hero-photo{width:calc(100% - 140px)}
-  .region-section{grid-template-columns:31.25% 23.046875% 32.8125% 12.890625%}
 }
 
-/* Phase-one navigation: useful anchors now, full destination pages follow in the money-page build. */
-.main-nav a{position:relative;padding:4px 0}
+/* Primary navigation. */
+.main-nav a{position:relative;padding:4px 0;min-height:24px;display:inline-flex;align-items:center}
 .main-nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:rgba(23,58,74,.42);transform:scaleX(0);transform-origin:left;transition:transform .18s ease}
 .main-nav a:hover::after,.main-nav a:focus-visible::after{transform:scaleX(1)}
 .main-nav a:focus-visible{outline:1px solid rgba(23,58,74,.35);outline-offset:4px}
 
 /* Current content pass: no placeholder property discovery; selling/contact become the primary conversion path. */
-.hero-actions{gap:0}
+.hero-actions{gap:24px}
 .sell-section{min-height:0;display:flex;align-items:center;padding:44px 46px 46px}
 .sell-section>div{max-width:760px}
 .sell-section h2{font-size:46px;margin-top:12px}
