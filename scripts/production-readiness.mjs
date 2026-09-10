@@ -80,14 +80,14 @@ if (!PUBLISH_PROPERTY_LISTINGS) {
 }
 let indexableCount = 0;
 
+const retiredLandline = /(?:0388(?:\s|&nbsp;|-)*26(?:\s|&nbsp;|-)*80911|\+49(?:\s|&nbsp;|-)*388(?:\s|&nbsp;|-)*26(?:\s|&nbsp;|-)*80911|\+493882680911|tel:\+493882680911)/i;
+
 for (const file of htmlFiles) {
   const route = routeForHtml(file);
   const html = readFileSync(file, 'utf8');
 
   if (/hoehn\.immobilien@t-online\.de/i.test(html)) fail(`${route}: alte T-Online-Adresse im Build gefunden.`);
-  if (/038826(?:\s|&nbsp;)*80911|\+49(?:\s|&nbsp;)*38826(?:\s|&nbsp;)*80911/i.test(html)) {
-    fail(`${route}: alte Höhn-Festnetznummer im öffentlichen Build gefunden.`);
-  }
+  if (retiredLandline.test(html)) fail(`${route}: alte Höhn-Festnetznummer im öffentlichen Build gefunden.`);
   if (/DatenpflegeNord/i.test(html)) fail(`${route}: fremdes Projektbranding im öffentlichen Build gefunden.`);
   if (/Staging-(?:Fassung|Platzhalter)|Staging-Fassung|Staging-Platzhalter|Arbeitsbranch noch nicht für den Produktivbetrieb/i.test(html)) {
     fail(`${route}: Staging-/Arbeitsbranch-Text im Production-Build gefunden.`);
@@ -99,6 +99,10 @@ for (const file of htmlFiles) {
   if (/einfamilienhaus-poetenitz-1724|eigentumswohnung-poetenitz-1722|Objektnummer\s*1724|Objektnummer\s*1722/i.test(html)) {
     fail(`${route}: ausgemustertes Nicht-WordPress-02-Angebot im öffentlichen Build gefunden.`);
   }
+  if (/header-cta/i.test(html)) fail(`${route}: veralteter doppelter Header-CTA im öffentlichen Build gefunden.`);
+
+  const footerCount = (html.match(/<footer\b/gi) ?? []).length;
+  if (footerCount !== 1) fail(`${route}: ${footerCount} Footer gefunden, erwartet genau einen globalen Footer.`);
 
   const externalFontResource = /<(?:link|script)\b[^>]*(?:href|src)=["']https:\/\/(?:fonts\.googleapis\.com|fonts\.gstatic\.com)[^"']*["'][^>]*>/i;
   if (externalFontResource.test(html)) fail(`${route}: externe Google-Font-Ressource im Markup gefunden.`);
@@ -116,6 +120,9 @@ for (const file of htmlFiles) {
   if (route !== '/' && route !== '/404' && !types.includes('BreadcrumbList')) {
     fail(`${route}: BreadcrumbList-Schema fehlt.`);
   }
+
+  const serializedSchemas = JSON.stringify(parsedSchemas);
+  if (retiredLandline.test(serializedSchemas)) fail(`${route}: alte Höhn-Festnetznummer im JSON-LD gefunden.`);
 
   const robots = attr(html, 'meta', 'name', 'robots', 'content');
   const shouldNoindex = noindexRoutes.has(route);
@@ -184,4 +191,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`Production readiness PASS: ${htmlFiles.length} HTML-Seiten, ${indexableCount} indexierbar, Canonicals/Sitemap/Robots/Schema/öffentliche Inhalte/Form-Empfänger geprüft.`);
+console.log(`Production readiness PASS: ${htmlFiles.length} HTML-Seiten, ${indexableCount} indexierbar, genau ein Footer pro Seite, Canonicals/Sitemap/Robots/Schema/Telefon/Form-Empfänger geprüft.`);
