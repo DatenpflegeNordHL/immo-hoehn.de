@@ -1,5 +1,7 @@
-Höhn Immobilien production deploy
+Höhn Immobilien production deploy retry
 Source QA commit: 9ff9f78cb53d9de143b7531be17fdc7a16fe303f
+Deploy workflow fix: 67db1553371b008c9a5959f3dd417cfdf72e9d8e
 Change: Homepage now has one integrated heritage footer; duplicate global homepage footer removed.
 QA: Astro Build PASS; Visual QA PASS; Lighthouse PASS; production-readiness/legacy-contact/duplicate-content gates PASS.
+Reason for retry: previous upload was rolled back only because curl|grep -q under pipefail produced curl exit 23 after a successful content match.
 Triggered: 2026-09-10
