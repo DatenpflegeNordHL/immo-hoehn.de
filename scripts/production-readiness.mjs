@@ -69,7 +69,7 @@ function parseJsonLd(html, route) {
 if (!existsSync(DIST)) fail('dist/ fehlt. Production build wurde nicht erzeugt.');
 
 const htmlFiles = existsSync(DIST) ? walk(DIST, '.html') : [];
-if (htmlFiles.length < 19) fail(`Zu wenige HTML-Seiten im Production-Build: ${htmlFiles.length} (erwartet mindestens 19).`);
+if (htmlFiles.length < 17) fail(`Zu wenige HTML-Seiten im Production-Build: ${htmlFiles.length} (erwartet mindestens 17).`);
 
 const sitemapFiles = existsSync(DIST) ? walk(DIST, '.xml').filter((p) => p.includes('sitemap')) : [];
 const sitemapCorpus = sitemapFiles.map((p) => readFileSync(p, 'utf8')).join('\n');
@@ -88,6 +88,13 @@ for (const file of htmlFiles) {
   if (/DatenpflegeNord/i.test(html)) fail(`${route}: fremdes Projektbranding im öffentlichen Build gefunden.`);
   if (/Staging-(?:Fassung|Platzhalter)|Staging-Fassung|Staging-Platzhalter|Arbeitsbranch noch nicht für den Produktivbetrieb/i.test(html)) {
     fail(`${route}: Staging-/Arbeitsbranch-Text im Production-Build gefunden.`);
+  }
+
+  if (/Webador|Bildbestand|frühere Höhn|bisherigen Höhn-Bestand|öffentlich geführte[nr]? Höhn-Objektseite|WordPress[_ -]?02|Datenquelle/i.test(html)) {
+    fail(`${route}: interne Migrations-/Quelleninformation im öffentlichen Build gefunden.`);
+  }
+  if (/einfamilienhaus-poetenitz-1724|eigentumswohnung-poetenitz-1722|Objektnummer\s*1724|Objektnummer\s*1722/i.test(html)) {
+    fail(`${route}: ausgemustertes Nicht-WordPress-02-Angebot im öffentlichen Build gefunden.`);
   }
 
   const externalFontResource = /<(?:link|script)\b[^>]*(?:href|src)=["']https:\/\/(?:fonts\.googleapis\.com|fonts\.gstatic\.com)[^"']*["'][^>]*>/i;
@@ -149,6 +156,9 @@ else {
 if (!sitemapFiles.some((p) => p.endsWith('sitemap-index.xml'))) fail('sitemap-index.xml fehlt.');
 if (/\/impressum\/?</i.test(sitemapCorpus)) fail('Impressum ist unerwartet in der Sitemap.');
 if (/\/datenschutz\/?</i.test(sitemapCorpus)) fail('Datenschutz ist unerwartet in der Sitemap.');
+if (/einfamilienhaus-poetenitz-1724|eigentumswohnung-poetenitz-1722/i.test(sitemapCorpus)) {
+  fail('Ausgemusterte Angebote 1724/1722 sind unerwartet in der Sitemap.');
+}
 if (!PUBLISH_PROPERTY_LISTINGS) {
   for (const property of properties) {
     if (sitemapCorpus.includes(`/immobilien/${property.slug}/`)) {
@@ -171,4 +181,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`Production readiness PASS: ${htmlFiles.length} HTML-Seiten, ${indexableCount} indexierbar, Canonicals/Sitemap/Robots/Schema/Drittressourcen/Branding/Form-Empfänger geprüft.`);
+console.log(`Production readiness PASS: ${htmlFiles.length} HTML-Seiten, ${indexableCount} indexierbar, Canonicals/Sitemap/Robots/Schema/öffentliche Inhalte/Form-Empfänger geprüft.`);
