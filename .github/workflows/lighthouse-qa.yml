@@ -3,6 +3,7 @@ name: Lighthouse QA
 on:
   push:
     branches:
+      - main
       - redesign/coastal-blueprint
   workflow_dispatch:
 
@@ -10,7 +11,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: lighthouse-coastal-blueprint
+  group: lighthouse-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
