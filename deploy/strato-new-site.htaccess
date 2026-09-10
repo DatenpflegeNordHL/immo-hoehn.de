@@ -4,6 +4,11 @@
 
 DirectoryIndex index.html
 ErrorDocument 404 /404.html
+ServerSignature Off
+
+<IfModule mod_setenvif.c>
+  SetEnvIf Request_URI "^/_astro/" HOEHN_IMMUTABLE_ASSET=1
+</IfModule>
 
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"
@@ -11,6 +16,13 @@ ErrorDocument 404 /404.html
   Header always set X-Frame-Options "SAMEORIGIN"
   Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
   Header always set Strict-Transport-Security "max-age=15552000"
+  Header always set Content-Security-Policy "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; frame-src 'none'; form-action 'self'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; media-src 'self'; worker-src 'self'; manifest-src 'self'; upgrade-insecure-requests"
+  Header always unset X-Powered-By
+  Header always set Cache-Control "public, max-age=31536000, immutable" env=HOEHN_IMMUTABLE_ASSET
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css application/javascript application/json application/ld+json application/xml image/svg+xml
 </IfModule>
 
 <IfModule mod_rewrite.c>
@@ -44,7 +56,8 @@ ErrorDocument 404 /404.html
   # RewriteRule ^immobilienangebote/kaufen/grundstuecke/rosenhagen-von-privat/?$ /immobilien/baugrundstuecke-rosenhagen-von-privat/ [R=301,L,NE]
 </IfModule>
 
-# Nach Live-Verifikation aktiviert:
+# Nach Live-Verifikation aktiviert und anschließend per Live-Deep-Audit zu prüfen:
 # - HSTS: max-age=15552000, bewusst ohne includeSubDomains und preload.
-# Bewusst nicht voraktiviert:
-# - CSP, bis die echte Produktionsseite mit ihren legitimen Inline-Anteilen geprüft ist.
+# - CSP: self-only mit erlaubten lokalen Inline-Anteilen für Astro/JSON-LD.
+# - Immutable Cache-Control für gehashte /_astro/-Assets.
+# - DEFLATE für komprimierbare Textressourcen, sofern mod_deflate auf STRATO verfügbar ist.
