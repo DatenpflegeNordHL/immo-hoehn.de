@@ -13,10 +13,8 @@ const routes = [
   '/grundstueck-verkaufen/',
   '/immobilienbewertung/',
   '/immobilien/',
-  '/immobilien/einfamilienhaus-poetenitz-1724/',
-  '/immobilien/eigentumswohnung-poetenitz-1722/',
-  '/immobilien/baugrundstuecke-rosenhagen/',
-  '/immobilien/baugrundstuecke-rosenhagen-von-privat/',
+  '/immobilien/grundstuecke-rosenhagen-623-743/',
+  '/immobilien/baugrundstuecke-rosenhagen-1599-1999/',
   '/regionen/dassow/',
   '/regionen/poetenitz/',
   '/regionen/rosenhagen/',
@@ -34,8 +32,8 @@ const screenshotRoutes = new Set([
   '/grundstueck-verkaufen/',
   '/immobilienbewertung/',
   '/immobilien/',
-  '/immobilien/einfamilienhaus-poetenitz-1724/',
-  '/immobilien/baugrundstuecke-rosenhagen-von-privat/',
+  '/immobilien/grundstuecke-rosenhagen-623-743/',
+  '/immobilien/baugrundstuecke-rosenhagen-1599-1999/',
   '/regionen/poetenitz/',
   '/kontakt/'
 ]);
