@@ -28,6 +28,7 @@
 .main-nav a:hover::after,.main-nav a:focus-visible::after{transform:scaleX(1)}
 .main-nav a:focus-visible{outline:1px solid rgba(23,58,74,.35);outline-offset:4px}
 .header-cta-short{display:none}
+.hero-meta p{border-left:0;padding-left:0}
 
 /* Current content pass: no placeholder property discovery; selling/contact become the primary conversion path. */
 .hero-actions{gap:24px}
