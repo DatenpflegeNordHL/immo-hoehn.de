@@ -47,9 +47,17 @@ function plainText(html) {
     .trim();
 }
 
-function mainText(html) {
+function normalizeText(text) {
+  return text.toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
+function mainHtml(html) {
   const match = html.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i);
-  let main = match?.[1] ?? html;
+  return match?.[1] ?? html;
+}
+
+function mainText(html) {
+  let main = mainHtml(html);
 
   // Shared boilerplate must not inflate page-to-page similarity.
   main = main
@@ -62,6 +70,12 @@ function mainText(html) {
 function firstTagText(html, tag) {
   const match = html.match(new RegExp(`<${tag}\\b[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'i'));
   return match ? plainText(match[1]) : '';
+}
+
+function allTagTexts(html, tag) {
+  return [...html.matchAll(new RegExp(`<${tag}\\b[^>]*>([\\s\\S]*?)<\\/${tag}>`, 'gi'))]
+    .map((match) => plainText(match[1]))
+    .filter(Boolean);
 }
 
 function metaDescription(html) {
@@ -129,12 +143,42 @@ function checkExactDuplicates(pages, key, label) {
       fail(`${page.route}: ${label} fehlt.`);
       continue;
     }
-    const normalized = value.toLowerCase().replace(/\s+/g, ' ');
+    const normalized = normalizeText(value);
     if (!groups.has(normalized)) groups.set(normalized, []);
     groups.get(normalized).push(page.route);
   }
   for (const routes of groups.values()) {
     if (routes.length > 1) fail(`${label} ist exakt doppelt: ${routes.join(', ')}`);
+  }
+}
+
+function checkWithinPageDuplicates(page) {
+  const main = mainHtml(page.html);
+
+  const paragraphs = allTagTexts(main, 'p').filter((text) => text.length >= 90);
+  const paragraphGroups = new Map();
+  for (const paragraph of paragraphs) {
+    const key = normalizeText(paragraph);
+    if (!paragraphGroups.has(key)) paragraphGroups.set(key, []);
+    paragraphGroups.get(key).push(paragraph);
+  }
+  for (const copies of paragraphGroups.values()) {
+    if (copies.length > 1) {
+      fail(`${page.route}: identischer langer Absatz ${copies.length}× innerhalb derselben Seite.`);
+    }
+  }
+
+  const headings = allTagTexts(main, 'h2');
+  const headingGroups = new Map();
+  for (const heading of headings) {
+    const key = normalizeText(heading);
+    if (!headingGroups.has(key)) headingGroups.set(key, []);
+    headingGroups.get(key).push(heading);
+  }
+  for (const copies of headingGroups.values()) {
+    if (copies.length > 1) {
+      warn(`${page.route}: identische H2 „${copies[0]}“ ${copies.length}× innerhalb derselben Seite.`);
+    }
   }
 }
 
@@ -161,6 +205,7 @@ const pages = walk(DIST, '.html')
 checkExactDuplicates(pages, 'title', 'Title');
 checkExactDuplicates(pages, 'description', 'Meta Description');
 checkExactDuplicates(pages, 'h1', 'H1');
+for (const page of pages) checkWithinPageDuplicates(page);
 
 const similarities = [];
 for (let i = 0; i < pages.length; i += 1) {
