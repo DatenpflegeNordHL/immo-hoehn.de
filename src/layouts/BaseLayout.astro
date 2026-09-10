@@ -15,6 +15,7 @@ const {
   forceNoindex = false,
   image = '/assets/hero-coast-1440.webp',
   imageAlt = 'Höhn Immobilien an der Ostseeküste',
+  hideFooter = false,
 } = Astro.props;
 
 const site = Astro.site ?? new URL('https://immo-hoehn.de');
@@ -73,6 +74,6 @@ const organization = {
   <body>
     <SiteHeader />
     <slot />
-    <SiteFooter />
+    {!hideFooter && <SiteFooter />}
   </body>
 </html>
