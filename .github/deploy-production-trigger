@@ -1,7 +1,9 @@
-Höhn Immobilien production hardening deploy
-Source QA commit: 00191d0417de1688b92e05e7d22d126dc935de43
-Final website fix commit included: 4866abae8afc1782b0e85bb5562f2cee0acc0913
-Change: final intrinsic image dimensions, current CSP/cache hardening, integrated single homepage footer, responsive/mobile fixes, duplicate/contact safety gates.
+Höhn Immobilien production hardening deploy retry
+Website QA source: 00191d0417de1688b92e05e7d22d126dc935de43
+Final website fix included: 4866abae8afc1782b0e85bb5562f2cee0acc0913
+Deploy transport hardening: c9b5200c1b32807c0b3cdb61c724d1464208897b
+Change: final intrinsic image dimensions, CSP/cache hardening, integrated single homepage footer, responsive/mobile fixes, duplicate/contact safety gates.
 QA: Astro Build PASS; Visual QA PASS (306/306); Lighthouse PASS; production-readiness/legacy-contact/duplicate-content gates PASS.
-Target: deploy and then require live deep audit with 0 errors / 0 warnings.
+Retry reason: previous build passed the live assertions until a transient STRATO connection reset; rollback restored the prior live version. New livecheck retries transient transport failures before considering rollback.
+Target: successful guarded deploy followed by live deep audit with 0 errors / 0 warnings.
 Triggered: 2026-09-10
