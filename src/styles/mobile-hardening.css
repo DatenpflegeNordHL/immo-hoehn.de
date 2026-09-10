@@ -1,0 +1,125 @@
+/* Mobile production hardening: readability, touch targets and iOS form behavior. */
+@media (max-width: 580px) {
+  .eyebrow {
+    font-size: 9px;
+    letter-spacing: .22em;
+  }
+
+  .site-header .main-nav a {
+    min-height: 40px;
+    padding: 0 3px;
+    font-size: 10.5px;
+  }
+
+  .site-header .header-cta {
+    min-height: 40px;
+    font-size: 10px;
+  }
+
+  .hero-intro {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .place-row,
+  .text-link {
+    font-size: 10.5px;
+  }
+
+  .btn-primary,
+  .button-primary,
+  .button-secondary,
+  .form-actions button {
+    min-height: 44px;
+    font-size: 11px;
+  }
+
+  .region-copy,
+  .sell-copy,
+  .contact-intro > p:not(.eyebrow) {
+    font-size: 13px;
+    line-height: 1.58;
+  }
+
+  .region-list article .region-title {
+    font-size: 10px;
+  }
+
+  .region-list article p {
+    font-size: 11.5px;
+  }
+
+  .contact-meta {
+    font-size: 10.5px;
+    line-height: 1.5;
+  }
+
+  .contact-meta a {
+    min-height: 40px;
+  }
+
+  .contact-form label > span:first-child {
+    font-size: 10px;
+  }
+
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    font-size: 16px;
+    line-height: 1.4;
+    padding: 10px 0 11px;
+  }
+
+  .contact-form input,
+  .contact-form select {
+    min-height: 44px;
+  }
+
+  .contact-form textarea {
+    min-height: 120px;
+  }
+
+  .consent-row {
+    grid-template-columns: 20px 1fr !important;
+  }
+
+  .consent-row input {
+    width: 18px;
+    height: 18px;
+  }
+
+  .consent-row span {
+    font-size: 11px !important;
+    line-height: 1.5;
+  }
+
+  .form-actions small {
+    font-size: 10.5px;
+    line-height: 1.5;
+  }
+
+  .side-card p,
+  .side-card a {
+    font-size: 13px;
+  }
+
+  .site-footer p,
+  .site-footer a {
+    font-size: 12px;
+    line-height: 1.65;
+  }
+
+  .site-footer a {
+    min-height: 36px;
+  }
+
+  .site-footer-bottom {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .site-header .main-nav {
+    gap: 12px;
+  }
+}
