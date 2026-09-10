@@ -1,3 +1,4 @@
-Höhn STRATO Stage Deploy
-Erneut ausgelöst am 2026-09-10 nach Aktivierung der vier verifizierten Projekt-/Immobilienangebote.
-Ziel: separater Ordner /home/www/immo-hoehn-astro
+Höhn STRATO Live Deploy
+Ausgelöst am 2026-09-10 nach Mobile-Hero-Fix und Wiederherstellung der Angebotsbilder.
+Ziel: /home/www/immo-hoehn-astro
+Geprüfter Stand vor Deploy: 790e2107b207b63eefbe7a96d4131caf797a218d
