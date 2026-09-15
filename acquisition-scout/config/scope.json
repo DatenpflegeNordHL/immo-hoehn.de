@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "timezone": "Europe/Berlin",
+  "core_regions": [
+    "Dassow",
+    "Pötenitz",
+    "Rosenhagen",
+    "Travemünde",
+    "Priwall"
+  ],
+  "adjacent_regions": [
+    "Barendorf",
+    "Kaltenhof",
+    "Kücknitz",
+    "Lübeck",
+    "Nordwestmecklenburg",
+    "Ostholstein",
+    "Lübecker Bucht"
+  ],
+  "asset_classes": [
+    "Einfamilienhaus",
+    "Doppelhaushälfte",
+    "Reihenhaus",
+    "Eigentumswohnung",
+    "Mehrfamilienhaus",
+    "Grundstück",
+    "Baugrundstück",
+    "Ferienimmobilie",
+    "Wochenendhaus",
+    "Gewerbeimmobilie",
+    "Entwicklungsgrundstück",
+    "Hotel/Ferienprojekt",
+    "Pflege/Service-Wohnen"
+  ],
+  "signal_types": [
+    "SELLER",
+    "BUYER",
+    "INVESTOR",
+    "PUBLIC_SALE",
+    "PLANNING",
+    "NEW_BUILD",
+    "INVESTOR_SEARCH",
+    "LEASEHOLD",
+    "RELISTING",
+    "MARKET_ONLY"
+  ],
+  "exclude": [
+    "Miete ohne Kaufoption",
+    "Ferienvermietung ohne Verkaufsbezug",
+    "verkaufte oder entfernte Anzeigen",
+    "Dubletten",
+    "allgemeine Immobiliennews ohne konkretes Signal"
+  ]
+}
