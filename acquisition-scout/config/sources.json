@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "tiers": {
+    "1_daily": [
+      {"name":"Kleinanzeigen","kind":"portal","signals":["SELLER","BUYER"],"discovery":true,"detail_required":true},
+      {"name":"ImmoScout24","kind":"portal","signals":["SELLER","MARKET_ONLY","NEW_BUILD"],"discovery":true,"detail_required":true},
+      {"name":"Immowelt","kind":"portal","signals":["SELLER","MARKET_ONLY","NEW_BUILD"],"discovery":true,"detail_required":true},
+      {"name":"Hansestadt Lübeck Grundstücksangebote","kind":"official","signals":["PUBLIC_SALE"],"discovery":true,"detail_required":true},
+      {"name":"Amt Schönberger Land","kind":"official","signals":["PLANNING","PUBLIC_SALE"],"discovery":true,"detail_required":true}
+    ],
+    "2_regular": [
+      {"name":"Ohne-Makler","kind":"portal","signals":["SELLER"],"discovery":true,"detail_required":true},
+      {"name":"ZVG-Portal","kind":"official","signals":["PUBLIC_SALE"],"discovery":true,"detail_required":true},
+      {"name":"lokale Projektentwickler","kind":"company","signals":["INVESTOR","INVESTOR_SEARCH"],"discovery":true,"detail_required":true},
+      {"name":"lokale Presse","kind":"discovery_only","signals":["PLANNING","NEW_BUILD","PUBLIC_SALE"],"discovery":true,"detail_required":true}
+    ],
+    "3_weekly": [
+      {"name":"Bauleitplanung Lübeck","kind":"official","signals":["PLANNING","LEASEHOLD"],"discovery":true,"detail_required":true},
+      {"name":"Bauleitplanung Dassow/Pötenitz/Rosenhagen","kind":"official","signals":["PLANNING"],"discovery":true,"detail_required":true},
+      {"name":"Investoren-Ankaufsprofile","kind":"company","signals":["INVESTOR","INVESTOR_SEARCH"],"discovery":true,"detail_required":true}
+    ]
+  },
+  "known_investor_domains": [
+    "grundstuecksentwicklung-schuett.de",
+    "bbc-bauen.de",
+    "ww-immobilienkontor.de",
+    "immvestica.com",
+    "reafina.de",
+    "ditting-bau.de",
+    "hochbau-luebeck.de"
+  ],
+  "query_families": [
+    "{region} immobilie von privat kaufen",
+    "{region} haus von privat",
+    "{region} wohnung von privat kaufen",
+    "{region} grundstück von privat",
+    "{region} haus gesucht kaufen",
+    "{region} grundstück gesucht kaufen",
+    "{region} ferienhaus gesucht kaufen",
+    "{region} ankaufsprofil grundstück",
+    "{region} projektentwicklung ankauf",
+    "{region} bebauungsplan immobilien",
+    "{region} grundstück ausschreibung",
+    "{region} neubau projekt",
+    "{region} erbbaurecht verkauf"
+  ]
+}
