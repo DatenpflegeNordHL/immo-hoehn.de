@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "hard_rules": {
+    "require_detail_page": true,
+    "search_snippet_is_evidence": false,
+    "allow_captcha_bypass": false,
+    "allow_login_bypass": false,
+    "auto_contact": false,
+    "private_phone_cold_call": false,
+    "private_cold_email": false,
+    "respect_no_broker_contact": true,
+    "sensitive_life_events_as_leads": false,
+    "core_regions_auto_change": false,
+    "compliance_auto_change": false
+  },
+  "active_statuses": [
+    "ACTIVE_CONFIRMED",
+    "ACTIVE_UNCERTAIN",
+    "RELISTED",
+    "MARKET_ONLY",
+    "NO_OUTREACH",
+    "SOLD",
+    "REMOVED",
+    "EXPIRED",
+    "DUPLICATE",
+    "DEAD_LINK"
+  ],
+  "outreach_rules": {
+    "SELLER_private": "platform_message_only_if_contextual_and_allowed",
+    "BUYER_public_request": "contextual_reply_allowed",
+    "INVESTOR_b2b": "allowed_when_profile_fit_is_documented",
+    "NO_OUTREACH": "blocked",
+    "MARKET_ONLY": "blocked"
+  },
+  "learning_limits": {
+    "source_weight_min": 0.5,
+    "source_weight_max": 1.5,
+    "max_weight_change_per_cycle": 0.1,
+    "min_feedback_samples_before_change": 3,
+    "priority_threshold_A": 80,
+    "priority_threshold_B": 60,
+    "min_output_score": 55
+  }
+}
